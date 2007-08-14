@@ -1,0 +1,37 @@
+# .mutt/bindings
+
+# delete
+#folder-hook . "bind index d delete-message"
+#folder-hook . "bind pager d delete-message"
+#folder-hook =mbox "macro index d '<save-message>=archive\n' 'archive message'"
+#folder-hook =mbox "macro pager d '<save-message>=archive\n' 'archive message'"
+#bind index D delete-message
+#bind pager D delete-message
+
+# bindings
+#macro index \em "<change-folder>=mbox\n"
+#macro pager \em "<change-folder>=mbox\n"
+#macro index \ea "<change-folder>=archive\n"
+#macro pager \ea "<change-folder>=archive\n"
+#macro index \es "<change-folder>=sent\n"
+#macro pager \es "<change-folder>=sent\n"
+macro index \ec "<change-folder>?\t"
+macro pager \ec "<change-folder>?\t"
+
+macro index \cb "<pipe-message>urlview\n" "call urlview"
+macro pager \cb "<pipe-message>urlview\n" "call urlview"
+macro pager \cv "<enter-command>set pgp_verify_sig\n<exit><display-message><enter-command>unset pgp_verify_sig\n" "check pgp sig"
+macro index \cr <read-thread><previous-thread><next-unread> "mark thread as read"
+macro pager \cr <read-thread><previous-thread><next-unread><display-message> "mark thread as read"
+
+macro index A "<shell-escape>jed ~/.mutt/aliases\n<enter-command>source ~/.mutt/aliases\n" "edit aliases"              
+macro pager A "<shell-escape>jed ~/.mutt/aliases\n<enter-command>source ~/.mutt/aliases\n" "edit aliases"
+
+bind pager <up> previous-line
+bind pager <down> next-line
+
+# spamassassin
+macro index S "|/usr/bin/sa-learn --spam\n<delete-message>"
+macro pager S "|/usr/bin/sa-learn --spam\n<delete-message>"
+macro index H "|/usr/bin/sa-learn --ham\n"
+macro pager H "|/usr/bin/sa-learn --ham\n"

@@ -1,0 +1,19 @@
+# .mutt/colors
+
+# default
+color normal white default
+
+# message
+color body yellow default "https?://[^ \n\t]+"
+
+# color indicator reverse
+color index brightwhite default ~N
+color index brightyellow default ~T
+color index brightred default ~F
+color index blue default ~D
+
+# my posts in magenta, replies to my posts in cyan
+folder-hook . 'uncolor index "~xmentat.localdomain !~F!~T!~N"'
+folder-hook lists/ 'color index cyan default "~xmentat.localdomain !~F!~T!~N"'
+folder-hook . 'uncolor index "~P!~F!~T!~N"'
+folder-hook lists/ 'color index magenta default "~P!~F!~T!~N"'

@@ -1,0 +1,9 @@
+gg:dcc 0
+gg:dcc_dir 
+gg:dcc_ip 
+gg:dcc_limit 30/30
+gg:dcc_port 1550
+gg:display_token 1
+gg:get_images 0
+gg:images_dir 
+gg:split_messages 0

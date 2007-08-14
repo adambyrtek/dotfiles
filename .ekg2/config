@@ -1,0 +1,51 @@
+auto_save 0
+auto_user_add 0
+away_reason 
+back_reason 
+beep 1
+beep_chat 1
+beep_mail 1
+beep_msg 1
+beep_notify 1
+completion_char 
+completion_notify 1
+debug 1
+default_status_window 0
+display_ack 3
+display_blinking 1
+display_color 1
+display_color_map nTgGbBrR
+display_notify 1
+display_pl_chars 1
+display_sent 1
+display_welcome 1
+emoticons 1
+events_delay 3
+keep_reason 1
+last 0
+last_size 10
+make_window 2
+mesg 2
+query_commands 0
+quit_reason 
+reason_limit 1
+save_password 1
+save_quit 1
+session_default 
+sessions_save 0
+sort_windows 0
+sound_app 
+sound_chat_file 
+sound_mail_file 
+sound_msg_file 
+sound_notify_file 
+sound_sysmsg_file 
+speech_app 
+subject_prefix ## 
+tab_command 
+theme 
+time_deviation 300
+timestamp \%H:\%M:\%S
+timestamp_show 1
+windows_layout 
+windows_save 0

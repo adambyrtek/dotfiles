@@ -1,0 +1,6 @@
+# Write your default config options here!
+fontconfig = yes
+font = "Luxi Sans"
+subcp = cp1250
+subfont-text-scale = 3
+stop-xscreensaver = yes

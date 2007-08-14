@@ -1,0 +1,16 @@
+[gg:1802819]
+status=avail
+descr=...
+password=aGFyYWtpcmkA
+auto_away=600
+auto_back=0
+auto_connect=0
+auto_find=0
+auto_reconnect=10
+connection_save=0
+display_notify=-1
+log_formats=xml,simple
+port=8074
+private=0
+scroll_long_desc=0
+scroll_mode=bounce

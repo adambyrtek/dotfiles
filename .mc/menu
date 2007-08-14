@@ -1,0 +1,84 @@
++ f *.tar.gz | f *.tar.z | f *.tgz & t n
+x	Extract tar.gz
+	tar xzvf %f
+
++ f *.tar.bz2 & t n
+x	Extract tar.bz2
+	tar xjvf %f
+	
++ f *.gz
+u	Gunzip
+	gunzip %f
+
++ f *.rtf & t n
+r	Convert RTF to TXT
+        dertf < %f > %f.txt
+
++ f *.patch | f *.diff & t n
+p	Patch
+	patch -p%{Patch level} < %f
+
++ f *.patch | f *.diff & t n
+r	Reverse patch
+	patch -R -p%{Reverse patch level} < %f
+
++ f *.deb & t n
+d	Install deb
+	sudo dpkg -i %f
+
++ f *.deb | f *.changes & t n
+l	Lintian check
+	lintian %f
+	
++ f *.changes & t n
+u	Sign package
+	debsign %f
+
++ f *.changes & t n
+u	Upload package to Debian archive
+	cat %f
+	echo "Press any key to continue..."
+	read
+	dupload %f
+
++ f *.tex & t n
+l	LaTeX
+	latex %f
+
+s	SVN status
+        FILE=%f
+        if [ "$FILE" == ".." ]; then FILE="."; fi
+	svn status $FILE
+
+u	SVN update
+        FILE=%f
+        if [ "$FILE" == ".." ]; then FILE="."; fi
+	svn up $FILE
+
+d	SVN diff
+        FILE=%f
+        if [ "$FILE" == ".." ]; then FILE="."; fi
+	svn diff $FILE | jed -f diff_mode
+
+i	SVN commit
+        FILE=%f
+        if [ "$FILE" == ".." ]; then FILE="."; fi
+        svn ci $FILE -m %{Message}
+
+r	SVN revert
+        FILE=%f
+        if [ "$FILE" == ".." ]; then FILE="."; fi
+	svn revert $FILE
+
+l	SVN log
+        FILE=%f
+        if [ "$FILE" == ".." ]; then FILE="."; fi
+	svn log $FILE | less
+
+b	SVN blame
+        FILE=%f
+        if [ "$FILE" == ".." ]; then FILE="."; fi
+	svn blame $FILE | less
+
+m	Make
+	make

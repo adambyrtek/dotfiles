@@ -1,0 +1,12 @@
+[miscellany]
+enable-auto-props = yes
+
+[auto-props]
+*.php = svn:eol-style=native
+*.xml = svn:eol-style=native
+*.html = svn:eol-style=native
+*.css = svn:eol-style=native
+*.sql = svn:eol-style=native
+*.txt = svn:eol-style=native
+*.js = svn:eol-style=native
+*.sh = svn:eol-style=native

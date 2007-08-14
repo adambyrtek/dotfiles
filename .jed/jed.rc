@@ -1,0 +1,133 @@
+% -*- SLang -*-
+
+#ifeval BATCH==0
+
+% Mode hooks
+public define text_mode_hook()
+{
+%    local_setkey("insert_simulated_tab", "\t");
+    local_setkey("indent_line", "\t");
+}
+
+% Use escape sequence to change xterm title
+static define change_xtitle(old_buffer)
+{
+    if (getenv("TERM")=="xterm" or getenv("TERM")=="rxvt") {
+	tt_send("\33]0;"+whatbuf()+" - JED\7");
+    }
+}
+
+% Toggle wrap on/off
+variable old_wrap;
+define toggle_wrap()
+{
+    if (WRAP==65535) {
+	WRAP=old_wrap;
+	message("Wrap is ON");
+    } else {
+	old_wrap=WRAP;
+	WRAP=65535;
+	message("Wrap is OFF");
+    }
+}
+
+% Redo
+public define redo()
+{
+    ERROR_BLOCK
+    {
+	call("undo");
+	_clear_error ();
+    };
+    if (CURRENT_KBD_COMMAND == LAST_KBD_COMMAND)
+      call ("undo");
+    else
+      call("kbd_quit");
+}
+
+
+% Debugging
+%_debug_info=1;
+%_traceback=1;
+
+% Home dir library
+require("home-lib", "/home/alpha/.jed/lib/home-lib.sl");
+
+% Ask for filename on start
+Startup_With_File=1;
+% Don't beep
+IGNORE_BEEP=0;
+% Show row and column count
+LINENUMBERS=2;
+% Show [EOB] marker
+WANT_EOB=1;
+% Add newline at the end of file
+ADD_NEWLINE=1;
+% Size of tab characters displayed
+TAB_DEFAULT=8;
+% Don't output tab character
+USE_TABS=0;
+% Don't create backups
+No_Backups=1;
+% C settings
+C_INDENT=4;
+C_BRACE=0;
+C_BRA_NEWLINE=0;
+% Don't show list when accessing missing buffer
+variable Numbuf_show_list_when_failing=0;
+% Name of recent memory file
+variable RECENT_FILES_LIST = "jedrecent";
+
+% Hide menu
+enable_top_status_line(0);
+% Auto decompression
+auto_compression_mode(1);
+% Change xterm title
+%add_to_hook("_jed_switch_active_buffer_hooks", &change_xtitle);
+
+% Load saved history
+history_load();
+% Load saved registers
+registers_load();
+% Emacs emulation
+require("emacs");
+% Numbered buffers
+require("numbuf");
+% Encoding
+require("iso-lat2");
+% Project specific config
+require("project");
+% Recent edited files
+% require("recent");
+
+% Status line
+set_status_line(" %b (%m%a%n%o) %f %p", 1);
+
+% Key bindings
+setkey("compile(\"make\")", "\ec");
+setkey("bkmrk_set_mark", "\em");
+setkey("bkmrk_goto_mark", "\ej");
+setkey("toggle_wrap", "^p");
+
+setkey("exit_jed", "^q");
+setkey("save_buffer", "^s");
+setkey("undo", "^z");
+setkey("redo", "\ez");
+setkey("isearch_forward", "^f");
+setkey("replace_cmd", "\er");
+
+% File extensions
+add_mode_for_extension("diff", "patch");
+add_mode_for_extension ("latex", "tex");
+
+add_mode_for_extension("html", "wml");
+add_mode_for_extension("html", "tmpl");
+add_mode_for_extension("html", "raw");
+add_mode_for_extension("php", "praw");
+add_mode_for_extension("css1", "css");
+
+% Color scheme
+%set_color_scheme("default1");
+set_color_scheme("alpha1");
+
+#endif
