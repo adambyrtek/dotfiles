@@ -55,7 +55,7 @@ set backspace=indent,eol,start
 " Indent new lines
 set autoindent
 
-" Indent blocks of code
+" Indent blocks of text
 "set smartindent
 
 " Always show tab line
