@@ -1,5 +1,5 @@
 " Color scheme
-colorscheme pablo
+colorscheme murphy
 
 " Syntax highlighting
 syntax on
@@ -22,8 +22,8 @@ set ruler
 " Wrap lines on screen at whitespaces
 set linebreak
 
-" Ignore case in patterns
-set ignorecase
+" Distinguish case only if capital used in string
+set smartcase
 
 " No backups
 set nobackup
@@ -82,7 +82,7 @@ set hidden
 filetype plugin indent on
 
 " Show indicator on wrapped lines
-set showbreak=>
+set showbreak=+
 
 " Autocommands
 augroup vimrc
@@ -94,6 +94,9 @@ augroup vimrc
 
     " Mail
     autocmd FileType mail setl spell
+
+    " LaTeX
+    autocmd FileType tex compiler tex
 
     " Change to the directory of the file
     autocmd BufEnter * :cd %:p:h
@@ -114,15 +117,15 @@ nmap <silent> <Down> gj
 nmap <silent> <Up> gk
 
 " Mappings for tabs
-map <D-w> :q<CR>
-map <D-t> :tabnew<CR>
-map <D-n> :new<CR>
-map <D-S-t> :browse tabe<CR>
-map <D-S-n> :browse split<CR>
-map <D-]> :tabn<CR>
-map <D-[> :tabp<CR>
+"map <D-w> :q<CR>
+"map <D-t> :tabnew<CR>
+"map <D-n> :new<CR>
+"map <D-S-t> :browse tabe<CR>
+"map <D-S-n> :browse split<CR>
+"map <D-]> :tabn<CR>
+"map <D-[> :tabp<CR>
 
-map <D-M-Right> :tabn<CR>
-map <D-M-Left> :tabp<CR>
-imap <D-M-Right> <C-o>:tabn<CR>
-imap <D-M-Left> <C-o>:tabp<CR>
+"map <D-M-Right> :tabn<CR>
+"map <D-M-Left> :tabp<CR>
+"imap <D-M-Right> <C-o>:tabn<CR>
+"imap <D-M-Left> <C-o>:tabp<CR>
