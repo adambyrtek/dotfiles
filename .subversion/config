@@ -9,3 +9,6 @@ enable-auto-props = yes
 *.txt = svn:eol-style=native
 *.js = svn:eol-style=native
 *.sh = svn:eol-style=native
+*.rhtml = svn:eol-style=native
+*.rb = svn:eol-style=native
+*.yml = svn:eol-style=native
