@@ -79,12 +79,19 @@
 "   This variable, if set, determines the options passed to the cvs diff
 "   command.  If not set, it defaults to 'u'.
 
+" Section: Plugin header {{{1
+
 if v:version < 700
+  echohl WarningMsg|echomsg 'VCSCommand requires at least VIM 7.0'|echohl None
   finish
 endif
 
-call system(VCSCommandGetOption('VCSCommandCVSExec', 'cvs') . ' --version')
-if v:shell_error
+let s:save_cpo=&cpo
+set cpo&vim
+
+runtime plugin/vcscommand.vim
+
+if !executable(VCSCommandGetOption('VCSCommandCVSExec', 'cvs'))
   " CVS is not installed
   finish
 endif
@@ -140,21 +147,37 @@ function! s:cvsFunctions.Annotate(argList)
     if &filetype == 'CVSAnnotate'
       " This is a CVSAnnotate buffer.  Perform annotation of the version
       " indicated by the current line.
-      let caption = matchstr(getline('.'),'\v%(^[0-9.]+)')
-      let options = ' -r' . caption
+      let caption = matchstr(getline('.'),'\v^[0-9.]+')
+
+      if VCSCommandGetOption('VCSCommandCVSAnnotateParent', 0) != 0
+        if caption != '1.1'
+          let revmaj = matchstr(caption,'\v[0-9.]+\ze\.[0-9]+')
+          let revmin = matchstr(caption,'\v[0-9.]+\.\zs[0-9]+') - 1
+          if revmin == 0
+            " Jump to ancestor branch
+            let caption = matchstr(revmaj,'\v[0-9.]+\ze\.[0-9]+')
+          else
+            let caption = revmaj . "." .  revmin
+          endif
+        endif
+      endif
+
+      let options = ['-r' . caption]
     else
+      " CVS defaults to pulling HEAD, regardless of current branch.
+      " Therefore, always pass desired revision.
       let caption = ''
-      let options = ''
+      let options = ['-r' .  VCSCommandGetRevision()]
     endif
   elseif len(a:argList) == 1 && a:argList[0] !~ '^-'
     let caption = a:argList[0]
-    let options = ' -r' . caption
+    let options = ['-r' . caption]
   else
-    let caption = join(a:argList, ' ')
-    let options = ' ' . caption
+    let caption = join(a:argList)
+    let options = a:argList
   endif
 
-  let resultBuffer = s:DoCommand('-q annotate' . options, 'annotate', caption) 
+  let resultBuffer = s:DoCommand(join(['-q', 'annotate'] + options), 'annotate', caption) 
   if resultBuffer > 0
     set filetype=CVSAnnotate
     " Remove header lines from standard error
@@ -187,26 +210,26 @@ endfunction
 
 " Function: s:cvsFunctions.Diff(argList) {{{2
 function! s:cvsFunctions.Diff(argList)
-  if len(a:argList) == 1
-    let revOptions = '-r ' . a:argList[0]
-    let caption = '(' . a:argList[0] . ' : current)'
-  elseif len(a:argList) == 2
-    let revOptions = '-r ' . a:argList[0] . ' -r ' . a:argList[1]
-    let caption = '(' . a:argList[0] . ' : ' . a:argList[1] . ')'
-  else
-    let revOptions = ''
+  if len(a:argList) == 0
+    let revOptions = []
     let caption = ''
+  elseif len(a:argList) <= 2 && match(a:argList, '^-') == -1
+    let revOptions = ['-r' . join(a:argList, ' -r')]
+    let caption = '(' . a:argList[0] . ' : ' . get(a:argList, 1, 'current') . ')'
+  else
+    " Pass-through
+    let caption = join(a:argList, ' ')
+    let revOptions = a:argList
   endif
 
   let cvsDiffOpt = VCSCommandGetOption('VCSCommandCVSDiffOpt', 'u')
-
   if cvsDiffOpt == ''
-    let diffOptionString = ''
+    let diffOptions = []
   else
-    let diffOptionString = ' -' . cvsDiffOpt . ' '
+    let diffOptions = ['-' . cvsDiffOpt]
   endif
 
-  let resultBuffer = s:DoCommand('diff ' . diffOptionString . revOptions , 'diff', caption)
+  let resultBuffer = s:DoCommand(join(['diff'] + diffOptions + revOptions), 'diff', caption)
   if resultBuffer > 0
     set filetype=diff
   else
@@ -225,6 +248,16 @@ endfunction
 function! s:cvsFunctions.GetBufferInfo()
   let originalBuffer = VCSCommandGetOriginalBuffer(bufnr('%'))
   let fileName = bufname(originalBuffer)
+  if isdirectory(fileName)
+    let tag = ''
+    if filereadable(fileName . '/CVS/Tag')
+      let tagFile = readfile(fileName . '/CVS/Tag')
+      if len(tagFile) == 1
+        let tag = substitute(tagFile[0], '^T', '', '')
+      endif
+    endif
+    return [tag]
+  endif
   let realFileName = fnamemodify(resolve(fileName), ':t')
   if !filereadable(fileName)
     return ['Unknown']
@@ -250,25 +283,25 @@ function! s:cvsFunctions.GetBufferInfo()
     let repository=substitute(repository, '^New file!\|No revision control file$', 'New', '')
     return [revision, repository, branch]
   finally
-    execute 'cd' escape(oldCwd, ' ')
+    call VCSCommandChdir(oldCwd)
   endtry
 endfunction
 
 " Function: s:cvsFunctions.Log() {{{2
 function! s:cvsFunctions.Log(argList)
   if len(a:argList) == 0
-    let versionOption = ''
+    let options = []
     let caption = ''
-  elseif len(a:argList) == 1 && a:argList[0] !~ '^-'
-    let versionOption =' -r' . a:argList[0]
-    let caption = a:argList[0]
+  elseif len(a:argList) <= 2 && match(a:argList, '^-') == -1
+    let options = ['-r' . join(a:argList, ':')]
+    let caption = options[0]
   else
-    " Multiple options, or the option starts with '-'
+    " Pass-through
+    let options = a:argList
     let caption = join(a:argList, ' ')
-    let versionOption = ' ' . caption
   endif
 
-  let resultBuffer=s:DoCommand('log' . versionOption, 'log', caption)
+  let resultBuffer=s:DoCommand(join(['log'] + options), 'log', caption)
   if resultBuffer > 0
     set filetype=rcslog
   endif
@@ -383,12 +416,6 @@ amenu <silent> &Plugin.VCS.CVS.WatchOff    <Plug>CVSWatchOff
 amenu <silent> &Plugin.VCS.CVS.WatchRemove <Plug>CVSWatchRemove
 
 " Section: Plugin Registration {{{1
-" If the vcscommand.vim plugin hasn't loaded, delay registration until it
-" loads.
-if exists('g:loaded_VCSCommand')
-  call VCSCommandRegisterModule('CVS', expand('<sfile>'), s:cvsFunctions, s:cvsExtensionMappings)
-else
-  augroup VCSCommand
-    au User VCSLoadExtensions call VCSCommandRegisterModule('CVS', expand('<sfile>'), s:cvsFunctions, s:cvsExtensionMappings)
-  augroup END
-endif
+call VCSCommandRegisterModule('CVS', expand('<sfile>'), s:cvsFunctions, s:cvsExtensionMappings)
+
+let &cpo = s:save_cpo

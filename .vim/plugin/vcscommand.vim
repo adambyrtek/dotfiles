@@ -2,7 +2,7 @@
 "
 " Vim plugin to assist in working with files under control of CVS or SVN.
 "
-" Version:       Beta 12
+" Version:       Beta 19
 " Maintainer:    Bob Hiestand <bob.hiestand@gmail.com>
 " License:
 " Copyright (c) 2007 Bob Hiestand
@@ -183,6 +183,14 @@
 "   This variable overrides the VCSCommandSplit variable, but only for buffers
 "   created with VCSVimDiff.
 "
+" VCSCommandDisableMappings
+"   This variable, if set to a non-zero value, prevents the default command
+"   mappings from being set.
+"
+" VCSCommandDisableExtensionMappings
+"   This variable, if set to a non-zero value, prevents the default command
+"   mappings from being set for commands specific to an individual VCS.
+"
 " VCSCommandEdit
 "   This variable controls whether to split the current window to display a
 "   scratch buffer ('split'), or to display it in the current buffer ('edit').
@@ -244,12 +252,6 @@
 "   VCSBufferSetup             This event is fired just after VCS buffer setup
 "                              occurs, if enabled.
 "
-"   VCSLoadExtensions          This event is fired just before the
-"                              VCSPluginFinish event.  It is intended to be
-"                              used only by VCS extensions to register
-"                              themselves with VCSCommand if they are sourced
-"                              first.
-"
 "   VCSPluginInit              This event is fired when the VCSCommand plugin
 "                              first loads.
 "
@@ -275,6 +277,9 @@ if v:version < 700
   echohl WarningMsg|echomsg 'VCSCommand requires at least VIM 7.0'|echohl None
   finish
 endif
+
+let s:save_cpo=&cpo
+set cpo&vim
 
 " Section: Event group setup {{{1
 
@@ -341,18 +346,25 @@ function! s:ExecuteVCSCommand(command, argList, verifyBuffer)
 
     let originalBuffer = VCSCommandGetOriginalBuffer(buffer)
     let bufferName = bufname(originalBuffer)
-    if !isdirectory(bufferName) && !filereadable(bufferName)
-      throw 'No such file ' . bufferName
-    endif
 
-    if(a:verifyBuffer)
-      let revision = VCSCommandGetRevision()
-      if revision == ''
-        throw 'Unable to obtain version information.'
-      elseif revision == 'Unknown'
-        throw 'Item not under source control'
-      elseif revision == 'New'
-        throw 'Operation not available on newly-added item.'
+    " It is already known that the directory is under VCS control.  No further
+    " checks are needed.  Otherwise, perform some basic sanity checks to avoid
+    " VCS-specific error messages from confusing things.
+    if !isdirectory(bufferName)
+      if !filereadable(bufferName)
+        throw 'No such file ' . bufferName
+      endif
+      if(a:verifyBuffer)
+        if isdirectory(bufferName)
+        endif
+        let revision = VCSCommandGetRevision()
+        if revision == ''
+          throw 'Unable to obtain version information.'
+        elseif revision == 'Unknown'
+          throw 'Item not under source control'
+        elseif revision == 'New'
+          throw 'Operation not available on newly-added item.'
+        endif
       endif
     endif
 
@@ -365,59 +377,6 @@ function! s:ExecuteVCSCommand(command, argList, verifyBuffer)
     call s:ReportError(v:exception)
     return -1
   endtry
-endfunction
-
-" Function: s:CreateCommandBuffer(cmd, cmdName, originalBuffer, statusText) {{{2
-" Creates a new scratch buffer and captures the output from execution of the
-" given command.  The name of the scratch buffer is returned.
-
-function! s:CreateCommandBuffer(cmd, cmdName, originalBuffer, statusText)
-  let output = system(a:cmd)
-
-  " HACK:  if line endings in the repository have been corrupted, the output
-  " of the command will be confused.
-  let output = substitute(output, "\r", '', 'g')
-
-  " HACK:  CVS diff command does not return proper error codes
-  if v:shell_error && (a:cmdName != 'diff' || getbufvar(a:originalBuffer, 'VCSCommandVCSType') != 'CVS')
-    if strlen(output) == 0
-      throw 'Version control command failed'
-    else
-      let output = substitute(output, '\n', '  ', 'g')
-      throw 'Version control command failed:  ' . output
-    endif
-  endif
-  if strlen(output) == 0
-    " Handle case of no output.  In this case, it is important to check the
-    " file status, especially since cvs edit/unedit may change the attributes
-    " of the file with no visible output.
-
-    checktime
-    return 0
-  endif
-
-  call s:EditFile(a:cmdName, a:originalBuffer, a:statusText)
-
-  silent 0put=output
-
-  " The last command left a blank line at the end of the buffer.  If the
-  " last line is folded (a side effect of the 'put') then the attempt to
-  " remove the blank line will kill the last fold.
-  "
-  " This could be fixed by explicitly detecting whether the last line is
-  " within a fold, but I prefer to simply unfold the result buffer altogether.
-
-  if has('folding')
-    normal zR
-  endif
-
-  $d
-  1
-
-  " Define the environment and execute user-defined hooks.
-
-  silent do VCSCommand User VCSBufferCreated
-  return bufnr('%')
 endfunction
 
 " Function: s:GenerateResultBufferName(command, originalBuffer, vcsType, statusText) {{{2
@@ -519,8 +478,8 @@ function! s:SetupBuffer()
     return
   endif
 
-  if strlen(&buftype) > 0 || !filereadable(@%)
-    " No special status for special buffers.
+  if !isdirectory(@%) && (strlen(&buftype) > 0 || !filereadable(@%))
+    " No special status for special buffers other than directory buffers.
     return
   endif
 
@@ -894,6 +853,17 @@ function! VCSCommandGetVCSType(buffer)
   throw 'No suitable plugin'
 endfunction
 
+" Function: VCSCommandChdir(directory) {{{2
+" Changes the current directory, respecting :lcd changes.
+
+function! VCSCommandChdir(directory)
+  let command = 'cd'
+  if exists("*haslocaldir") && haslocaldir()
+    let command = 'lcd'
+  endif
+  execute command escape(a:directory, ' ')
+endfunction
+
 " Function: VCSCommandChangeToCurrentFileDir() {{{2
 " Go to the directory in which the given file is located.
 
@@ -901,7 +871,7 @@ function! VCSCommandChangeToCurrentFileDir(fileName)
   let oldCwd = getcwd()
   let newCwd = fnamemodify(resolve(a:fileName), ':p:h')
   if strlen(newCwd) > 0
-    execute 'cd' escape(newCwd, ' ')
+    call VCSCommandChdir(newCwd)
   endif
   return oldCwd
 endfunction
@@ -932,7 +902,9 @@ function! VCSCommandRegisterModule(name, file, commandMap, mappingMap)
   let s:plugins[a:name] = a:commandMap
   call add(s:pluginFiles, a:file)
   let s:extendedMappings[a:name] = a:mappingMap
-  if(!empty(a:mappingMap))
+  if !empty(a:mappingMap)
+        \ && !VCSCommandGetOption('VCSCommandDisableMappings', 0)
+        \ && !VCSCommandGetOption('VCSCommandDisableExtensionMappings', 0)
     for mapname in keys(a:mappingMap)
       execute 'noremap <silent> <Leader>' . mapname ':call <SID>ExecuteExtensionMapping(''' . mapname . ''')<CR>'
     endfor
@@ -960,14 +932,60 @@ function! VCSCommandDoCommand(cmd, cmdName, statusText)
     let realFileName = fnamemodify(fileName, ':t')
   endif
 
+  " Change to the directory of the current buffer.  This is done for CVS, but
+  " is left in for other systems as it does not affect them negatively.
+
   let oldCwd = VCSCommandChangeToCurrentFileDir(fileName)
   try
-    let fullCmd = a:cmd . ' "' . realFileName . '"'
-    let resultBuffer = s:CreateCommandBuffer(fullCmd, a:cmdName, originalBuffer, a:statusText)
-    return resultBuffer
+    let output = system(a:cmd . ' "' . realFileName . '"')
   finally
-    execute 'cd' escape(oldCwd, ' ')
+    call VCSCommandChdir(oldCwd)
   endtry
+
+  " HACK:  if line endings in the repository have been corrupted, the output
+  " of the command will be confused.
+  let output = substitute(output, "\r", '', 'g')
+
+  " HACK:  CVS diff command does not return proper error codes
+  if v:shell_error && (a:cmdName != 'diff' || getbufvar(originalBuffer, 'VCSCommandVCSType') != 'CVS')
+    if strlen(output) == 0
+      throw 'Version control command failed'
+    else
+      let output = substitute(output, '\n', '  ', 'g')
+      throw 'Version control command failed:  ' . output
+    endif
+  endif
+  if strlen(output) == 0
+    " Handle case of no output.  In this case, it is important to check the
+    " file status, especially since cvs edit/unedit may change the attributes
+    " of the file with no visible output.
+
+    checktime
+    return 0
+  endif
+
+  call s:EditFile(a:cmdName, originalBuffer, a:statusText)
+
+  silent 0put=output
+
+  " The last command left a blank line at the end of the buffer.  If the
+  " last line is folded (a side effect of the 'put') then the attempt to
+  " remove the blank line will kill the last fold.
+  "
+  " This could be fixed by explicitly detecting whether the last line is
+  " within a fold, but I prefer to simply unfold the result buffer altogether.
+
+  if has('folding')
+    normal zR
+  endif
+
+  $d
+  1
+
+  " Define the environment and execute user-defined hooks.
+
+  silent do VCSCommand User VCSBufferCreated
+  return bufnr('%')
 endfunction
 
 " Function: VCSCommandGetOption(name, default) {{{2
@@ -1060,13 +1078,13 @@ com! -nargs=* VCSDelete call s:ExecuteVCSCommand('Delete', [<f-args>], 1)
 com! -nargs=* VCSDiff call s:ExecuteVCSCommand('Diff', [<f-args>], 1)
 com! -nargs=0 -bang VCSGotoOriginal call s:VCSGotoOriginal(<q-bang>)
 com! -nargs=* VCSInfo call s:ExecuteVCSCommand('Info', [<f-args>], 1)
-com! -nargs=* VCSLock call s:MarkOrigBufferForSetup(s:ExecuteVCSCommand('Lock', [<f-args>]), 1)
+com! -nargs=* VCSLock call s:MarkOrigBufferForSetup(s:ExecuteVCSCommand('Lock', [<f-args>], 1))
 com! -nargs=* VCSLog call s:ExecuteVCSCommand('Log', [<f-args>], 1)
-com! -nargs=0 VCSRevert call s:MarkOrigBufferForSetup(s:ExecuteVCSCommand('Revert', []), 1)
+com! -nargs=0 VCSRevert call s:MarkOrigBufferForSetup(s:ExecuteVCSCommand('Revert', [], 1))
 com! -nargs=? VCSReview call s:ExecuteVCSCommand('Review', [<f-args>], 1)
 com! -nargs=* VCSStatus call s:ExecuteVCSCommand('Status', [<f-args>], 1)
-com! -nargs=* VCSUnlock call s:MarkOrigBufferForSetup(s:ExecuteVCSCommand('Unlock', [<f-args>]), 1)
-com! -nargs=0 VCSUpdate call s:MarkOrigBufferForSetup(s:ExecuteVCSCommand('Update', []), 1)
+com! -nargs=* VCSUnlock call s:MarkOrigBufferForSetup(s:ExecuteVCSCommand('Unlock', [<f-args>], 1))
+com! -nargs=0 VCSUpdate call s:MarkOrigBufferForSetup(s:ExecuteVCSCommand('Update', [], 1))
 com! -nargs=* VCSVimDiff call s:VCSVimDiff(<f-args>)
 
 " Section: VCS buffer management commands {{{2
@@ -1095,53 +1113,56 @@ nnoremap <silent> <Plug>VCSUpdate :VCSUpdate<CR>
 nnoremap <silent> <Plug>VCSVimDiff :VCSVimDiff<CR>
 
 " Section: Default mappings {{{1
-if !hasmapto('<Plug>VCSAdd')
-  nmap <unique> <Leader>ca <Plug>VCSAdd
-endif
-if !hasmapto('<Plug>VCSAnnotate')
-  nmap <unique> <Leader>cn <Plug>VCSAnnotate
-endif
-if !hasmapto('<Plug>VCSClearAndGotoOriginal')
-  nmap <unique> <Leader>cG <Plug>VCSClearAndGotoOriginal
-endif
-if !hasmapto('<Plug>VCSCommit')
-  nmap <unique> <Leader>cc <Plug>VCSCommit
-endif
-if !hasmapto('<Plug>VCSDelete')
-  nmap <unique> <Leader>cD <Plug>VCSDelete
-endif
-if !hasmapto('<Plug>VCSDiff')
-  nmap <unique> <Leader>cd <Plug>VCSDiff
-endif
-if !hasmapto('<Plug>VCSGotoOriginal')
-  nmap <unique> <Leader>cg <Plug>VCSGotoOriginal
-endif
-if !hasmapto('<Plug>VCSInfo')
-  nmap <unique> <Leader>ci <Plug>VCSInfo
-endif
-if !hasmapto('<Plug>VCSLock')
-  nmap <unique> <Leader>cL <Plug>VCSLock
-endif
-if !hasmapto('<Plug>VCSLog')
-  nmap <unique> <Leader>cl <Plug>VCSLog
-endif
-if !hasmapto('<Plug>VCSRevert')
-  nmap <unique> <Leader>cq <Plug>VCSRevert
-endif
-if !hasmapto('<Plug>VCSReview')
-  nmap <unique> <Leader>cr <Plug>VCSReview
-endif
-if !hasmapto('<Plug>VCSStatus')
-  nmap <unique> <Leader>cs <Plug>VCSStatus
-endif
-if !hasmapto('<Plug>VCSUnlock')
-  nmap <unique> <Leader>cU <Plug>VCSUnlock
-endif
-if !hasmapto('<Plug>VCSUpdate')
-  nmap <unique> <Leader>cu <Plug>VCSUpdate
-endif
-if !hasmapto('<Plug>VCSVimDiff')
-  nmap <unique> <Leader>cv <Plug>VCSVimDiff
+
+if !VCSCommandGetOption('VCSCommandDisableMappings', 0)
+  if !hasmapto('<Plug>VCSAdd')
+    nmap <unique> <Leader>ca <Plug>VCSAdd
+  endif
+  if !hasmapto('<Plug>VCSAnnotate')
+    nmap <unique> <Leader>cn <Plug>VCSAnnotate
+  endif
+  if !hasmapto('<Plug>VCSClearAndGotoOriginal')
+    nmap <unique> <Leader>cG <Plug>VCSClearAndGotoOriginal
+  endif
+  if !hasmapto('<Plug>VCSCommit')
+    nmap <unique> <Leader>cc <Plug>VCSCommit
+  endif
+  if !hasmapto('<Plug>VCSDelete')
+    nmap <unique> <Leader>cD <Plug>VCSDelete
+  endif
+  if !hasmapto('<Plug>VCSDiff')
+    nmap <unique> <Leader>cd <Plug>VCSDiff
+  endif
+  if !hasmapto('<Plug>VCSGotoOriginal')
+    nmap <unique> <Leader>cg <Plug>VCSGotoOriginal
+  endif
+  if !hasmapto('<Plug>VCSInfo')
+    nmap <unique> <Leader>ci <Plug>VCSInfo
+  endif
+  if !hasmapto('<Plug>VCSLock')
+    nmap <unique> <Leader>cL <Plug>VCSLock
+  endif
+  if !hasmapto('<Plug>VCSLog')
+    nmap <unique> <Leader>cl <Plug>VCSLog
+  endif
+  if !hasmapto('<Plug>VCSRevert')
+    nmap <unique> <Leader>cq <Plug>VCSRevert
+  endif
+  if !hasmapto('<Plug>VCSReview')
+    nmap <unique> <Leader>cr <Plug>VCSReview
+  endif
+  if !hasmapto('<Plug>VCSStatus')
+    nmap <unique> <Leader>cs <Plug>VCSStatus
+  endif
+  if !hasmapto('<Plug>VCSUnlock')
+    nmap <unique> <Leader>cU <Plug>VCSUnlock
+  endif
+  if !hasmapto('<Plug>VCSUpdate')
+    nmap <unique> <Leader>cu <Plug>VCSUpdate
+  endif
+  if !hasmapto('<Plug>VCSVimDiff')
+    nmap <unique> <Leader>cv <Plug>VCSVimDiff
+  endif
 endif
 
 " Section: Menu items {{{1
@@ -1170,12 +1191,35 @@ if VCSCommandGetOption('VCSCommandEnableBufferSetup', 0)
   call VCSCommandEnableBufferSetup()
 endif
 
+" Section: VIM shutdown hook {{{1
+
+" Close all result buffers when VIM exits, to prevent them from being restored
+" via viminfo.
+
+" Function: s:CloseAllResultBuffers() {{{2
+" Closes all vcscommand result buffers.
+function! s:CloseAllResultBuffers()
+  " This avoids using bufdo as that may load buffers already loaded in another
+  " vim process, resulting in an error.
+  let buffnr = 1
+  let buffmaxnr = bufnr('$')
+  while buffnr <= buffmaxnr
+    if getbufvar(buffnr, 'VCSCommandOriginalBuffer') != "" 
+      execute 'bw' buffnr
+    endif
+    let buffnr = buffnr + 1
+  endwhile
+endfunction
+
+augroup VCSCommandVIMShutdown
+  au!
+  au VimLeavePre * call s:CloseAllResultBuffers()
+augroup END
+
 " Section: Plugin completion {{{1
 
 let loaded_VCSCommand = 2
 
-" Load delayed extension plugin registration.
-silent do VCSCommand User VCSLoadExtensions
-au! VCSCommand User VCSLoadExtensions
-
 silent do VCSCommand User VCSPluginFinish
+
+let &cpo = s:save_cpo

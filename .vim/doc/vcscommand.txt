@@ -137,6 +137,11 @@ it uses the most recent version of the file (on the current branch, if under
 CVS control).  Additionally, if the current buffer is a VCSAnnotate buffer
 already, the version number on the current line is used.
 
+For CVS buffers, the 'VCSCommandCVSAnnotateParent' option, if set to non-zero,
+will cause the above behavior to change.  Instead of annotating the version on
+the current line, the parent revision is used instead, crossing branches if
+necessary.
+
 The filetype of the vcscommand scratch buffer is set to one of 'CVSAnnotate',
 'SVNAnnotate', or 'SVKAnnotate' as appropriate, to take advantage of the
 bundled syntax files.
@@ -395,6 +400,8 @@ The following variables are available:
 |VCSCommandCVSExec|
 |VCSCommandDeleteOnHide|
 |VCSCommandDiffSplit|
+|VCSCommandDisableMappings|
+|VCSCommandDisableExtensionMappings|
 |VCSCommandEdit|
 |VCSCommandEnableBufferSetup|
 |VCSCommandResultBufferNameExtension|
@@ -431,6 +438,17 @@ VCSCommandDiffSplit				*VCSCommandDiffSplit*
 
 This variable overrides the |VCSCommandSplit| variable, but only for buffers
 created with |:VCSVimDiff|.
+
+VCSCommandDisableMappings			*VCSCommandDisableMappings*
+
+This variable, if set to a non-zero value, prevents the default command
+mappings from being set.  This supercedes 
+|VCSCommandDisableExtensionMappings|.
+
+VCSCommandDisableExtensionMappings	*VCSCommandDisableExtensionMappings*
+
+This variable, if set to a non-zero value, prevents the default command
+mappings from being set for commands specific to an individual VCS.
 
 VCSCommandEdit					*VCSCommandEdit*
 
