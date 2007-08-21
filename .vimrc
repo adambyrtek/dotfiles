@@ -22,7 +22,10 @@ set ruler
 " Wrap lines on screen at whitespaces
 set linebreak
 
-" Distinguish case only if capital used in string
+" Don't distinguish case in patterns
+set ignorecase
+
+" But distinguish case if capital letter is used in pattern
 set smartcase
 
 " No backups
@@ -84,6 +87,9 @@ filetype plugin indent on
 " Show indicator on wrapped lines
 set showbreak=+
 
+" Show only manual bookmarks on the margin
+let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 " Autocommands
 augroup vimrc
     au!
@@ -99,7 +105,8 @@ augroup vimrc
     autocmd FileType tex compiler tex
 
     " Change to the directory of the file
-    autocmd BufEnter * :cd %:p:h
+    autocmd BufRead,BufNewFile * :lcd %:p:h
+    autocmd BufEnter * :lcd %:p:h
 
     " Go to last known position
     autocmd BufReadPost *
