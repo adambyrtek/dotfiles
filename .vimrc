@@ -122,17 +122,3 @@ imap <silent> <Up> <C-o>gk
 
 nmap <silent> <Down> gj
 nmap <silent> <Up> gk
-
-" Mappings for tabs
-"map <D-w> :q<CR>
-"map <D-t> :tabnew<CR>
-"map <D-n> :new<CR>
-"map <D-S-t> :browse tabe<CR>
-"map <D-S-n> :browse split<CR>
-"map <D-]> :tabn<CR>
-"map <D-[> :tabp<CR>
-
-"map <D-M-Right> :tabn<CR>
-"map <D-M-Left> :tabp<CR>
-"imap <D-M-Right> <C-o>:tabn<CR>
-"imap <D-M-Left> <C-o>:tabp<CR>
