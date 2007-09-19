@@ -12,3 +12,4 @@ enable-auto-props = yes
 *.rhtml = svn:eol-style=native
 *.rb = svn:eol-style=native
 *.yml = svn:eol-style=native
+*.tex = svn:eol-style=native
