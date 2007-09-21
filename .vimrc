@@ -119,6 +119,7 @@ augroup END
 " Mappings to move through wrapped lines
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
-
 nmap <silent> <Down> gj
 nmap <silent> <Up> gk
+vmap <silent> <Down> gj
+vmap <silent> <Up> gk
