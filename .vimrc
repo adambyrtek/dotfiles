@@ -87,8 +87,28 @@ filetype plugin indent on
 " Show indicator on wrapped lines
 set showbreak=+
 
+" Show ruler with file postion
+set ruler
+
+" Show menu with available completions
+set wildmenu
+
+" Convenient completion mode
+set wildmode=longest:full
+
 " Show only manual bookmarks on the margin
 let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+" Tag list shows only tags for current file
+let Tlist_Show_One_File=1
+
+" Close tag list if it is the only window
+let Tlist_Exit_OnlyWindow=1
+
+" Tags for custom languages
+" http://vim-taglist.sourceforge.net/extend.html
+let tlist_actionscript_settings = 'actionscript;c:class;f:method;p:property;v:variable'
+let tlist_tex_settings   = 'latex;s:sections;g:graphics;l:labels'
 
 " Autocommands
 augroup vimrc
@@ -98,11 +118,15 @@ augroup vimrc
     autocmd BufNewFile,BufRead mail.google.com.* setf mail
     autocmd BufNewFile,BufRead mail.google.com.* setl tw=0
 
-    " Mail
+    " Mail has spelling
     autocmd FileType mail setl spell
 
-    " LaTeX
+    " LaTeX compiler
     autocmd FileType tex compiler tex
+
+    " PHP make command
+    autocmd FileType php setl makeprg=php\ -l\ %
+    autocmd FileType php setl errorformat=%m\ in\ %f\ on\ line\ %l
 
     " Change to the directory of the file
     autocmd BufRead,BufNewFile * :lcd %:p:h
@@ -117,12 +141,15 @@ augroup vimrc
 augroup END
 
 " Mappings to move through wrapped lines
-imap <silent> <Down> <C-o>gj
-imap <silent> <Up> <C-o>gk
-nmap <silent> <Down> gj
-nmap <silent> <Up> gk
-vmap <silent> <Down> gj
-vmap <silent> <Up> gk
+inoremap <silent> <Down> <C-o>gj
+inoremap <silent> <Up> <C-o>gk
+nnoremap <silent> <Down> gj
+nnoremap <silent> <Up> gk
+vnoremap <silent> <Down> gj
+vnoremap <silent> <Up> gk
+
+" Easier omni-completion
+inoremap <C-F> <C-X><C-O>
 
 " Clever tabs
 function! CleverTab()
