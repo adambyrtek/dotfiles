@@ -158,19 +158,10 @@ nnoremap <Backspace> <PageUp>
 
 " Clever tabs
 " http://www.vim.org/tips/tip.php?tip_id=102
-function! CleverTab(direction)
+function! CleverTab()
     if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-        if a:direction > 0
-            return "\<Tab>"
-        else
-            return "\<S-Tab>"
-        endif
+        return "\<Tab>"
     else
-        if a:direction > 0
-            return "\<C-N>"
-        else
-            return "\<C-P>"
-        endif
+        return "\<C-N>"
 endfunction
-inoremap <Tab> <C-R>=CleverTab(1)<CR>
-inoremap <S-Tab> <C-P>=CleverTab(-1)<CR>
+inoremap <Tab> <C-R>=CleverTab()<CR>
