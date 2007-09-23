@@ -1,11 +1,6 @@
 # ~/.zshrc
 # Sourced for interactive shells
 
-# Initialize Fink (Mac OS X)
-if [ -r /sw/bin/init.sh ]; then
-   source /sw/bin/init.sh 2> /dev/null
-fi
-
 # Aliases
 
 # Debian
@@ -96,24 +91,24 @@ setopt autocd
 
 # Set window title
 
-xtitle () { print -Pn "\e]0;$1\a" }
-stitle () { print -Pn "\ek$1\e\\" }
+#xtitle () { print -Pn "\e]0;$1\a" }
+#stitle () { print -Pn "\ek$1\e\\" }
 
-case $TERM in
-   xterm*|rxvt*)
-      precmd () { xtitle "zsh %/" }
-      preexec () { xtitle "$1" }
-   ;;
-   
-   screen)
-      precmd () { stitle "zsh" }
-      preexec () 
-      {
-         local -a cmd; cmd=(${(z)1})
-         stitle "$cmd[1]"
-      }
-   ;;
-esac
+#case $TERM in
+#   xterm*|rxvt*)
+#      precmd () { xtitle "zsh %/" }
+#      preexec () { xtitle "$1" }
+#   ;;
+#   
+#   screen)
+#      precmd () { stitle "zsh" }
+#      preexec () 
+#      {
+#         local -a cmd; cmd=(${(z)1})
+#         stitle "$cmd[1]"
+#      }
+#   ;;
+#esac
 
 # Startup
 
