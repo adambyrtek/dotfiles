@@ -141,6 +141,7 @@ augroup vimrc
 augroup END
 
 " Mappings to move through wrapped lines
+" http://www.vim.org/tips/tip.php?tip_id=308
 inoremap <silent> <Down> <C-o>gj
 inoremap <silent> <Up> <C-o>gk
 nnoremap <silent> <Down> gj
@@ -151,11 +152,25 @@ vnoremap <silent> <Up> gk
 " Easier omni-completion
 inoremap <C-F> <C-X><C-O>
 
+" Space can be used for paging
+nnoremap <Space> <PageDown>
+nnoremap <Backspace> <PageUp>
+
 " Clever tabs
-function! CleverTab()
-   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-      return "\<Tab>"
-   else
-      return "\<C-N>"
+" http://www.vim.org/tips/tip.php?tip_id=102
+function! CleverTab(direction)
+    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+        if a:direction > 0
+            return "\<Tab>"
+        else
+            return "\<S-Tab>"
+        endif
+    else
+        if a:direction > 0
+            return "\<C-N>"
+        else
+            return "\<C-P>"
+        endif
 endfunction
-inoremap <Tab> <C-R>=CleverTab()<CR>
+inoremap <Tab> <C-R>=CleverTab(1)<CR>
+inoremap <S-Tab> <C-P>=CleverTab(-1)<CR>
