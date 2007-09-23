@@ -6,7 +6,7 @@ if [ -r /sw/bin/init.sh ]; then
 fi
 
 # Set environment
-#export PATH=$PATH":/sbin:/usr/sbin:/usr/games/bin:$HOME/bin:/usr/local/bin:/usr/local/sbin:."
+export PATH="$PATH:$HOME/bin:/usr/local/bin:/usr/local/sbin:."
 export LESS="-R -X -M"
 export PAGER=less
 export EDITOR=vim
