@@ -1,9 +1,7 @@
 # ~/.zshrc
 # Sourced for interactive shells
 
-# Aliases
-
-# Debian
+# Aliases for Debian
 if [ -e /usr/bin/aptitude ]; then 
    alias a=aptitude
    alias sa="sudo aptitude"
@@ -12,7 +10,7 @@ else
    alias sa="sudo apt-get"
 fi
 
-# Gentoo
+# Aliases for Gentoo
 if [ -e /usr/bin/emerge ]; then
    alias em=emerge
    alias sem="sudo emerge"
@@ -29,38 +27,37 @@ alias pstree="pstree -hG"
 alias diff='diff -uN'
 si () { sudo /etc/init.d/$1 $2 }
 
+# Ls with colors
 if [ `uname -s` = "Darwin" ]; then
    alias ls="ls -hGF"
 else
    alias ls="ls -hF --color=auto"
 fi
 
-# Appliation aliases
-alias sc=sitecopy
-alias jedgrep="jed -f grep"
-
-# Variables
-
+# Prompt
 PROMPT="%B%/%#%b "
+
+# History
 HISTFILE=~/.zsh_history
 HISTSIZE=2048
 SAVEHIST=2048
+
 # Slash not a part of word
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
 # Watch users
 #LOGCHECK=10
 #watch=(all)
+
 # Check mail
 #MAILCHECK=10
 #mailpath=(/home/alpha/mail/mbox/)
 
 # Completion
-
 autoload -U compinit
 compinit
 
 # Colors
-
 if [ -x /usr/bin/dircolors ]; then
    eval `/usr/bin/dircolors -b`
 fi
@@ -110,8 +107,7 @@ setopt autocd
 #   ;;
 #esac
 
-# Startup
-
+# Show pal calendar if exists
 if [ -e /usr/bin/pal ]; then
    pal
 fi
