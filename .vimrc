@@ -91,6 +91,9 @@ set wildmode=longest:full
 " Custom status line with filetype
 set statusline=%<%f\ %h%m%r%y%=%-14.(%l,%c%V%)\ %P
 
+" Add local directory to path (to access Subversion on Mac)
+let $PATH=$PATH.":/usr/local/bin"
+
 " Show only manual bookmarks on the margin
 let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
