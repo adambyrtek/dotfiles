@@ -8,13 +8,10 @@ syntax on
 set nocompatible
 
 " Show partial commands in status
-"set showcmd
+set showcmd
 
 " Line numbering
 "set number
-
-" Ruler in status bar
-set ruler
 
 " No wrapping of display
 "set nowrap
@@ -31,10 +28,10 @@ set smartcase
 " No backups
 set nobackup
 
-" Smart indentation with spaces
+" Indentation can be deleted with Backspace
 set smarttab
 
-" Insert tabs as spaces
+" Indent and tab with spaces
 set expandtab
 
 " Number of spaces to use for indent
@@ -55,13 +52,13 @@ set encoding=utf-8
 " Allow backspace to delete everything
 set backspace=indent,eol,start
 
-" Indent new lines
+" Indent new lines as previous line
 set autoindent
 
 " Indent blocks of text
 "set smartindent
 
-" Always show tab line
+" Always show tab list
 "set showtabline=3
 
 " Always show status
@@ -72,11 +69,6 @@ set scrolljump=5
 
 " Number of lines before the end of the screen to scroll
 set scrolloff=3
-
-" Formatting options (see fo-table)
-" ro - add comment leader on new line
-" 1 - don't wrap after one-letter words
-"set formatoptions+=ro1
 
 " Buffers can be hidden
 set hidden
@@ -95,6 +87,9 @@ set wildmenu
 
 " Convenient completion mode
 set wildmode=longest:full
+
+" Custom status line with filetype
+set statusline=%<%f\ %h%m%r%y%=%-14.(%l,%c%V%)\ %P
 
 " Show only manual bookmarks on the margin
 let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -125,8 +120,11 @@ augroup vimrc
     autocmd FileType tex compiler tex
 
     " PHP make command
-    autocmd FileType php setl makeprg=php\ -l\ %
+    autocmd FileType php setl makeprg=php5\ -l\ %
     autocmd FileType php setl errorformat=%m\ in\ %f\ on\ line\ %l
+
+    " YAML indentation
+    autocmd FileType yaml setl shiftwidth=2
 
     " Change to the directory of the file
     autocmd BufRead,BufNewFile * :lcd %:p:h
