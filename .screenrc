@@ -1,16 +1,38 @@
+# Different escape character
 escape ``
+
+# Don't show startup message
 startup_message off
-#hardstatus string '%h'
-backtick 1 5 1 awk '// { print $7; }' /proc/apm
-#caption always " %c %1`  %-Lw%{= kw}%50> %n%f* %t %{-}%+Lw%< "
+
+# Use visual bell
+vbell on
+
+# Put hardcopies in home directory
+hardcopydir $HOME
+
+# Nice status bar at the bottom with list of tabs
 caption always " %H  %-Lw%{= kw}%50> %n%f* %t %{-}%+Lw%< "
-#caption always "%3n %t%? (%u)%?%?: %h%?"
-windowlist title ""
-windowlist string "%3n%f %t%? (%h)%?"
+
+# Crazy hardstatus
+#hardstatus alwayslastline "%{=b kW}[ %{= Y}$USER @ %H %{b W}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{b W}][%{= Y} %l %{b W}][%{= Y} %d/%m %{Y}%c %{b W}]"
+
+# Custom message for activity
+activity "%c activity -> %n%f %t"
+
+# Custom message for bell
+bell_msg "%c bell -> %n%f %t^G"
+
+# Bigger scrollback buffer
 defscrollback 4096
+
+# Use UTF-8 by default
 defutf8 on
 
-bind '=' next
-bind '-' prev
-bind 'l' screen -t logs 9 sudo /home/alpha/bin/taillog
-bind 'm' screen 8 mutt
+# Remove some dangerous bindings
+bind .
+bind h
+
+# New bindings
+bind = next
+bind - prev
+bind w windowlist -b
