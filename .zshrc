@@ -35,7 +35,7 @@ else
 fi
 
 # Prompt
-PROMPT="%B%/%#%b "
+PROMPT="%B%~%#%b "
 
 # History
 HISTFILE=~/.zsh_history
@@ -87,27 +87,21 @@ setopt autolist
 setopt autocd
 
 # Set window title
+xtitle () { print -Pn "\e]0;$1\a" }
+stitle () { print -Pn "\ek$1\e\\" }
 
-#xtitle () { print -Pn "\e]0;$1\a" }
-#stitle () { print -Pn "\ek$1\e\\" }
-
-#case $TERM in
-#   xterm*|rxvt*)
-#      precmd () { xtitle "zsh %/" }
-#      preexec () { xtitle "$1" }
-#   ;;
-#   
-#   screen)
-#      precmd () { stitle "zsh" }
-#      preexec () 
-#      {
-#         local -a cmd; cmd=(${(z)1})
-#         stitle "$cmd[1]"
-#      }
-#   ;;
-#esac
-
-# Show pal calendar if exists
-if [ -e /usr/bin/pal ]; then
-   pal
-fi
+case $TERM in
+   xterm*|rxvt*)
+      precmd () { xtitle "zsh %/" }
+      preexec () { xtitle "$1" }
+   ;;
+   
+   screen)
+      precmd () { stitle "zsh" }
+      preexec () 
+      {
+         local -a cmd; cmd=(${(z)1})
+         stitle "$cmd[1]"
+      }
+   ;;
+esac
