@@ -1,17 +1,17 @@
 # ~/.zshrc
 # Sourced for interactive shells
 
-# Aliases for Debian
-if [ -e /usr/bin/aptitude ]; then 
+# Package management for Debian
+if which aptitude > /dev/null; then 
    alias a=aptitude
    alias sa="sudo aptitude"
-else
+else if which apt-get > /dev/null
    alias a=apt-get
    alias sa="sudo apt-get"
 fi
 
-# Aliases for Gentoo
-if [ -e /usr/bin/emerge ]; then
+# Package management for Gentoo
+if which emerge > /dev/null; then
    alias em=emerge
    alias sem="sudo emerge"
    alias es="esearch -c"
@@ -25,8 +25,8 @@ alias du="du -chs"
 alias df="df -h"
 alias pstree="pstree -hG"
 alias diff='diff -uN'
-svngrep () { grep -R $* | grep -v "^[^:]*\.svn/.*:" }
 si () { sudo /etc/init.d/$1 $2 }
+svngrep () { grep -R $* | grep -v "^[^:]*\.svn/.*:" }
 
 # Colorized ls
 if [ `uname -s` = "Darwin" ]; then
@@ -39,7 +39,7 @@ alias la="ls -a"
 alias lla="ls -la"
 
 # Prompt
-PROMPT="%B%~%#%b "
+PROMPT="%{[0;33m%}%B%n:%~%#%{[0m%} "
 
 # History
 HISTFILE=~/.zsh_history
@@ -62,9 +62,7 @@ autoload -U compinit
 compinit
 
 # Colors
-if [ -x /usr/bin/dircolors ]; then
-   eval `/usr/bin/dircolors -b`
-fi
+which dircolors > /dev/null && eval `dircolors -b`
 zmodload zsh/complist
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
@@ -76,7 +74,7 @@ setopt incappendhistory
 
 # Share history with other zshs
 #setopt sharehistory
-#
+
 # Ignore entries starting with space in history
 setopt histignorespace
 
@@ -95,18 +93,21 @@ setopt autolist
 # Enter directories without cd
 setopt autocd
 
+# Enable spelling correction
+setopt correct
+
 # Set window title
-xtitle () { print -Pn "\e]0;$1\a" }
-stitle () { print -Pn "\ek$1\e\\" }
+xtitle() { print -Pn "\e]0;$1\a" }
+stitle() { print -Pn "\ek$1\e\\" }
 
 case $TERM in
-   xterm*|rxvt*)
-      precmd () { xtitle "zsh %~" }
-      preexec () { xtitle "$1" }
-   ;;
+    xterm*|rxvt)
+        precmd() { xtitle "zsh %~" }
+        preexec() { xtitle "$1" }
+    ;;
    
-   screen)
-      precmd () { stitle "zsh %~" }
-      preexec () { stitle "$1" }
-   ;;
+    screen)
+        precmd() { stitle "zsh %~" }
+        preexec() { stitle "$1" }
+    ;;
 esac
