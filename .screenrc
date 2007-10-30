@@ -28,10 +28,6 @@ defscrollback 4096
 # Use UTF-8 by default
 defutf8 on
 
-# Remove some dangerous bindings
-bind .
-bind h
-
 # New bindings
 bind = next
 bind - prev

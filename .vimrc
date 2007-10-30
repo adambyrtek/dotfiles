@@ -106,7 +106,7 @@ let Tlist_Exit_OnlyWindow=1
 " Tags for custom languages
 " http://vim-taglist.sourceforge.net/extend.html
 let tlist_actionscript_settings = 'actionscript;c:class;f:method;p:property;v:variable'
-let tlist_tex_settings   = 'latex;s:sections;g:graphics;l:labels'
+let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels'
 
 " Autocommands
 augroup vimrc

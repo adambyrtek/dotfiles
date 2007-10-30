@@ -25,14 +25,18 @@ alias du="du -chs"
 alias df="df -h"
 alias pstree="pstree -hG"
 alias diff='diff -uN'
+svngrep () { grep -R $* | grep -v "^[^:]*\.svn/.*:" }
 si () { sudo /etc/init.d/$1 $2 }
 
-# Colorized
+# Colorized ls
 if [ `uname -s` = "Darwin" ]; then
    alias ls="ls -hGF"
 else
    alias ls="ls -hF --color=auto"
 fi
+alias ll="ls -l"
+alias la="ls -a"
+alias lla="ls -la"
 
 # Prompt
 PROMPT="%B%~%#%b "
@@ -97,16 +101,12 @@ stitle () { print -Pn "\ek$1\e\\" }
 
 case $TERM in
    xterm*|rxvt*)
-      precmd () { xtitle "zsh %/" }
+      precmd () { xtitle "zsh %~" }
       preexec () { xtitle "$1" }
    ;;
    
    screen)
-      precmd () { stitle "zsh" }
-      preexec () 
-      {
-         local -a cmd; cmd=(${(z)1})
-         stitle "$cmd[1]"
-      }
+      precmd () { stitle "zsh %~" }
+      preexec () { stitle "$1" }
    ;;
 esac
