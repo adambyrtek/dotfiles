@@ -27,7 +27,7 @@ alias pstree="pstree -hG"
 alias diff='diff -uN'
 si () { sudo /etc/init.d/$1 $2 }
 
-# Ls with colors
+# Colorized
 if [ `uname -s` = "Darwin" ]; then
    alias ls="ls -hGF"
 else
@@ -64,25 +64,30 @@ fi
 zmodload zsh/complist
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# ZSH options
-
 # Set Emacs style editing
 bindkey -e
 
 # Append to history file instantly
 setopt incappendhistory
+
 # Share history with other zshs
 #setopt sharehistory
+#
 # Ignore entries starting with space in history
 setopt histignorespace
+
 # Ignore duplicates in history
 setopt histignoredups
+
 # Safe redirections
 setopt noclobber
+
 # Don't show completion menu
 setopt noautomenu
+
 # Show list of completions instead
 setopt autolist
+
 # Enter directories without cd
 setopt autocd
 

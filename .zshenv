@@ -10,5 +10,7 @@ export PATH="$PATH:$HOME/bin:/usr/local/bin:/usr/local/sbin:."
 export LESS="-R -X -M"
 export PAGER=less
 export EDITOR=vim
+export VISUAL=$EDITOR
 export MANPAGER="col -b | view -c 'set ft=man nomod nolist' -"
 export LANG=en_US.UTF-8
+export GREP_OPTIONS="--color=auto"
