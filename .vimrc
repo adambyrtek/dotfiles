@@ -116,8 +116,9 @@ augroup vimrc
     autocmd BufNewFile,BufRead mail.google.com.* setf mail
     autocmd BufNewFile,BufRead mail.google.com.* setl tw=0
 
-    " Mail has spelling
+    " Mail has spelling and wrapping
     autocmd FileType mail setl spell
+    autocmd FileType mail setl wrap
 
     " LaTeX compiler
     autocmd FileType tex compiler tex
@@ -157,12 +158,29 @@ inoremap <C-F> <C-X><C-O>
 nnoremap <Space> <PageDown>
 nnoremap <Backspace> <PageUp>
 
+" Automaticaly close curly braces
+imap {<Enter> {<Enter>}<Esc>O
+
+" Surround visual selection
+vmap ,) di()<Esc>P2l
+vmap ,} di{}<Esc>P2l
+vmap ,] di[]<Esc>P2l
+vmap ,/ di//<Esc>P2l
+vmap ," di""<Esc>P2l
+vmap ,' di''<Esc>P2l
+vmap ,< di<<Esc>pa></<Esc>pa><Esc>F/hi
+
 " Clever tabs
-" http://www.vim.org/tips/tip.php?tip_id=102
-function! CleverTab()
-    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+function! InsertTabWrapper(direction)
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
         return "\<Tab>"
+    elseif "backward" == a:direction
+        return "\<C-P>"
     else
         return "\<C-N>"
+    endif
 endfunction
-inoremap <Tab> <C-R>=CleverTab()<CR>
+
+inoremap <Tab> <C-R>=InsertTabWrapper("forward")<CR>
+inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
