@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Edit password protected file
+
+ENCFILE=~/pass.gpg
+
+set -e
+
+if [ -z $EDITOR ]; then
+   echo "EDITOR not set"
+   exit
+fi
+
+# Temp filename
+TMP=$(mktemp)
+chmod 600 $TMP
+trap "rm -f $TMP $TMP.orig $TMP.new $TMP.enc" EXIT
+
+# Decrypt and edit
+gpg -d < $ENCFILE > $TMP.orig
+cp -f $TMP.orig $TMP.new
+$EDITOR $TMP.new
+clear
+
+# Encrypt again only if modified
+if [ $TMP.new -nt $TMP.orig ]; then
+   gpg -c < $TMP.new > $TMP.enc
+   cp -f $TMP.enc $ENCFILE
+   echo Encrypted
+else
+   echo Not modified
+fi
