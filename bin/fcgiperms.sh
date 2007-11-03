@@ -18,6 +18,8 @@ if [ ! -r "$APPDIR/Rakefile" ]; then
     exit 1
 fi
 
+cd $APPDIR
+
 REQFILES="public/dispatch.fcgi config/database.yml tmp log"
 for FILE in $REQFILES; do
     if [ ! -e $FILE ]; then
@@ -26,13 +28,14 @@ for FILE in $REQFILES; do
     fi
 done
 
-cd $APPDIR
-
 chgrp -R www-data tmp log config/database.yml
 chmod -R g+w tmp log
 chmod 640 config/database.yml
 chmod a+x public/dispatch.fcgi
-if head -1 public/dispatch.fcgi | grep -v '^#!/usr/bin/env ruby$' > /dev/null 2>&1; then
+if head -1 public/dispatch.fcgi | grep -v '^#!/usr/bin/env ruby$' > /dev/null; then
     echo "Please fix bang line in dispatch.fcgi, should be:"
     echo "#!/usr/bin/env ruby"
+fi
+if [ `gem list fcgi | grep "fcgi" | wc -l` -eq "0" ]; then
+    echo "Please install fcgi gem"
 fi
