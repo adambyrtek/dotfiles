@@ -74,11 +74,8 @@ bindkey '\e[5C' forward-word
 # Enable completion
 autoload -U compinit && compinit
 
-# Pager for long completion lists
-#zmodload zsh/complist
-#zstyle ':completion:*:default' list-prompt '%S%M matches %s'
-
 # Colors in completion
+zmodload -i zsh/complist
 if [ ! -n "$LS_COLORS" ]; then
     zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi 
