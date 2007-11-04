@@ -28,6 +28,9 @@ defscrollback 4096
 # Use UTF-8 by default
 defutf8 on
 
+# Time after which screen is considered silent
+silencewait 10
+
 # New bindings
 bind = next
 bind - prev

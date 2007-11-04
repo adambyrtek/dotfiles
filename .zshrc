@@ -5,7 +5,7 @@
 if which aptitude > /dev/null; then 
    alias a=aptitude
    alias sa="sudo aptitude"
-else if which apt-get > /dev/null
+elif which apt-get > /dev/null; then
    alias a=apt-get
    alias sa="sudo apt-get"
 fi
@@ -18,17 +18,23 @@ if which emerge > /dev/null; then
    alias eq=equery
 fi
 
-# Common aliases
+# New aliases
 alias !=history
+alias l=less
+alias g=grep
+alias psa="ps -aux"
+si () { sudo /etc/init.d/$1 $2 }
+
+# Default parameters
 alias dirs="dirs -v"
+alias history="history -iD"
 alias du="du -chs"
 alias df="df -h"
 alias pstree="pstree -hG"
-alias diff='diff -uN'
-si () { sudo /etc/init.d/$1 $2 }
-svngrep () { grep -R $* | grep -v "^[^:]*\.svn/.*:" }
+alias diff="diff -uN"
 
 # Colorized ls
+which dircolors > /dev/null && eval `dircolors -b`
 if [ `uname -s` = "Darwin" ]; then
    alias ls="ls -hGF"
 else
@@ -39,7 +45,8 @@ alias la="ls -a"
 alias lla="ls -la"
 
 # Prompt
-PROMPT="%{[0;33m%}%B%n:%~%#%{[0m%} "
+autoload colors && colors
+PROMPT="%{${fg[yellow]}%}%n:%~%#%{$reset_color%} "
 
 # History
 HISTFILE=~/.zsh_history
@@ -57,23 +64,32 @@ WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 #MAILCHECK=10
 #mailpath=(/home/alpha/mail/mbox/)
 
-# Completion
-autoload -U compinit
-compinit
-
-# Colors
-which dircolors > /dev/null && eval `dircolors -b`
-zmodload zsh/complist
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
 # Set Emacs style editing
 bindkey -e
 
+# Bind Ctrl-Left/Right
+bindkey '\e[5D' backward-word
+bindkey '\e[5C' forward-word
+
+# Enable completion
+autoload -U compinit && compinit
+
+# Pager for long completion lists
+#zmodload zsh/complist
+#zstyle ':completion:*:default' list-prompt '%S%M matches %s'
+
+# Colors in completion
+if [ ! -n "$LS_COLORS" ]; then
+    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+fi 
+
+# Grouping for completion types
+zstyle ':completion:*:descriptions' format "%{${fg[blue]}%}%d:%{$reset_color%}"
+zstyle ':completion:*' group-name ""
+
+
 # Append to history file instantly
 setopt incappendhistory
-
-# Share history with other zshs
-#setopt sharehistory
 
 # Ignore entries starting with space in history
 setopt histignorespace
@@ -81,20 +97,33 @@ setopt histignorespace
 # Ignore duplicates in history
 setopt histignoredups
 
+# Save timestamps in history file
+setopt extendedhistory
+
 # Safe redirections
 setopt noclobber
 
 # Don't show completion menu
 setopt noautomenu
 
-# Show list of completions instead
+# Show list of completions
 setopt autolist
 
 # Enter directories without cd
 setopt autocd
 
-# Enable spelling correction
+# Add every directory to the stack
+setopt autopushd
+
+# Spelling correction
 setopt correct
+
+# Don't beep when showing list of completions
+setopt nolistbeep
+
+# Terminal beep
+#setopt nobeep
+
 
 # Set window title
 xtitle() { print -Pn "\e]0;$1\a" }

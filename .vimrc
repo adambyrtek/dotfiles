@@ -1,5 +1,5 @@
 " Color scheme
-colorscheme murphy
+colorscheme pablo
 
 " Syntax highlighting
 syntax on
