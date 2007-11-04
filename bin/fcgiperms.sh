@@ -9,11 +9,11 @@ if [[ ! $# -eq 1 ]]; then
 fi
 
 APPDIR=$1
-if [[ ! -d "$APPDIR" ]]; then
+if [[ ! -d $APPDIR ]]; then
     echo "$PROGNAME: $APPDIR is not a directory"
     exit 1
 fi
-if [[ ! -r "$APPDIR/Rakefile" ]]; then
+if [[ ! -r $APPDIR/Rakefile ]]; then
     echo "$PROGNAME: $APPDIR doesn't look like Rails application"
     exit 1
 fi
@@ -22,7 +22,7 @@ cd $APPDIR
 
 REQFILES="public/dispatch.fcgi config/database.yml tmp log"
 for FILE in $REQFILES; do
-    if [[ ! -e "$FILE" ]]; then
+    if [[ ! -e $FILE ]]; then
         echo "$PROGNAME: Required file $FILE not exists"
         exit 1
     fi

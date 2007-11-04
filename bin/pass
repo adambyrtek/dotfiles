@@ -6,7 +6,7 @@ ENCFILE=~/pass.gpg
 
 set -e
 
-if [ -z $EDITOR ]; then
+if [[ -z $EDITOR ]]; then
    echo "EDITOR not set"
    exit
 fi
