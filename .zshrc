@@ -46,7 +46,7 @@ alias lla="ls -la"
 
 # Prompt
 autoload colors && colors
-PROMPT="%{${fg[yellow]}%}%n:%~%#%{$reset_color%} "
+PROMPT="%{${fg[yellow]}%}%n@%m:%~%#%{$reset_color%} "
 
 # History
 HISTFILE=~/.zsh_history
@@ -75,8 +75,7 @@ bindkey '\e[5C' forward-word
 autoload -U compinit && compinit
 
 # Colors in completion
-zmodload -i zsh/complist
-if [ ! -n "$LS_COLORS" ]; then
+if [ -n "$LS_COLORS" ]; then
     zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi 
 
