@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Edit password protected file
 
@@ -23,7 +23,7 @@ $EDITOR $TMP.new
 clear
 
 # Encrypt again only if modified
-if [ $TMP.new -nt $TMP.orig ]; then
+if [[ $TMP.new -nt $TMP.orig ]]; then
    gpg -c < $TMP.new > $TMP.enc
    cp -f $TMP.enc $ENCFILE
    echo Encrypted
