@@ -44,9 +44,14 @@ alias ll="ls -l"
 alias la="ls -a"
 alias lla="ls -la"
 
-# Prompt
+# Load color module
 autoload colors && colors
-PROMPT="%{${fg[yellow]}%}%n@%m:%~%#%{$reset_color%} "
+
+# Main prompt
+PROMPT="%{${fg[yellow]}%}%n@%m:%~%#%{${reset_color}%} "
+
+# Spelling correction prompt
+SPROMPT="%{${bg[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
 
 # History
 HISTFILE=~/.zsh_history
