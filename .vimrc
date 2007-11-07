@@ -127,6 +127,9 @@ augroup vimrc
     autocmd FileType php setl makeprg=php5\ -l\ %
     autocmd FileType php setl errorformat=%m\ in\ %f\ on\ line\ %l
 
+    " Ruby indentation
+    autocmd FileType ruby setl shiftwidth=2
+
     " YAML indentation
     autocmd FileType yaml setl shiftwidth=2
 
