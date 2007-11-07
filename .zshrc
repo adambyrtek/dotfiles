@@ -91,11 +91,7 @@ zstyle ':completion:*' group-name ""
 # Split manual pages by sections
 zstyle ':completion:*:manuals' separate-sections 'yes'
 
-# Completion caching, useful for remote hosts
-zstyle ':completion:*' use-cache 'yes'
-zstyle ':completion:*' cache-path ~/.zshcache
-
-# Ignore internal functions starting with underscore
+# Ignore internal zsh functions
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
 # Describe all command options
