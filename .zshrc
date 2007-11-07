@@ -85,9 +85,22 @@ if [ -n "$LS_COLORS" ]; then
 fi 
 
 # Grouping for completion types
-zstyle ':completion:*:descriptions' format "%{${fg[blue]}%}%d:%{$reset_color%}"
+zstyle ':completion:*:descriptions' format "%{${fg[magenta]}%}-- %d --%{$reset_color%}"
 zstyle ':completion:*' group-name ""
 
+# Split manual pages by sections
+zstyle ':completion:*:manuals' separate-sections 'yes'
+
+# Completion caching, useful for remote hosts
+zstyle ':completion:*' use-cache 'yes'
+zstyle ':completion:*' cache-path ~/.zshcache
+
+# Ignore internal functions starting with underscore
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+# Describe all command options
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d' 
 
 # Append to history file instantly
 setopt incappendhistory
