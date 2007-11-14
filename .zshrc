@@ -96,7 +96,7 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 
 # Describe all command options
 zstyle ':completion:*:options' description 'yes'
-zstyle ':completion:*:options' auto-description '%d' 
+zstyle ':completion:*:options' auto-description '%d*' 
 
 # Append to history file instantly
 setopt incappendhistory
