@@ -161,9 +161,6 @@ inoremap <C-F> <C-X><C-O>
 nnoremap <Space> <PageDown>
 nnoremap <Backspace> <PageUp>
 
-" Automaticaly close curly braces
-imap {<Enter> {<Enter>}<Esc>O
-
 " Surround visual selection
 vmap ,) di()<Esc>P2l
 vmap ,} di{}<Esc>P2l
