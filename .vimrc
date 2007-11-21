@@ -129,6 +129,7 @@ augroup vimrc
 
     " Ruby indentation
     autocmd FileType ruby setl shiftwidth=2
+    autocmd FileType eruby setl shiftwidth=2
 
     " YAML indentation
     autocmd FileType yaml setl shiftwidth=2
@@ -136,6 +137,16 @@ augroup vimrc
     " Change to the directory of the file
     autocmd BufRead,BufNewFile * :lcd %:p:h
     autocmd BufEnter * :lcd %:p:h
+
+    " Omni completion enabled
+    " http://amix.dk/blog/viewEntry/19021
+    autocmd FileType python setl omnifunc=pythoncomplete#Complete
+    autocmd FileType javascript setl omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType html setl omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType css setl omnifunc=csscomplete#CompleteCSS
+    autocmd FileType xml setl omnifunc=xmlcomplete#CompleteTags
+    autocmd FileType php setl omnifunc=phpcomplete#CompletePHP
+    autocmd FileType c setl omnifunc=ccomplete#Complete
 
     " Go to last known position
     autocmd BufReadPost *
