@@ -135,8 +135,8 @@ augroup vimrc
     autocmd FileType yaml setl shiftwidth=2
 
     " Change to the directory of the file
-    autocmd BufRead,BufNewFile * :lcd %:p:h
-    autocmd BufEnter * :lcd %:p:h
+    "autocmd BufRead,BufNewFile * :lcd %:p:h
+    "autocmd BufEnter * :lcd %:p:h
 
     " Omni completion enabled
     " http://amix.dk/blog/viewEntry/19021
