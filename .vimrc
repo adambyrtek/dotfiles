@@ -131,6 +131,9 @@ augroup vimrc
     autocmd FileType ruby setl shiftwidth=2
     autocmd FileType eruby setl shiftwidth=2
 
+    " Correct type for ERB files
+    autocmd BufNewFile,BufRead *.erb setl ft=eruby
+
     " YAML indentation
     autocmd FileType yaml setl shiftwidth=2
 
