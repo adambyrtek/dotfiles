@@ -85,11 +85,14 @@ set ruler
 " Show menu with available completions
 set wildmenu
 
-" Convenient completion mode
-set wildmode=longest:full
+" Completion similar to command line
+set wildmode=list:longest
 
 " Custom status line with filetype
 set statusline=%<%f\ %h%m%r%y%=%-14.(%l,%c%V%)\ %P
+
+" Show matching parenthesis
+set showmatch
 
 " Add local directory to path (to access Subversion on Mac)
 let $PATH=$PATH.":/usr/local/bin"
