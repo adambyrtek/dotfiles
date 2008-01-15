@@ -41,7 +41,7 @@ set shiftwidth=4
 set tabstop=4
 
 " Highlight search in yellow
-set hlsearch
+"set hlsearch
 
 " Incremental search
 set incsearch
@@ -153,6 +153,7 @@ augroup vimrc
     autocmd FileType xml setl omnifunc=xmlcomplete#CompleteTags
     autocmd FileType php setl omnifunc=phpcomplete#CompletePHP
     autocmd FileType c setl omnifunc=ccomplete#Complete
+    autocmd FileType ruby setl omnifunc=rubycomplete#Complete
 
     " Go to last known position
     autocmd BufReadPost *
