@@ -117,11 +117,11 @@ augroup vimrc
 
     " Mail mode for It's All Text
     autocmd BufNewFile,BufRead mail.google.com.* setf mail
-    autocmd BufNewFile,BufRead mail.google.com.* setl tw=0
 
     " Mail has spelling and wrapping
     autocmd FileType mail setl spell
     autocmd FileType mail setl wrap
+    autocmd FileType mail setl tw=0
 
     " LaTeX compiler
     autocmd FileType tex compiler tex
@@ -180,13 +180,12 @@ nnoremap <Space> <PageDown>
 nnoremap <Backspace> <PageUp>
 
 " Surround visual selection
-vmap ,) di()<Esc>P2l
-vmap ,} di{}<Esc>P2l
-vmap ,] di[]<Esc>P2l
-vmap ,/ di//<Esc>P2l
-vmap ," di""<Esc>P2l
-vmap ,' di''<Esc>P2l
-vmap ,< di<<Esc>pa></<Esc>pa><Esc>F/hi
+vnoremap ,) di()<Esc>P2l
+vnoremap ,} di{}<Esc>P2l
+vnoremap ,] di[]<Esc>P2l
+vnoremap ,> di<><Esc>P2l
+vnoremap ," di""<Esc>P2l
+vnoremap ,' di''<Esc>P2l
 
 " Clever tabs
 function! InsertTabWrapper(direction)
@@ -200,5 +199,10 @@ function! InsertTabWrapper(direction)
     endif
 endfunction
 
+" Mapping for tab completion
 inoremap <Tab> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
+
+" Quick save
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>W :wall<CR>
