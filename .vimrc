@@ -97,6 +97,9 @@ set showmatch
 " Add local directory to path (to access Subversion on Mac)
 let $PATH=$PATH.":/usr/local/bin"
 
+" Disable showing of bookmarks by default
+let showmarks_enable=0
+
 " Show only manual bookmarks on the margin
 let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -210,6 +213,7 @@ inoremap <Tab> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 
 " Leader shortcuts to common actions
+nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wall<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
