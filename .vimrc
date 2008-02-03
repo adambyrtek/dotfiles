@@ -117,8 +117,8 @@ let Tlist_Use_Right_Window=1
 
 " Tags for custom languages
 " http://vim-taglist.sourceforge.net/extend.html
-let tlist_actionscript_settings = 'actionscript;c:class;f:method;p:property;v:variable'
-let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels'
+let tlist_actionscript_settings='actionscript;c:class;f:method;p:property;v:variable'
+let tlist_tex_settings='latex;s:sections;g:graphics;l:labels'
 
 " NERD Commenter won't output "Unknown filetype" messages
 let NERDShutUp=1
@@ -216,10 +216,10 @@ inoremap <Tab> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 
 " Leader shortcuts to common actions
-nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wall<CR>
-nnoremap <Leader>m :make<CR>
+nnoremap <Leader>d :BD<CR>
+nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>t :TlistToggle<CR>
 nnoremap <Leader>e :BufExplorer<CR>
