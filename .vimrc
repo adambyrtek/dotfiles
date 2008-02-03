@@ -106,6 +106,12 @@ let Tlist_Show_One_File=1
 " Close tag list if it is the only window
 let Tlist_Exit_OnlyWindow=1
 
+" Don't show fold column in tag list
+let Tlist_Enable_Fold_Column=0
+
+" Show tag list window on right
+let Tlist_Use_Right_Window=1
+
 " Tags for custom languages
 " http://vim-taglist.sourceforge.net/extend.html
 let tlist_actionscript_settings = 'actionscript;c:class;f:method;p:property;v:variable'
@@ -203,6 +209,9 @@ endfunction
 inoremap <Tab> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 
-" Quick save
+" Leader shortcuts to common actions
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wall<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>t :TlistToggle<CR>
+nnoremap <Leader>e :BufExplorer<CR>
