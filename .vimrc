@@ -120,6 +120,9 @@ let Tlist_Use_Right_Window=1
 let tlist_actionscript_settings = 'actionscript;c:class;f:method;p:property;v:variable'
 let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels'
 
+" NERD Commenter won't output "Unknown filetype" messages
+let NERDShutUp=1
+
 " Autocommands
 augroup vimrc
     au!
@@ -216,6 +219,7 @@ inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wall<CR>
+nnoremap <Leader>m :make<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>t :TlistToggle<CR>
 nnoremap <Leader>e :BufExplorer<CR>
