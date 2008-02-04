@@ -24,7 +24,7 @@ alias l=less
 alias g=grep
 alias psa="ps aux"
 alias psgrep="ps aux | grep"
-vimgrep() { vim -c "vimgrep /$1/ $@[2,-1]" -c copen }
+vimgrep() { vim -c "vimgrep /$1/ $*[2,-1]" -c copen }
 si() { sudo /etc/init.d/$1 $2 }
 
 # Default parameters
