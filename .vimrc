@@ -215,11 +215,14 @@ endfunction
 inoremap <Tab> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 
-" Leader shortcuts to common actions
+" Leader shortcuts to frequent actions
+nnoremap <Leader>a :b#<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wall<CR>
 nnoremap <Leader>d :BD<CR>
 nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
+
+" Leader shortcuts to frequent plugins
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>t :TlistToggle<CR>
 nnoremap <Leader>e :BufExplorer<CR>
