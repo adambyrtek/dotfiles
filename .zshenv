@@ -6,7 +6,7 @@ if [ -r /sw/bin/init.sh ]; then
 fi
 
 # Set environment
-export PATH="$PATH:$HOME/bin:/usr/local/bin:/usr/local/sbin:."
+export PATH="$PATH:$HOME/bin:/var/lib/gems/1.8/bin:/usr/local/bin:/usr/local/sbin:."
 export LESS="-R -X -M -I"
 export PAGER=less
 export EDITOR=vim
