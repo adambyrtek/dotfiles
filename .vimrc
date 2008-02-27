@@ -94,6 +94,9 @@ set statusline=%<%f\ %h%m%r%y%=%-14.(%l,%c%V%)\ %P
 " Show matching parenthesis
 set showmatch
 
+" Directories to use for swap files
+set directory=~/tmp,~/Temp
+
 " Add local directory to path (to access Subversion on Mac)
 let $PATH=$PATH.":/usr/local/bin"
 
@@ -219,7 +222,8 @@ inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 nnoremap <Leader>a :b#<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wall<CR>
-nnoremap <Leader>d :BD<CR>
+nnoremap <Leader>d :bd<CR>
+nnoremap <Leader>D :BD<CR>
 nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
 
 " Leader shortcuts to frequent plugins
