@@ -95,7 +95,7 @@ set statusline=%<%f\ %h%m%r%y%=%-14.(%l,%c%V%)\ %P
 set showmatch
 
 " Directories to use for swap files
-set directory=~/tmp,~/Temp
+set directory=
 
 " Add local directory to path (to access Subversion on Mac)
 let $PATH=$PATH.":/usr/local/bin"
