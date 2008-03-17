@@ -3,19 +3,19 @@
 
 # Package management for Debian
 if which aptitude > /dev/null; then 
-   alias a=aptitude
-   alias sa="sudo aptitude"
+    alias a=aptitude
+    alias sa="sudo aptitude"
 elif which apt-get > /dev/null; then
-   alias a=apt-get
-   alias sa="sudo apt-get"
+    alias a=apt-get
+    alias sa="sudo apt-get"
 fi
 
 # Package management for Gentoo
 if which emerge > /dev/null; then
-   alias em=emerge
-   alias sem="sudo emerge"
-   alias es="esearch -c"
-   alias eq=equery
+    alias em=emerge
+    alias sem="sudo emerge"
+    alias es="esearch -c"
+    alias eq=equery
 fi
 
 # New aliases
@@ -37,10 +37,11 @@ alias diff="diff -uN"
 
 # Colorized ls
 which dircolors > /dev/null && eval `dircolors -b`
-if [ `uname -s` = "Darwin" ]; then
-   alias ls="ls -hGF"
+if [[ -z $MACOSX ]]; then
+    alias ls="ls -hF --color=auto"
 else
-   alias ls="ls -hF --color=auto"
+    # BSD has its own way
+    alias ls="ls -hGF"
 fi
 alias ll="ls -l"
 alias la="ls -a"
@@ -143,12 +144,12 @@ stitle() { print -Pn "\ek$1\e\\" }
 
 case $TERM in
     xterm*|rxvt)
-        precmd() { xtitle "zsh %~" }
-        preexec() { xtitle "$1" }
+    precmd() { xtitle "zsh %~" }
+    preexec() { xtitle "$1" }
     ;;
-   
+
     screen)
-        precmd() { stitle "zsh %~" }
-        preexec() { stitle "$1" }
+    precmd() { stitle "zsh %~" }
+    preexec() { stitle "$1" }
     ;;
 esac

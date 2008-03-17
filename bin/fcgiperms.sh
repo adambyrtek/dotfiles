@@ -28,8 +28,8 @@ for FILE in $REQFILES; do
     fi
 done
 
-chgrp -R www-data tmp log config/database.yml
-chmod -R g+w tmp log
+chgrp -R www-data tmp/* log config/database.yml
+chmod -R g+ws tmp/* log
 chmod 640 config/database.yml
 chmod a+x public/dispatch.fcgi
 if head -1 public/dispatch.fcgi | grep -qv '^#!/usr/bin/env ruby$'; then
