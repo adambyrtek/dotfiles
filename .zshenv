@@ -30,5 +30,6 @@ if [[ -n $MACOSX ]]; then
     if [[ -d "$HOME/Code/jruby" ]]; then
         export JRUBY_HOME="$HOME/Code/jruby"
         export PATH="$PATH:$JRUBY_HOME/bin"
+        export CLASSPATH="lib/jruby.jar:lib/asm-3.0.jar:lib/jna.jar:."
     fi
 fi
