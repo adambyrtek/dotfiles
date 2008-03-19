@@ -126,6 +126,9 @@ let tlist_tex_settings='latex;s:sections;g:graphics;l:labels'
 " NERD Commenter won't output "Unknown filetype" messages
 let NERDShutUp=1
 
+" Qbuf hotkey
+let g:qb_hotkey = "<Leader>q"
+
 " Autocommands
 augroup vimrc
     au!
