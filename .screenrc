@@ -37,3 +37,4 @@ bind - prev
 bind w windowlist -b
 bind o focus
 bind q only
+bind s silence
