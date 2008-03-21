@@ -21,6 +21,7 @@ export LANG=en_US.UTF-8
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR=32
 
+# Java on Mac OS X
 if [[ -n $MACOSX ]]; then
     # Java on Mac OS X
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
@@ -29,7 +30,11 @@ if [[ -n $MACOSX ]]; then
     # JRuby
     if [[ -d "$HOME/Code/jruby" ]]; then
         export JRUBY_HOME="$HOME/Code/jruby"
-        export PATH="$PATH:$JRUBY_HOME/bin"
-        export CLASSPATH="lib/jruby.jar:lib/asm-3.0.jar:lib/jna.jar:."
     fi
+fi
+
+# JRuby
+if [[ -n $JRUBY_HOME ]]; then
+    export PATH="$PATH:$JRUBY_HOME/bin"
+    export CLASSPATH="lib/jruby.jar:lib/asm-3.0.jar:lib/jna.jar:."
 fi
