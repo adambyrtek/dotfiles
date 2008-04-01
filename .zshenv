@@ -21,6 +21,13 @@ export LANG=en_US.UTF-8
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR=32
 
+# MacPorts
+if [[ -n $MACOSX && -d /opt/local ]]; then
+    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+    export MANPATH=/opt/local/share/man:$MANPATH
+    export DISPLAY=:0.0
+fi
+
 # Java on Mac OS X
 if [[ -n $MACOSX ]]; then
     # Java on Mac OS X
