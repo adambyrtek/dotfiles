@@ -98,7 +98,7 @@ set showmatch
 set directory=~/Temp,~/tmp,/var/tmp,/tmp
 
 " Add local directory to path (to access Subversion on Mac)
-let $PATH=$PATH.":/usr/local/bin"
+let $PATH=$PATH.":/opt/local/bin"
 
 " Disable showing of bookmarks by default
 let showmarks_enable=0
