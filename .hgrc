@@ -1,2 +1,6 @@
 [ui]
-username = Adam Byrtek <adambyrtek@gmail.com>
+username = Adam Byrtek <adambyrtek@gmail.com> 
+
+[extensions]
+convert =
+fetch =
