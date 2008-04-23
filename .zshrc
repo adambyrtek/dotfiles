@@ -44,8 +44,8 @@ else
     alias ls="ls -hGF"
 fi
 alias ll="ls -l"
-alias la="ls -a"
-alias lla="ls -la"
+alias la="ls -A"
+alias lla="ls -lA"
 
 # Load color module
 autoload colors && colors
