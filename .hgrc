@@ -2,5 +2,5 @@
 username = Adam Byrtek <adambyrtek@gmail.com> 
 
 [extensions]
-convert =
-fetch =
+#convert =
+#fetch =
