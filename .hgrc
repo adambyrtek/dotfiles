@@ -3,5 +3,5 @@ username = Adam Byrtek <adambyrtek@gmail.com>
 verbose = True
 
 [extensions]
-convert =
-fetch =
+#convert =
+#fetch =
