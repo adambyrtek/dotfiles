@@ -5,7 +5,7 @@
 # ColorDiff - a wrapper/replacment for 'diff' producing                #
 #             colourful output                                         #
 #                                                                      #
-# Copyright (C)2002-2006 Dave Ewart (davee@sungate.co.uk)              #
+# Copyright (C)2002-2007 Dave Ewart (davee@sungate.co.uk)              #
 #                                                                      #
 ########################################################################
 #                                                                      #
@@ -26,11 +26,11 @@ use Getopt::Long qw(:config pass_through);
 use IPC::Open2;
 
 my $app_name     = 'colordiff';
-my $version      = '1.0.6';
+my $version      = '1.0.7';
 my $author       = 'Dave Ewart';
 my $author_email = 'davee@sungate.co.uk';
 my $app_www      = 'http://colordiff.sourceforge.net/';
-my $copyright    = '(C)2002-2006';
+my $copyright    = '(C)2002-2007';
 my $show_banner  = 1;
 my $color_patch  = 0;
 
@@ -64,9 +64,9 @@ my $cvs_stuff  = $colour{green};
 # Locations for personal and system-wide colour configurations
 my $HOME   = $ENV{HOME};
 my $etcdir = '/etc';
-
 my ($setting, $value);
-my @config_files = ("$etcdir/colordiffrc", "$HOME/.colordiffrc");
+my @config_files = ("$etcdir/colordiffrc");
+push (@config_files, "$ENV{HOME}/.colordiffrc") if (defined $ENV{HOME});
 my $config_file;
 
 foreach $config_file (@config_files) {
@@ -187,7 +187,7 @@ my $longest_record = 0;
 DIFF_TYPE: foreach $record (@inputstream) {
     # Unified diffs are the only flavour having '+++' or '---'
     # at the start of a line
-    if ($record =~ /^(\+\+\+|---)/) {
+    if ($record =~ /^(\+\+\+|---|@@)/) {
         $diff_type = 'diffu';
         last DIFF_TYPE;
     }
@@ -208,6 +208,16 @@ DIFF_TYPE: foreach $record (@inputstream) {
     # types, this might be good enough
     elsif ($record =~ /(\s\|\s|\s<$|\s>\s)/) {
         $diff_type = 'diffy';
+        last DIFF_TYPE;
+    }
+    # wdiff deleted/added patterns
+    # should almost always be pairwaise?
+    elsif ($record =~ /\[-.*?-\]/s) {
+        $diff_type = 'wdiff';
+        last DIFF_TYPE;
+    }
+    elsif ($record =~ /\{\+.*?\+\}/s) {
+        $diff_type = 'wdiff';
         last DIFF_TYPE;
     }
 }
@@ -286,10 +296,10 @@ foreach (@inputstream) {
         elsif (/^>/) {
             print "$file_new";
         }
-        elsif (/^[1-9]/) {
+        elsif (/^[0-9]/) {
             print "$diff_stuff";
         }
-        elsif (/^(Index: |={5,}|RCS file: |retrieving |diff )/) {
+        elsif (/^(Index: |={4,}|RCS file: |retrieving |diff )/) {
             print "$cvs_stuff";
         }
         else {
@@ -328,7 +338,7 @@ foreach (@inputstream) {
                 print "$file_new";
             }
         }
-        elsif (/^(Index: |={5,}|RCS file: |retrieving |diff )/) {
+        elsif (/^(Index: |={4,}|RCS file: |retrieving |diff )/) {
             print "$cvs_stuff";
         }
         else {
@@ -345,7 +355,7 @@ foreach (@inputstream) {
         elsif (/^\@/) {
             print "$diff_stuff";
         }
-        elsif (/^(Index: |={5,}|RCS file: |retrieving |diff )/) {
+        elsif (/^(Index: |={4,}|RCS file: |retrieving |diff )/) {
             print "$cvs_stuff";
         }
         else {
@@ -373,6 +383,10 @@ foreach (@inputstream) {
         else {
             print "$plain_text";
         }
+    }
+    elsif ($diff_type eq 'wdiff') {
+        $_ =~ s/(\[-[^]]*?-\])/$file_old$1$colour{off}/g;
+        $_ =~ s/(\{\+[^]]*?\+\})/$file_new$1$colour{off}/g;
     }
     s/$/$colour{off}/;
     print "$_";
