@@ -1,5 +1,4 @@
 require 'irb/completion'
-require 'rubygems'
-require 'wirble'
-Wirble.init
-Wirble.colorize
+require 'irb/ext/save-history'
+IRB.conf[:SAVE_HISTORY] = 100
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
