@@ -1,10 +1,13 @@
 ---
-:gem: --no-ri --no-rdoc
 :sources:
 - http://gems.rubyforge.org
 - http://gems.github.com/
+
 # Useful for local gems installation
 #:gemhome: /home/USERNAME/.gems
 #:gempath:
 #- /home/USERNAME/.gems
 #- /usr/lib/ruby/gems/1.8
+
+# Default options
+#:gem: --no-ri --no-rdoc
