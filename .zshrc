@@ -34,6 +34,7 @@ alias du="du -chs"
 alias df="df -h"
 alias pstree="pstree -hG"
 alias diff="diff -uN"
+alias tree="tree -C"
 
 # Colorized ls
 which dircolors > /dev/null && eval `dircolors -b`
