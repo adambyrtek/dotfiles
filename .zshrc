@@ -52,7 +52,14 @@ alias lla="ls -lA"
 autoload colors && colors
 
 # Main prompt
-PROMPT="%{${fg[yellow]}%}%n@%m:%~%#%{${reset_color}%} "
+PROMPT='%{${fg[yellow]}%}%n@%m:%~%#%{${reset_color}%} '
+
+# Git branch right prompt
+git_current_branch() {
+    ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
+    echo "[${ref#refs/heads/}]"
+}
+RPROMPT='%{${fg[red]}%}$(git_current_branch)%{${reset_color}%}'
 
 # Spelling correction prompt
 SPROMPT="%{${bg[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
@@ -137,6 +144,9 @@ setopt nolistbeep
 
 # Terminal beep
 #setopt nobeep
+
+# Dynamic variable substitution in prompt
+setopt prompt_subst
 
 
 # Set window title
