@@ -23,3 +23,6 @@
 --regex-latex=/\\ref[[:space:]]*\{([^}]+)\}/\1/r,ref/
 --regex-latex=/\\pageref[[:space:]]*\{([^}]+)\}/\1/p,pageref/
 --regex-make=/^([^:# \t]+)[ \t]*[:]{1,2}/\1/t,targets/
+--langmap=javascript:.js
+--regex-javascript=/^(.*).prototype *= *(.*)/\1/o,object/
+--regex-javascript=/^[ \t]*(.*) *: *function/\1/o,object/
