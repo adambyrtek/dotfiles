@@ -228,6 +228,7 @@ nnoremap <Leader>W :wall<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
 nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
+nnoremap <Leader>T :!ctags -R .<CR>
 
 " Leader shortcuts to frequent plugins
 nnoremap <Leader>n :NERDTreeToggle<CR>
