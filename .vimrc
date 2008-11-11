@@ -65,7 +65,7 @@ set autoindent
 set laststatus=2
 
 " Number of lines to jump during scroll
-set scrolljump=5
+"set scrolljump=5
 
 " Number of lines before the end of the screen to scroll
 set scrolloff=3
