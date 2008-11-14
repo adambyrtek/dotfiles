@@ -101,7 +101,7 @@ set directory=~/Temp,~/tmp,/var/tmp,/tmp
 let $PATH=$PATH.":/opt/local/bin"
 
 " Disable showing of bookmarks by default
-let showmarks_enable=0
+let showmarks_enable=1
 
 " Show only manual bookmarks on the margin
 let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -227,7 +227,7 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wall<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
-nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
+" nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
 nnoremap <Leader>T :!ctags -R .<CR>
 
 " Leader shortcuts to frequent plugins
