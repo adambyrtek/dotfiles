@@ -112,6 +112,7 @@ let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 " Highlight whole line when bookmark is set
 let g:showmarks_hlline_lower=1
+let g:showmarks_hlline_upper=1
 
 " Tag list shows only tags for current file
 let Tlist_Show_One_File=1
