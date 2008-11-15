@@ -181,11 +181,11 @@ augroup vimrc
     " ShowMarks highlight colors
     autocmd VimEnter *
                 \ if has('gui') |
-                \        highlight ShowMarksHLl gui=bold guifg=#a0a0e0 guibg=#2e2e2e |
-                \        highlight ShowMarksHLu gui=none guifg=#a0a0e0 guibg=#2e2e2e |
-                \        highlight ShowMarksHLo gui=none guifg=#a0a0e0 guibg=#2e2e2e |
-                \        highlight ShowMarksHLm gui=none guifg=#a0a0e0 guibg=#2e2e2e |
-                \        highlight SignColumn   gui=none guifg=#f0f0f8 guibg=#2e2e2e |
+                \        highlight ShowMarksHLl guibg=#660000 |
+                \        highlight ShowMarksHLu guibg=#660000 |
+                \        highlight ShowMarksHLo guibg=#660000 |
+                \        highlight ShowMarksHLm guibg=#660000 |
+                \        highlight SignColumn   guibg=#111111 |
                 \    endif
 
 augroup END
