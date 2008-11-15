@@ -101,10 +101,17 @@ set directory=~/Temp,~/tmp,/var/tmp,/tmp
 let $PATH=$PATH.":/opt/local/bin"
 
 " Disable showing of bookmarks by default
-let showmarks_enable=1
+if has("gui_running")
+    let g:showmarks_enable=1
+else
+    let g:showmarks_enable=0
+endif
 
 " Show only manual bookmarks on the margin
 let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+" Highlight whole line when bookmark is set
+let g:showmarks_hlline_lower=1
 
 " Tag list shows only tags for current file
 let Tlist_Show_One_File=1
@@ -117,6 +124,9 @@ let Tlist_Enable_Fold_Column=0
 
 " Show tag list window on right
 let Tlist_Use_Right_Window=1
+
+" Focus tag list window when opened
+let Tlist_GainFocus_On_ToggleOpen=1
 
 " Tags for custom languages
 " http://vim-taglist.sourceforge.net/extend.html
@@ -162,22 +172,21 @@ augroup vimrc
     "autocmd BufRead,BufNewFile * :lcd %:p:h
     "autocmd BufEnter * :lcd %:p:h
 
-    " Omni completion enabled
-    " http://amix.dk/blog/viewEntry/19021
-    autocmd FileType python setl omnifunc=pythoncomplete#Complete
-    autocmd FileType javascript setl omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType html setl omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType css setl omnifunc=csscomplete#CompleteCSS
-    autocmd FileType xml setl omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType php setl omnifunc=phpcomplete#CompletePHP
-    autocmd FileType c setl omnifunc=ccomplete#Complete
-    autocmd FileType ruby setl omnifunc=rubycomplete#Complete
-
     " Go to last known position
     autocmd BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "normal g`\"" |
-        \ endif
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \   exe "normal g`\"" |
+                \ endif
+
+    " ShowMarks highlight colors
+    autocmd VimEnter *
+                \ if has('gui') |
+                \        highlight ShowMarksHLl gui=bold guifg=#a0a0e0 guibg=#2e2e2e |
+                \        highlight ShowMarksHLu gui=none guifg=#a0a0e0 guibg=#2e2e2e |
+                \        highlight ShowMarksHLo gui=none guifg=#a0a0e0 guibg=#2e2e2e |
+                \        highlight ShowMarksHLm gui=none guifg=#a0a0e0 guibg=#2e2e2e |
+                \        highlight SignColumn   gui=none guifg=#f0f0f8 guibg=#2e2e2e |
+                \    endif
 
 augroup END
 
@@ -228,9 +237,7 @@ nnoremap <Leader>W :wall<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
 " nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
-nnoremap <Leader>T :!ctags -R .<CR>
-
-" Leader shortcuts to frequent plugins
-nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>t :TlistToggle<CR>
+nnoremap <Leader>T :!ctags -R .<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>e :BufExplorer<CR>
