@@ -13,15 +13,6 @@ hardcopydir $HOME
 # Nice status bar at the bottom with list of tabs
 caption always " %H  %-Lw%{= kw}%50> %n%f* %t %{-}%+Lw%< "
 
-# Crazy hardstatus
-#hardstatus alwayslastline "%{=b kW}[ %{= Y}$USER @ %H %{b W}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{b W}][%{= Y} %l %{b W}][%{= Y} %d/%m %{Y}%c %{b W}]"
-
-# Custom message for activity
-activity "%c activity -> %n%f %t"
-
-# Custom message for bell
-bell_msg "%c bell -> %n%f %t^G"
-
 # Bigger scrollback buffer
 defscrollback 4096
 
