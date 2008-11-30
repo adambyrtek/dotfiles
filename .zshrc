@@ -18,7 +18,7 @@ if which emerge > /dev/null; then
     alias eq=equery
 fi
 
-# New aliases
+# Aliases
 alias !=history
 alias l=less
 alias g=grep
@@ -69,7 +69,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=2048
 SAVEHIST=2048
 
-# Slash not a part of word
+# Slash not a part of a word
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 # Watch users
@@ -148,19 +148,20 @@ setopt nolistbeep
 # Dynamic variable substitution in prompt
 setopt prompt_subst
 
+# Set screen or xterm title
+title() {
+    # Truncate long command and join lines
+    t=$(print -Pn "%40>...>$1" | tr -d "\n")
 
-# Set window title
-xtitle() { print -Pn "\e]0;$1\a" }
-stitle() { print -Pn "\ek$1\e\\" }
+    case $TERM in
+        screen)
+        print -Pn "\ek$t\e\\"
+        ;;
+        xterm*|rxvt)
+        print -Pn "\e]0;$t\a"
+        ;;
+    esac
+}
 
-case $TERM in
-    xterm*|rxvt)
-    precmd() { xtitle "zsh %~" }
-    preexec() { xtitle "$1" }
-    ;;
-
-    screen)
-    precmd() { stitle "zsh %~" }
-    preexec() { stitle "$1" }
-    ;;
-esac
+precmd() { title "zsh %~" }
+preexec() { title "$1" }
