@@ -8,7 +8,7 @@ fi
 # Basic environment
 export PATH="$PATH:/usr/local/bin:$HOME/bin:."
 export PAGER=less
-export LESS="-R -X -M -I"
+export LESS="-R -X -M -I -S"
 export EDITOR=vim
 export VISUAL=$EDITOR
 export MANPAGER="col -b | view -c 'set ft=man nomod nolist' -"
