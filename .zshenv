@@ -6,7 +6,7 @@ if [[ -n $SECURITYSESSIONID ]]; then
 fi
 
 # Basic environment
-export PATH="$PATH:/var/lib/gems/1.8/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:."
+export PATH="$PATH:/usr/local/bin:$HOME/bin:."
 export PAGER=less
 export LESS="-R -X -M -I"
 export EDITOR=vim
@@ -24,20 +24,13 @@ if [[ -n $MACOSX && -d /opt/local ]]; then
     export DISPLAY=:0.0
 fi
 
-# Java on Mac OS X
-if [[ -n $MACOSX ]]; then
-    # Java on Mac OS X
-    export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
-    export ANT_HOME=/Developer/Java/ant
-
-    # JRuby
-    if [[ -d "$HOME/Code/jruby" ]]; then
-        export JRUBY_HOME=$HOME/Code/jruby
-    fi
+# Enable lesspipe if present
+if which lesspipe.sh > /dev/null; then
+    export LESSOPEN="|$(which lesspipe.sh) %s"
 fi
 
-# JRuby
-if [[ -n $JRUBY_HOME ]]; then
-    export PATH=$PATH:$JRUBY_HOME/bin
-    export CLASSPATH=lib/jruby.jar:lib/asm-3.0.jar:lib/jna.jar:.
+# Java on Mac OS X
+if [[ -n $MACOSX ]]; then
+    export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
+    export ANT_HOME=/Developer/Java/ant
 fi
