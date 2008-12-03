@@ -167,5 +167,9 @@ title() {
     esac
 }
 
+# Change title before and after each command
 precmd() { title "zsh %~" }
 preexec() { title "$1" }
+
+# ls on each directory change
+chpwd() { ls }
