@@ -11,3 +11,9 @@ IRB.conf[:AUTO_INDENT] = true
 def ri(obj)
   puts `ri #{obj}`
 end
+
+class Object
+  def local_methods
+    self.methods.sort - self.class.superclass.methods
+  end
+end
