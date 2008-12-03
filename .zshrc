@@ -27,6 +27,10 @@ alias psgrep="ps aux | grep"
 vimgrep() { vim -c "vimgrep /$1/ $*[2,-1]" -c copen }
 si() { sudo /etc/init.d/$1 $2 }
 
+# Global aliases
+alias -g '***'='**/*'
+alias -g '...'='../..'
+
 # Default parameters
 alias dirs="dirs -v"
 alias history="history -iD"
