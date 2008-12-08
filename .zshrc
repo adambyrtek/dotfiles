@@ -20,6 +20,9 @@ fi
 
 # Aliases
 alias !=history
+alias '...'='../..'
+alias '....'='../../..'
+alias '.....'='../../../../'
 alias l=less
 alias g=grep
 alias psa="ps aux"
@@ -29,7 +32,6 @@ si() { sudo /etc/init.d/$1 $2 }
 
 # Global aliases
 alias -g '***'='**/*'
-alias -g '...'='../..'
 
 # Default parameters
 alias dirs="dirs -v"

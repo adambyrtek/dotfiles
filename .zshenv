@@ -13,7 +13,7 @@ export EDITOR=vim
 export VISUAL=$EDITOR
 export MANPAGER="col -b | view -c 'set ft=man nomod nolist' -"
 export LANG=en_US.UTF-8
-export GREP_OPTIONS="--color=auto"
+export GREP_OPTIONS="--color=auto -i"
 export GREP_COLOR=32
 export EMAIL="adambyrtek@gmail.com"
 
