@@ -11,7 +11,7 @@
 # First, check "All the Usual Suspects" for the location of the Vim.app bundle.
 # You can short-circuit this by setting the VIM_APP_DIR environment variable
 # or by un-commenting and editing the following line:
-VIM_APP_DIR=/Applications/Alpha
+# VIM_APP_DIR=/Applications
 
 if [ -z "$VIM_APP_DIR" ]
 then
@@ -63,7 +63,7 @@ if [ "$gui" ]; then
 	# terminal instead of the console log.
 	# But if you use open instead, you will need to fully qualify the
 	# path names for any filenames you specify, which is hard.
-	exec "$binary" -g $opts ${1:+"$@"} &
+	exec "$binary" -g $opts ${1:+"$@"}
 else
 	exec "$binary" $opts ${1:+"$@"}
 fi
