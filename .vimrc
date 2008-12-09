@@ -140,6 +140,9 @@ let NERDShutUp=1
 " Qbuf hotkey
 let g:qb_hotkey = "<Leader>q"
 
+" Python syntax settings
+let python_highlight_all = 1
+
 " Autocommands
 augroup vimrc
     au!
@@ -155,9 +158,14 @@ augroup vimrc
     " LaTeX compiler
     autocmd FileType tex compiler tex
 
-    " PHP make command
+    " PHP syntaxt error checking
     autocmd FileType php setl makeprg=php5\ -l\ %
     autocmd FileType php setl errorformat=%m\ in\ %f\ on\ line\ %l
+
+    " Python syntax error checking
+    " http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
+    autocmd FileType python setl makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
+    autocmd FileType python setl efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 
     " Ruby indentation
     autocmd FileType ruby setl shiftwidth=2
