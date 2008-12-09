@@ -1,5 +1,2 @@
 # Ignore everything that hasn't been explicitly added
-.*
 *
-**/.*
-**/*
