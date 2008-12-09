@@ -184,18 +184,18 @@ augroup vimrc
     " Go to last known position
     autocmd BufReadPost *
                 \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                \   exe "normal g`\"" |
+                \     exe "normal g`\"" |
                 \ endif
 
     " ShowMarks highlight colors
     autocmd VimEnter *
                 \ if has('gui') |
-                \        highlight ShowMarksHLl guibg=#660000 |
-                \        highlight ShowMarksHLu guibg=#660000 |
-                \        highlight ShowMarksHLo guibg=#660000 |
-                \        highlight ShowMarksHLm guibg=#660000 |
-                \        highlight SignColumn   guibg=#111111 |
-                \    endif
+                \     highlight ShowMarksHLl guibg=#660000 |
+                \     highlight ShowMarksHLu guibg=#660000 |
+                \     highlight ShowMarksHLo guibg=#660000 |
+                \     highlight ShowMarksHLm guibg=#660000 |
+                \     highlight SignColumn   guibg=#111111 |
+                \ endif
 
 augroup END
 
