@@ -140,9 +140,6 @@ let NERDShutUp=1
 " Qbuf hotkey
 let g:qb_hotkey = "<Leader>q"
 
-" Python syntax settings
-let python_highlight_all = 1
-
 " Autocommands
 augroup vimrc
     au!
