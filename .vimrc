@@ -163,9 +163,11 @@ augroup vimrc
     " http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
     autocmd FileType python setl makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
     autocmd FileType python setl efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+    autocmd FileType python setl tags+=$HOME/.python/tags
 
     " Ruby indentation
     autocmd FileType ruby setl shiftwidth=2
+    autocmd FileType ruby setl tags+=$HOME/.gems/tags
     autocmd FileType eruby setl shiftwidth=2
 
     " Correct type for ERB files
