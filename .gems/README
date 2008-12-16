@@ -1,0 +1,5 @@
+RubyGems Home
+=============
+
+Place for Ruby gems installed by the current user. GEM_HOME environment
+variable has to point to this directory.

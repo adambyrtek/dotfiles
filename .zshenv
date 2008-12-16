@@ -6,7 +6,7 @@ if [[ -n $SECURITYSESSIONID ]]; then
 fi
 
 # Basic environment
-export PATH="$PATH:/usr/local/bin:$HOME/bin:$HOME/.python/bin:."
+export PATH="$PATH:/usr/local/bin:$HOME/bin:$HOME/.python/bin"
 export PAGER=less
 export LESS="-R -X -M -I -S"
 export EDITOR=vim
@@ -16,6 +16,13 @@ export LANG=en_US.UTF-8
 export GREP_OPTIONS="--color=auto -i"
 export GREP_COLOR=32
 export EMAIL="adambyrtek@gmail.com"
+
+# Ruby gems installed in home directory
+export GEM_HOME="$HOME/.gems"
+export PATH="$PATH:$GEM_HOME/bin"
+
+# Current directory always at the end
+export PATH="$PATH:."
 
 # MacPorts
 if [[ -n $MACOSX && -d /opt/local ]]; then
