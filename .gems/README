@@ -2,4 +2,9 @@ RubyGems Home
 =============
 
 Place for Ruby gems installed by the current user. GEM_HOME environment
-variable has to point to this directory.
+variable has to point to this directory. Remember that you have to require
+rubygems first. It can be done automatically by setting RUBYOPT environment
+variable to "-rubygems".
+
+Makefile is used to generate the tags file for installed gems, it can be used
+for example in Vim after set tags+="$HOME/.gems/tags".
