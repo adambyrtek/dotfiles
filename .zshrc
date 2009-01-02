@@ -62,7 +62,7 @@ PROMPT='%{${fg[yellow]}%}%n@%m:%~%#%{${reset_color}%} '
 
 # Git branch right prompt
 git_current_branch() {
-    ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
     echo "[${ref#refs/heads/}]"
 }
 RPROMPT='%{${fg[red]}%}$(git_current_branch)%{${reset_color}%}'
