@@ -1,0 +1,21 @@
+#/bin/bash
+
+EXCLUDE="Music Movies Downloads Temp Repos CS"
+DEST="/Volumes/Mac Backup"
+
+if [[ ! -w $DEST ]]; then
+    echo "Destination directory not found or not writable" && exit 1
+fi
+
+EXCLUDEOPTS=""
+for DIR in $EXCLUDE; do
+    EXCLUDEOPTS="--exclude="$DIR" $EXCLUDEOPTS"
+done
+
+# Rsync to destination
+nice rsync -va --delete-after $EXCLUDEOPTS "$HOME" "$DEST"
+
+# Dump list of ports
+if which port > /dev/null; then
+    port list > $DEST/port.list
+fi
