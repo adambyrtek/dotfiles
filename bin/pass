@@ -2,7 +2,7 @@
 
 # Edit password protected file
 
-ENCFILE=~/pass.gpg
+ENCFILE=~/Documents/pass.gpg
 
 set -e
 

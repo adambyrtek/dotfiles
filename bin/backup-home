@@ -1,7 +1,7 @@
 #/bin/bash
 
 EXCLUDE="Music Movies Downloads Temp Repos CS"
-DEST="/Volumes/Mac Backup"
+DEST="/Volumes/Backup"
 
 if [[ ! -w $DEST ]]; then
     echo "Destination directory not found or not writable" && exit 1
