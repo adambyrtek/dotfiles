@@ -2,14 +2,10 @@
 
 ENCDIR=~/Documents/Hush
 PLAINDIR=~/Documents/Plain
-PASSFILE=pass.txt
+PASSFILE=pass.yml
 
 set -e
 
-if [[ -z $EDITOR ]]; then
-   echo "EDITOR not set" && exit
-fi
-
 encfs "$ENCDIR" "$PLAINDIR"
 trap "umount \"$PLAINDIR\"" EXIT
-$EDITOR "$PLAINDIR/$PASSFILE"
+vim -n "$PLAINDIR/$PASSFILE"
