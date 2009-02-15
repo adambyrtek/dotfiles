@@ -9,3 +9,4 @@ set -e
 encfs "$ENCDIR" "$PLAINDIR"
 trap "umount \"$PLAINDIR\"" EXIT
 vim -n "$PLAINDIR/$PASSFILE"
+clear
