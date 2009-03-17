@@ -241,7 +241,6 @@ inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 " Leader shortcuts to frequent actions
 nnoremap <Leader>a :b#<CR>
 nnoremap <Leader>w :w<CR>
-nnoremap <Leader>W :wall<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
 " nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
@@ -249,3 +248,6 @@ nnoremap <Leader>t :TlistToggle<CR>
 nnoremap <Leader>T :!ctags -R .<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>e :BufExplorer<CR>
+
+" Custom commands
+command W write !sudo tee % > /dev/null
