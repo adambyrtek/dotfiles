@@ -1,6 +1,9 @@
 [miscellany]
 enable-auto-props = yes
 
+[helpers]
+diff-cmd=colordiff
+
 [auto-props]
 Portfile = svn:eol-style=native;svn:keywords=Id
 *.php = svn:eol-style=native
