@@ -27,7 +27,7 @@ export PATH="$PATH:."
 
 # MacPorts
 if [[ -n $MACOSX && -d /opt/local ]]; then
-    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+    export PATH=/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql83/bin:$PATH
     export MANPATH=/opt/local/share/man:$MANPATH
     export DISPLAY=:0.0
 fi
