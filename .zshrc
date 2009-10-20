@@ -42,6 +42,11 @@ alias pstree="pstree -hG"
 alias diff="diff -uN"
 alias tree="tree -C"
 
+# Simulate open command from Mac OS X
+if which xdg-open > /dev/null; then
+    alias open="xdg-open"
+fi
+
 # Colorized ls
 which dircolors > /dev/null && eval `dircolors -b`
 if [[ -z $MACOSX ]]; then
