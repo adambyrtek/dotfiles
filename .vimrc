@@ -108,7 +108,7 @@ else
 endif
 
 " Show only manual bookmarks on the margin
-let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+let g:showmarks_include="abcdef"
 
 " Highlight whole line when bookmark is set
 let g:showmarks_hlline_lower=1
