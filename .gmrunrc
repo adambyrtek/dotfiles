@@ -1,0 +1,4 @@
+URL_http = xdg-open %u
+URL_mailto = xdg-open %u
+URL_file = xdg-open %u
+EXT:pdf = xdg-open %s
