@@ -180,3 +180,6 @@ preexec() { title "$1" }
 
 # ls on each directory change
 chpwd() { ls }
+
+# man pages displayed in vim
+man() { /usr/bin/man $* | col -b | vim -R -c 'set ft=man nomod nolist' -; }
