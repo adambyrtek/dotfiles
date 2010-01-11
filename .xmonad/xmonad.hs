@@ -5,9 +5,13 @@ import XMonad.Util.EZConfig
 
 myManageHook :: [ManageHook]
 myManageHook =
-    [ resource =? "Do"   --> doIgnore ]
+    [ resource =? "Do" --> doIgnore ]
 
 main = xmonad $ gnomeConfig
-    { modMask = mod4Mask, manageHook = manageHook gnomeConfig <+> composeAll myManageHook }
+    { modMask = mod4Mask
+    , manageHook = manageHook gnomeConfig <+> composeAll myManageHook
+    }
     `additionalKeysP`
-        [ ("M-S-l",    spawn "gnome-screensaver-command -l") ]
+        [ ("M-S-l", spawn "gnome-screensaver-command -l")
+        , ("M-p", spawn "gmrun")
+        ]
