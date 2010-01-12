@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Actions.CycleWS
 import XMonad.Config.Gnome
 import XMonad.ManageHook
 import XMonad.Util.EZConfig
@@ -14,4 +15,8 @@ main = xmonad $ gnomeConfig
     `additionalKeysP`
         [ ("M-S-l", spawn "gnome-screensaver-command -l")
         , ("M-p", spawn "gmrun")
+        , ("M-[", prevWS)
+        , ("M-]", nextWS)
+        , ("M-S-[", shiftToPrev)
+        , ("M-S-]", shiftToNext)
         ]
