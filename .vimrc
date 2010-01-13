@@ -140,6 +140,9 @@ let NERDShutUp=1
 " Qbuf hotkey
 let g:qb_hotkey = "<Leader>q"
 
+" Prefer symmetric encryption
+let g:GPGPreferSymmetric = 1
+
 " Autocommands
 augroup vimrc
     au!
