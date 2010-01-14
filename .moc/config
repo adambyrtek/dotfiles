@@ -1,1 +1,6 @@
+# Dark theme
 Theme = darkdot_theme
+
+# Last.fm support
+# http://devnulll.blogspot.com/2007/08/how-to-submit-songs-to-lastfm-whilst_03.html
+OnSongChange = "/usr/lib/lastfmsubmitd/lastfmsubmit --artist %a --title %t --length %d --album %r"
