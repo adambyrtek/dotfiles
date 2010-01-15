@@ -5,7 +5,7 @@ escape ``
 startup_message off
 
 # Use visual bell
-vbell on
+vbell off
 
 # Put hardcopies in home directory
 hardcopydir $HOME
