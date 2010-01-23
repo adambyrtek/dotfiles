@@ -63,8 +63,9 @@ alias lla="ls -lA"
 # Load color module
 autoload colors && colors
 
-# Main prompt
-PROMPT='%{${fg[yellow]}%}%n@%m:%~%#%{${reset_color}%} '
+# Main prompt, empty line for readability
+PROMPT='
+%{${fg[yellow]}%}%n@%m:%~%#%{${reset_color}%} '
 
 # Git branch right prompt
 git_current_branch() {
