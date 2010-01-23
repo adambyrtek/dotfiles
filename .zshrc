@@ -121,6 +121,11 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:options' auto-description '%d*' 
 
+# Process name completion includes processes without tty
+zstyle ':completion:*:*:*:*:processes' command  'ps -a -u $USER -o pid,user,cmd'
+zstyle ':completion:*:*:*:*:processes' menu yes select
+zstyle ':completion:*:*:*:*:processes' force-list always
+
 # Append to history file instantly
 setopt incappendhistory
 
