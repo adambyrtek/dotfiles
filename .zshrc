@@ -25,6 +25,7 @@ alias '....'='../../..'
 alias '.....'='../../../../'
 alias l=less
 alias g=grep
+alias s=screen
 alias psa="ps aux"
 alias psgrep="ps aux | grep"
 vimgrep() { vim -c "vimgrep /$1/ $*[2,-1]" -c copen }
@@ -77,8 +78,8 @@ SPROMPT="%{${bg[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
 
 # History
 HISTFILE=~/.zsh_history
-HISTSIZE=2048
-SAVEHIST=2048
+HISTSIZE=10000
+SAVEHIST=10000
 
 # Slash not a part of a word
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
