@@ -121,8 +121,9 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:options' auto-description '%d*' 
 
-# Process name completion includes processes without tty
+# Process completion shows all processes, has menu and colors
 zstyle ':completion:*:*:*:*:processes' command  'ps -a -u $USER -o pid,user,cmd'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31' 
 zstyle ':completion:*:*:*:*:processes' menu yes select
 zstyle ':completion:*:*:*:*:processes' force-list always
 
