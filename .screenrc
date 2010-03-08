@@ -22,6 +22,9 @@ defutf8 on
 # Time after which screen is considered silent
 silencewait 10
 
+# Interactive applications don't clutter the buffer
+altscreen on
+
 # New bindings
 bind = next
 bind - prev
