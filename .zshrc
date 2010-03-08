@@ -1,8 +1,8 @@
 # ~/.zshrc
-# Sourced for interactive shells
+# Sourced for interactive shells only
 
 # Package management for Debian
-if which aptitude > /dev/null; then 
+if which aptitude > /dev/null; then
     alias a=aptitude
     alias sa="sudo aptitude"
 elif which apt-get > /dev/null; then
@@ -28,6 +28,7 @@ alias g=grep
 alias s=screen
 alias psa="ps aux"
 alias psgrep="ps aux | grep"
+calc () { echo $* | bc -l }
 vimgrep() { vim -c "vimgrep /$1/ $*[2,-1]" -c copen }
 si() { sudo /etc/init.d/$1 $2 }
 
@@ -60,19 +61,64 @@ alias ll="ls -l"
 alias la="ls -A"
 alias lla="ls -lA"
 
-# Load color module
+# Load colors module
 autoload colors && colors
 
-# Main prompt, empty line for readability
-PROMPT='
-%{${fg[yellow]}%}%n@%m:%~%#%{${reset_color}%} '
+# Initialize VCS info module
+autoload vcs_info
 
-# Git branch right prompt
-git_current_branch() {
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    echo "[${ref#refs/heads/}]"
+# Prompt inspired by http://kriener.org/articles/2009/06/04/zsh-prompt-magic
+for COLOR in RED GREEN YELLOW WHITE BLACK CYAN; do
+    eval PR_$COLOR='%{$fg[${(L)COLOR}]%}'
+    eval PR_BRIGHT_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
+done
+PR_RESET="%{${reset_color}%}";
+
+FMT_BRANCH="${PR_GREEN}%b%u%c${PR_RESET}"
+FMT_ACTION="(${PR_CYAN}%a${PR_RESET}%)"
+FMT_PATH="%R${PR_YELLOW}/%S"
+
+zstyle ':vcs_info:*:prompt:*' check-for-changes false
+zstyle ':vcs_info:*:prompt:*' unstagedstr '?'
+zstyle ':vcs_info:*:prompt:*' stagedstr '!'
+zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}//" "${FMT_PATH}"
+zstyle ':vcs_info:*:prompt:*' formats "${FMT_BRANCH}//" "${FMT_PATH}"
+zstyle ':vcs_info:*:prompt:*' nvcsformats "" "%~"
+
+function lprompt {
+    local brackets=$1
+    local color1=$2
+    local color2=$3
+
+    local bracket_open="${color1}${brackets[1]}${PR_RESET}"
+    local bracket_close="${color1}${brackets[2]}"
+
+    local git='$vcs_info_msg_0_'
+    local cwd="${color2}%B%1~%b"
+
+    PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}%# ${PR_RESET}"
 }
-RPROMPT='%{${fg[red]}%}$(git_current_branch)%{${reset_color}%}'
+
+function rprompt {
+    local brackets=$1
+    local color1=$2
+    local color2=$3
+
+    local bracket_open="${color1}${brackets[1]}${PR_RESET}"
+    local bracket_close="${color1}${brackets[2]}${PR_RESET}"
+    local colon="${color1}:"
+    local at="${color1}@${PR_RESET}"
+
+    local user_host="${color2}%n${at}${color2}%m"
+    local vcs_cwd='${${vcs_info_msg_1_%%.}/$HOME/~}'
+    local cwd="${color2}%B%20<..<${vcs_cwd}%<<%b"
+    local inner="${user_host}${colon}${cwd}"
+
+    RPROMPT="${PR_RESET}${bracket_open}${inner}${bracket_close}${PR_RESET}"
+}
+
+lprompt '[]' $BR_BRIGHT_BLACK $PR_WHITE
+rprompt '()' $BR_BRIGHT_BLACK $PR_WHITE
 
 # Spelling correction prompt
 SPROMPT="%{${bg[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
@@ -85,20 +131,12 @@ SAVEHIST=10000
 # Slash not a part of a word
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
-# Watch users
-#LOGCHECK=10
-#watch=(all)
-
-# Check mail
-#MAILCHECK=10
-#mailpath=(/home/alpha/mail/mbox/)
-
 # Set Emacs style editing
 bindkey -e
 
 # Bind Ctrl-Left/Right
-bindkey '\e[5D' backward-word
-bindkey '\e[5C' forward-word
+bindkey '\e[1;5D' backward-word
+bindkey '\e[1;5C' forward-word
 
 # Enable completion
 autoload -U compinit && compinit
@@ -106,7 +144,7 @@ autoload -U compinit && compinit
 # Colors in completion
 if [ -n "$LS_COLORS" ]; then
     zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-fi 
+fi
 
 # Grouping for completion types
 zstyle ':completion:*:descriptions' format "%{${fg[magenta]}%}-- %d --%{$reset_color%}"
@@ -120,11 +158,11 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 
 # Describe all command options
 zstyle ':completion:*:options' description 'yes'
-zstyle ':completion:*:options' auto-description '%d*' 
+zstyle ':completion:*:options' auto-description '%d*'
 
 # Process completion shows all processes, has menu and colors
 zstyle ':completion:*:*:*:*:processes' command  'ps -a -u $USER -o pid,user,cmd'
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31' 
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:*:*:processes' menu yes select
 zstyle ':completion:*:*:*:*:processes' force-list always
 
@@ -136,9 +174,6 @@ setopt histignorespace
 
 # Ignore duplicates in history
 setopt histignoredups
-
-# Save timestamps in history file
-setopt extendedhistory
 
 # Safe redirections
 setopt noclobber
@@ -158,14 +193,17 @@ setopt autopushd
 # Spelling correction
 setopt correct
 
-# Don't beep when showing list of completions
-setopt nolistbeep
+# No beep when showing list of completions
+#setopt nolistbeep
 
-# Terminal beep
+# No line editor beep
 #setopt nobeep
 
 # Dynamic variable substitution in prompt
-setopt prompt_subst
+setopt promptsubst
+
+# Print the exit value for commands with non-zero exit status
+setopt printexitvalue
 
 # Set screen or xterm title
 title() {
@@ -183,7 +221,7 @@ title() {
 }
 
 # Change title before and after each command
-precmd() { title "zsh %~" }
+precmd() { title "zsh %~"; vcs_info prompt }
 preexec() { title "$1" }
 
 # ls on each directory change
@@ -191,3 +229,8 @@ chpwd() { ls }
 
 # man pages displayed in vim
 man() { /usr/bin/man $* | col -b | vim -R -c 'set ft=man nomod nolist' -; }
+
+# Enable lesspipe if present
+if which lesspipe > /dev/null; then
+    eval $(lesspipe)
+fi

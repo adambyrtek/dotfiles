@@ -1,4 +1,5 @@
 # ~/.zshenv
+# Sourced for all shells
 
 # Detect Mac OS X
 if [[ -n $SECURITYSESSIONID ]]; then
@@ -8,7 +9,7 @@ fi
 # Basic environment
 export PATH="$PATH:/usr/local/bin:$HOME/bin:$HOME/.python/bin"
 export PAGER=less
-export LESS="-R -X -M -I -S"
+export LESS="-R -X -M -i -S"
 export EDITOR=vim
 export VISUAL=$EDITOR
 export LANG=en_US.UTF-8
@@ -29,11 +30,6 @@ if [[ -n $MACOSX && -d /opt/local ]]; then
     export PATH=/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql83/bin:$PATH
     export MANPATH=/opt/local/share/man:$MANPATH
     export DISPLAY=:0.0
-fi
-
-# Enable lesspipe if present
-if which lesspipe.sh > /dev/null; then
-    export LESSOPEN="|$(which lesspipe.sh) %s"
 fi
 
 # Java on Mac OS X
