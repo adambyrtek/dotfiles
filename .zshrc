@@ -23,7 +23,8 @@ alias !=history
 alias '...'='../..'
 alias '....'='../../..'
 alias '.....'='../../../../'
-alias l=less
+alias l="${PAGER:-less}"
+alias e="${EDITOR:-vim}"
 alias g=grep
 alias s=screen
 alias psa="ps aux"
@@ -111,7 +112,7 @@ function rprompt {
 
     local user_host="${color2}%n${at}${color2}%m"
     local vcs_cwd='${${vcs_info_msg_1_%%.}/$HOME/~}'
-    local cwd="${color2}%B%20<..<${vcs_cwd}%<<%b"
+    local cwd="${color2}%B%30<..<${vcs_cwd}%<<%b"
     local inner="${user_host}${colon}${cwd}"
 
     RPROMPT="${PR_RESET}${bracket_open}${inner}${bracket_close}${PR_RESET}"
