@@ -1,3 +1,7 @@
+if v:version < 700
+	finish
+endif
+
 if !exists("g:qb_hotkey") || g:qb_hotkey == ""
 	let g:qb_hotkey = "<F4>"
 endif
@@ -14,7 +18,8 @@ let s:action2cmd = {"z": 'call <SID>switchbuf(#,"")', "!z": 'call <SID>switchbuf
 			\"s": "sb #",
 			\"d": 'call <SID>qbufdcmd(#,"")', "!d": 'call <SID>qbufdcmd(#,"!")',
 			\"w": "bw #", "!w": "bw! #",
-			\"l": "let s:unlisted = 1 - s:unlisted"}
+			\"l": "let s:unlisted = 1 - s:unlisted",
+			\"c": 'call <SID>closewindow(#,"")'}
 
 function s:rebuild()
 	redir @y | silent ls! | redir END
@@ -102,7 +107,7 @@ function s:init(onStart)
 		let s:cmdh = &cmdheight
 		hi Cursor guibg=NONE guifg=NONE
 
-		let s:klist = ["j", "k", "u", "d", "w", "l", "s"]
+		let s:klist = ["j", "k", "u", "d", "w", "l", "s", "c"]
 		for l:key in s:klist
 			exe "cnoremap ".l:key." ".l:key."<cr>:cal SBRun()<cr>"
 		endfor
@@ -175,5 +180,11 @@ function s:qbufdcmd(bno, mod)
 		call setbufvar(a:bno, "&buflisted", 1)
 	else
 		exe "bd" . a:mod a:bno
+	endif
+endfunc
+
+function s:closewindow(bno, mod)
+	if bufwinnr(a:bno) != -1
+		exe bufwinnr(a:bno) . "winc w|close" . a:mod
 	endif
 endfunc
