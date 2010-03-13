@@ -166,8 +166,11 @@ if [ -n "$LS_COLORS" ]; then
     zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi
 
+# Show completion indicator
+zstyle ":completion:*" show-completer true
+
 # Grouping for completion types
-zstyle ':completion:*:descriptions' format "%{${fg[magenta]}%}-- %d --%{$reset_color%}"
+zstyle ':completion:*:descriptions' format "%{${fg[magenta]}%}-* %d *-%{$reset_color%}"
 zstyle ':completion:*' group-name ""
 
 # Split manual pages by sections
