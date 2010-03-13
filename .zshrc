@@ -150,9 +150,13 @@ WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 # Set Emacs style editing
 bindkey -e
 
-# Bind Ctrl-Left/Right
+# Ctrl-Left/Right
 bindkey '\e[1;5D' backward-word
 bindkey '\e[1;5C' forward-word
+
+# Ctrl-P/Ctrl-N
+bindkey "^N" history-beginning-search-forward
+bindkey "^P" history-beginning-search-backward
 
 # Enable completion
 autoload -U compinit && compinit
