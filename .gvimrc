@@ -1,3 +1,7 @@
+" Color scheme ported from TextMate
+" http://blog.infinitered.com/entries/show/8
+colorscheme ir_black
+
 " Make the window higher
 set lines=40
 
