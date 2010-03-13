@@ -58,8 +58,13 @@ if which xdg-open > /dev/null; then
     alias open="xdg-open"
 fi
 
+# Sync history from disk
+alias h="fc -R"
+
 # Colorized ls
-which dircolors > /dev/null && eval `dircolors -b`
+if which dircolors > /dev/null; then
+    eval $(dircolors -b)
+fi
 if [[ -z $MACOSX ]]; then
     alias ls="ls -hF --color=auto"
 else
