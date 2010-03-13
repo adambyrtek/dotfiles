@@ -126,8 +126,8 @@ SPROMPT="%{${bg[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
 
 # History
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=1000000
+SAVEHIST=1000000
 
 # Slash not a part of a word
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
@@ -169,6 +169,9 @@ zstyle ':completion:*:*:*:*:processes' force-list always
 
 # Append to history file instantly
 setopt incappendhistory
+
+# Save timestamps in history file
+setopt extendedhistory
 
 # Ignore entries starting with space in history
 setopt histignorespace
