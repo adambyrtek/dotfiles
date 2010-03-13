@@ -265,7 +265,9 @@ preexec() { title "$1" }
 chpwd() { ls }
 
 # man pages displayed in vim
-man() { /usr/bin/man $* | col -b | vim -R -c 'set ft=man nomod nolist' -; }
+if which vim > /dev/null; then
+    man() { /usr/bin/man $* | col -b | vim -R -c 'set ft=man nomod nolist' -; }
+fi
 
 # Enable lesspipe if present
 if which lesspipe > /dev/null; then
