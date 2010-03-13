@@ -1,10 +1,11 @@
-" Number of lines
+" Make the window higher
 set lines=40
 
-" MacVim settings
+" Font settings
 if has("gui_macvim")
     set guifont=DejaVu\ Sans\ Mono:h13
-    colorscheme murphy
+else
+    set guifont=Inconsolata\ 11
 endif
 
 " No toolbar
