@@ -1,11 +1,15 @@
 [color]
-    diff = auto
-    status = auto
-    branch = auto
+	diff = auto
+	status = auto
+	branch = auto
 [user]
-    email = adambyrtek@gmail.com
-    name = Adam Byrtek
+	email = adambyrtek@gmail.com
+	name = Adam Byrtek
 [alias]
-    st = status
-    ci = commit
-    co = checkout
+	st = status
+	ci = commit
+	co = checkout
+	meld = !git-meld
+	vimdiff = !git-vimdiff
+[merge]
+	tool = meld
