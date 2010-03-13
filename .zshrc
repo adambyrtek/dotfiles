@@ -94,7 +94,7 @@ zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}//" "${FM
 zstyle ':vcs_info:*:prompt:*' formats "${FMT_BRANCH}//" "${FMT_PATH}"
 zstyle ':vcs_info:*:prompt:*' nvcsformats "" "%~"
 
-function lprompt {
+_lprompt() {
     local brackets=$1
     local color1=$2
     local color2=$3
@@ -108,7 +108,7 @@ function lprompt {
     PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}%# ${PR_RESET}"
 }
 
-function rprompt {
+_rprompt() {
     local brackets=$1
     local color1=$2
     local color2=$3
@@ -126,8 +126,8 @@ function rprompt {
     RPROMPT="${PR_RESET}${bracket_open}${inner}${bracket_close}${PR_RESET}"
 }
 
-lprompt '[]' $BR_BRIGHT_BLACK $PR_WHITE
-rprompt '()' $BR_BRIGHT_BLACK $PR_WHITE
+_lprompt '[]' $BR_BRIGHT_BLACK $PR_WHITE
+_rprompt '()' $BR_BRIGHT_BLACK $PR_WHITE
 
 # Spelling correction prompt
 SPROMPT="%{${bg[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
@@ -238,11 +238,11 @@ title() {
     t=$(print -Pn "%40>...>$1" | tr -d "\n")
 
     case $TERM in
-    screen)
+        screen)
         # Update screen title
         print -Pn "\ek$t\e\\"
         ;;
-    xterm*|rxvt)
+        xterm*|rxvt)
         # Update xterm window title
         print -Pn "\e]0;$t\a"
         ;;
