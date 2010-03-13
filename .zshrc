@@ -18,6 +18,12 @@ if which emerge > /dev/null; then
     alias eq=equery
 fi
 
+# Package management for Arch Linux
+if which pacman > /dev/null; then
+    alias p=pacman
+    alias sp="sudo pacman"
+fi
+
 # Aliases
 alias !=history
 alias '...'='../..'
@@ -27,11 +33,13 @@ alias l="${PAGER:-less}"
 alias e="${EDITOR:-vim}"
 alias g=grep
 alias s=screen
-alias psa="ps aux"
+alias o=open
+alias psa=ps aux
 alias psgrep="ps aux | grep"
 calc () { echo $* | bc -l }
 vimgrep() { vim -c "vimgrep /$1/ $*[2,-1]" -c copen }
 si() { sudo /etc/init.d/$1 $2 }
+beep() { printf "\a" }
 
 # Global aliases
 alias -g '***'='**/*'
@@ -41,11 +49,11 @@ alias dirs="dirs -v"
 alias history="history -iD"
 alias du="du -chs"
 alias df="df -h"
-alias pstree="pstree -hG"
+alias pstree="pstree -h"
 alias diff="diff -uN"
-alias tree="tree -C"
+alias tree="tree -F"
 
-# Simulate open command from Mac OS X
+# Emulate open command from Mac OS X
 if which xdg-open > /dev/null; then
     alias open="xdg-open"
 fi
@@ -124,10 +132,17 @@ rprompt '()' $BR_BRIGHT_BLACK $PR_WHITE
 # Spelling correction prompt
 SPROMPT="%{${bg[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
 
-# History
+# History file
 HISTFILE=~/.zsh_history
+
+# Size of internal history buffer
 HISTSIZE=1000000
+
+# Number of history lines to save
 SAVEHIST=1000000
+
+# Show as many completions as fit on the screen
+LISTMAX=0
 
 # Slash not a part of a word
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
@@ -194,14 +209,17 @@ setopt autocd
 # Add every directory to the stack
 setopt autopushd
 
+# Ignore duplicates on the stack
+setopt pushdignoredups
+
 # Spelling correction
 setopt correct
 
 # No beep when showing list of completions
-#setopt nolistbeep
+setopt nolistbeep
 
-# No line editor beep
-#setopt nobeep
+# No line editor beep at all
+setopt nobeep
 
 # Dynamic variable substitution in prompt
 setopt promptsubst
