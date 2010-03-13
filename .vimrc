@@ -229,7 +229,8 @@ nnoremap <Leader>T :!ctags -R .<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
-nnoremap <Leader>h :set invhlsearch<CR>
+nnoremap <Leader>h :set invhlsearch<CR>:set hlsearch?<CR>
+nnoremap <Leader>p :set invpaste<CR>:set paste?<CR>
 
 " Write buffer using sudo
 command W write !sudo tee % > /dev/null

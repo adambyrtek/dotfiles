@@ -229,6 +229,9 @@ setopt nobeep
 # Dynamic variable substitution in prompt
 setopt promptsubst
 
+# Erase the right prompt after a line is accepted
+setopt transientrprompt
+
 # Print the exit value for commands with non-zero exit status
 setopt printexitvalue
 
