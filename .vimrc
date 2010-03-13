@@ -1,5 +1,5 @@
 " Color scheme
-colorscheme pablo
+colorscheme elflord
 
 " Syntax highlighting
 syntax on
@@ -37,12 +37,6 @@ set expandtab
 " Number of spaces to use for indent
 set shiftwidth=4
 
-" Number of spaces to use for tab
-set tabstop=4
-
-" Highlight search in yellow
-"set hlsearch
-
 " Incremental search
 set incsearch
 
@@ -55,20 +49,11 @@ set backspace=indent,eol,start
 " Indent new lines as previous line
 set autoindent
 
-" Indent blocks of text
-"set smartindent
-
-" Always show tab list
-"set showtabline=3
-
 " Always show status
 set laststatus=2
 
-" Number of lines to jump during scroll
-"set scrolljump=5
-
 " Number of lines before the end of the screen to scroll
-set scrolloff=3
+set scrolloff=6
 
 " Buffers can be hidden
 set hidden
@@ -134,9 +119,6 @@ let Tlist_GainFocus_On_ToggleOpen=1
 let tlist_actionscript_settings='actionscript;c:class;f:method;p:property;v:variable'
 let tlist_tex_settings='latex;s:sections;g:graphics;l:labels'
 
-" NERD Commenter won't output "Unknown filetype" messages
-let NERDShutUp=1
-
 " Qbuf hotkey
 let g:qb_hotkey = "<Leader>q"
 
@@ -179,10 +161,6 @@ augroup vimrc
     " YAML indentation
     autocmd FileType yaml setl shiftwidth=2
 
-    " Change to the directory of the file
-    "autocmd BufRead,BufNewFile * :lcd %:p:h
-    "autocmd BufEnter * :lcd %:p:h
-
     " Go to last known position
     autocmd BufReadPost *
                 \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -215,7 +193,6 @@ inoremap <C-F> <C-X><C-O>
 
 " Space can be used for paging
 nnoremap <Space> <PageDown>
-nnoremap <Backspace> <PageUp>
 
 " Surround visual selection
 vnoremap ,) di()<Esc>P2l
@@ -246,11 +223,13 @@ nnoremap <Leader>a :b#<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
-" nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
+"nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
 nnoremap <Leader>t :TlistToggle<CR>
 nnoremap <Leader>T :!ctags -R .<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
+nnoremap <Leader>h :set invhlsearch<CR>
 
-" Custom commands
+" Write buffer using sudo
 command W write !sudo tee % > /dev/null

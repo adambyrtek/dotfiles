@@ -238,11 +238,11 @@ title() {
     t=$(print -Pn "%40>...>$1" | tr -d "\n")
 
     case $TERM in
-        screen)
+    screen)
         # Update screen title
         print -Pn "\ek$t\e\\"
         ;;
-        xterm*|rxvt)
+    xterm*|rxvt)
         # Update xterm window title
         print -Pn "\e]0;$t\a"
         ;;

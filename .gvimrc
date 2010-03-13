@@ -6,3 +6,6 @@ if has("gui_macvim")
     set guifont=DejaVu\ Sans\ Mono:h13
     colorscheme murphy
 endif
+
+" No toolbar
+set guioptions-=T
