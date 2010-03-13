@@ -184,10 +184,8 @@ zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:options' auto-description '%d*'
 
 # Process completion shows all processes, has menu and colors
-zstyle ':completion:*:*:*:*:processes' command  'ps -a -u $USER -o pid,user,cmd'
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:*:*:*:processes' menu yes select
-zstyle ':completion:*:*:*:*:processes' force-list always
+zstyle ':completion:*:*:*:*:processes' command  'ps -A -o pid,user,cmd'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;32'
 
 # Append to history file instantly
 setopt incappendhistory
@@ -241,19 +239,26 @@ title() {
 
     case $TERM in
         screen)
+        # Update screen title
         print -Pn "\ek$t\e\\"
         ;;
         xterm*|rxvt)
+        # Update xterm window title
         print -Pn "\e]0;$t\a"
         ;;
     esac
 }
 
-# Change title before and after each command
-precmd() { title "zsh %~"; vcs_info prompt }
+# Hook run before showing prompt
+precmd() { 
+    title "zsh %1~"
+    vcs_info prompt
+}
+
+# Hook run before executing command
 preexec() { title "$1" }
 
-# ls on each directory change
+# Hook run on each directory change
 chpwd() { ls }
 
 # man pages displayed in vim
