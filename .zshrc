@@ -53,9 +53,13 @@ alias pstree="pstree -h"
 alias diff="diff -uN"
 alias tree="tree -F"
 
-# Emulate open command from Mac OS X
+# Emulate commands from Mac OS X
 if which xdg-open > /dev/null; then
     alias open="xdg-open"
+fi
+if which xclip > /dev/null; then
+    alias pbcopy="xclip -i"
+    alias pbpaste="xclip -o"
 fi
 
 # Sync history from disk
