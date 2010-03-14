@@ -128,7 +128,7 @@ _rprompt() {
     local at="${color1}@${PR_RESET}"
 
     local user_host="${color2}%n${at}${color2}%m"
-    local vcs_cwd='${${vcs_info_msg_1_%%.}/$HOME/~}'
+    local vcs_cwd='${${vcs_info_msg_1_%%.}/${HOME}/~}'
     local cwd="${color2}%B%30<..<${vcs_cwd}%<<%b"
     local inner="${user_host}${colon}${cwd}"
 
@@ -176,7 +176,7 @@ if [ -n "$LS_COLORS" ]; then
 fi
 
 # Show completion indicator
-zstyle ":completion:*" show-completer true
+#zstyle ":completion:*" show-completer true
 
 # Grouping for completion types
 zstyle ':completion:*:descriptions' format "%{${fg[magenta]}%}-* %d *-%{$reset_color%}"
@@ -192,9 +192,12 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:options' auto-description '%d*'
 
-# Process completion shows all processes, has menu and colors
+# Process completion shows all processes with colors
 zstyle ':completion:*:*:*:*:processes' command  'ps -A -o pid,user,cmd'
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;32'
+zstyle ':completion:*:*:*:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;32'
+
+# Cache expensive completions
+zstyle ':completion:*' use-cache on
 
 # Append to history file instantly
 setopt incappendhistory
@@ -275,7 +278,9 @@ chpwd() { ls }
 
 # man pages displayed in vim
 if which vim > /dev/null; then
-    man() { /usr/bin/man $* | col -b | vim -R -c 'set ft=man nomod nolist' -; }
+    man() {
+        /usr/bin/man $* | col -b | vim -R -c 'set ft=man nomod nolist' -
+    }
 fi
 
 # Enable lesspipe if present
