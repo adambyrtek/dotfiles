@@ -3,14 +3,16 @@ import Data.Ratio ((%))
 import XMonad
 import XMonad.Actions.CycleWS
 import XMonad.Config.Gnome
+import XMonad.Hooks.ManageDocks
 import XMonad.Layout.IM
+import XMonad.Layout.NoBorders
 import XMonad.ManageHook
 import XMonad.Util.EZConfig
 
 myManageHook :: [ManageHook]
 myManageHook = [ resource =? "Do" --> doIgnore ]
 
-myLayout = tiled ||| Mirror tiled ||| Full ||| gridIM (1%7) (ClassName "psi")
+myLayout = avoidStruts $ smartBorders $ tiled ||| Mirror tiled ||| Full ||| gridIM (1%7) (ClassName "psi")
     where 
         tiled = Tall nmaster delta ratio
         nmaster = 1
