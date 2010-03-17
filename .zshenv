@@ -22,6 +22,9 @@ export RUBYOPT="-rubygems"
 export GEM_HOME="$HOME/.gems"
 export PATH="$PATH:$GEM_HOME/bin"
 
+# Startup file for Python interpreter
+export PYTHONSTARTUP="$HOME/.pythonrc.py"
+
 # Current directory always at the end
 export PATH="$PATH:."
 
