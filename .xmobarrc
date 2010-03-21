@@ -3,13 +3,14 @@ Config { font = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u"
        , fgColor = "#AFAF87"
        , position = Top 
        , lowerOnStart = True
-       , commands = [ Run Network "wlan0" ["-L","0","-H","32","--normal","#429942","--high","#A36666"] 10
-                    , Run Cpu ["-L","3","-H","50","--normal","#429942","--high","#A36666"] 10
+       , commands = [ Run Network "wlan0" [] 10
+                    , Run Cpu ["-L","50","-H","80","-n","yellow","-h","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
-                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run Date "%Y-%m-%d %H:%M:%S" "date" 10
+                    , Run Battery ["-L","5","-H","20","-l","red","-n","yellow"] 10
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %StdinReader% }{ %cpu% | %memory% | %wlan0% | %date%"
+       , template = " %StdinReader% }{ %cpu% | %memory% | %wlan0% | %battery% | %date%"
        }

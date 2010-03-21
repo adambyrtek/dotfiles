@@ -6,6 +6,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.IM
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.NoBorders
@@ -21,7 +22,7 @@ myManageHook = composeAll [ manageDocks
                , className =? "Gimp" --> doFloat
                ]
 
-myLayout = avoidStruts $ smartBorders $ tiled ||| Mirror tiled ||| simpleTabbed ||| gridIM (1%7) (Title "Buddy List")
+myLayout = avoidStruts $ smartBorders $ tiled ||| Mirror tiled ||| simpleTabbed ||| gridIM (1%6) (Title "Buddy List")
     where 
         tiled = ResizableTall 1 (3/100) (1/2) [1]
 
@@ -35,21 +36,25 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("M-C-j", sendMessage $ MirrorShrink)
          , ("M-C-h", sendMessage $ Shrink)
          , ("M-C-l", sendMessage $ Expand)
-         , ("M-f", sendMessage $ JumpToLayout "Full")
+         --, ("M-f", sendMessage $ JumpToLayout "Full")
+         , ("M-u", focusUrgent)
          ]
 
 main = do
     host <- fmap nodeName getSystemID
-    xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
-    xmonad $ gnomeConfig
+    xmproc <- spawnPipe "/usr/bin/xmobar"
+    xmonad $ withUrgencyHook NoUrgencyHook gnomeConfig
         { modMask = mod4Mask
         --, terminal = "xterm"
         , focusedBorderColor = "#ffff00"
         , manageHook = myManageHook <+> manageHook gnomeConfig 
         , layoutHook = myLayout
-        , logHook = dynamicLogWithPP $ xmobarPP
+        , logHook = dynamicLogWithPP $ defaultPP
                         { ppOutput = hPutStrLn xmproc
+                        , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
                         , ppTitle = xmobarColor "green" "" . shorten 50
+                        , ppUrgent = xmobarColor "yellow" "red" . xmobarStrip
+                        , ppSep = " | "
                         }
         }
         `additionalKeysP` myKeys
