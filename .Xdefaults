@@ -6,3 +6,5 @@ xterm*faceSize: 11
 xterm*metaSendsEscape: true
 ! Enable 256-color mode
 XTerm*termName: xterm-256color
+! Set urgency flag on bell
+XTerm*bellIsUrgent: true
