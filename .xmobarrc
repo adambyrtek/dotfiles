@@ -1,0 +1,15 @@
+Config { font = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u"
+       , bgColor = "#000000"
+       , fgColor = "#AFAF87"
+       , position = Top 
+       , lowerOnStart = True
+       , commands = [ Run Network "wlan0" ["-L","0","-H","32","--normal","#429942","--high","#A36666"] 10
+                    , Run Cpu ["-L","3","-H","50","--normal","#429942","--high","#A36666"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %StdinReader% }{ %cpu% | %memory% | %wlan0% | %date%"
+       }
