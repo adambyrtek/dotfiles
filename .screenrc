@@ -25,6 +25,9 @@ ignorecase on
 # Disable software flow control
 defflow off
 
+# Assume terminal that supports 256 colors
+term "screen-256color"
+
 # New key bindings
 bind = next
 bind - prev
