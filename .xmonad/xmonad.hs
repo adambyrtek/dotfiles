@@ -7,12 +7,14 @@ import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
+import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
 import XMonad.ManageHook
+import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
@@ -22,9 +24,10 @@ myManageHook = composeAll [ manageDocks
                , className =? "Gimp" --> doFloat
                ]
 
-myLayout = avoidStruts $ smartBorders $ tiled ||| Mirror tiled ||| simpleTabbed ||| gridIM (1%6) (Title "Buddy List")
+myLayout = avoidStruts $ smartBorders $ (im $ tiled ||| Mirror tiled ||| Grid) ||| Full
     where 
         tiled = ResizableTall 1 (3/100) (1/2) [1]
+        im = withIM (1%6) (Title "Buddy List") 
 
 myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("M-p", spawn "gmrun")
@@ -36,9 +39,16 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("M-C-j", sendMessage $ MirrorShrink)
          , ("M-C-h", sendMessage $ Shrink)
          , ("M-C-l", sendMessage $ Expand)
-         --, ("M-f", sendMessage $ JumpToLayout "Full")
+         , ("M-f", sendMessage $ JumpToLayout "Full")
          , ("M-u", focusUrgent)
          ]
+         ++
+         -- Use view instead of greedyView for all workspaces
+         [ (otherModMasks ++ "M-" ++ [key], action tag)
+         | (tag, key)  <- zip ["1","2","3","4","5","6","7","8","9"] "123456789"
+         , (otherModMasks, action) <- [ ("", windows . W.view) -- was W.greedyView
+                                      , ("S-", windows . W.shift)]
+    ]
 
 main = do
     host <- fmap nodeName getSystemID
