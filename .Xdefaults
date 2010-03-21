@@ -4,3 +4,5 @@ xterm*faceName: Inconsolata
 xterm*faceSize: 11
 ! Make Left Alt behave correctly
 xterm*metaSendsEscape: true
+! Enable 256-color mode
+XTerm*termName: xterm-256color
