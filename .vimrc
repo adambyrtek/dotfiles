@@ -167,7 +167,7 @@ augroup vimrc
                 \     exe "normal g`\"" |
                 \ endif
 
-    " ShowMarks highlight colors
+    " ShowMarks highlight colors and highlight tabs
     autocmd VimEnter *
                 \ if has('gui') |
                 \     highlight ShowMarksHLl guibg=#660000 |
@@ -175,7 +175,8 @@ augroup vimrc
                 \     highlight ShowMarksHLo guibg=#660000 |
                 \     highlight ShowMarksHLm guibg=#660000 |
                 \     highlight SignColumn   guibg=#111111 |
-                \ endif
+                \ endif |
+                \ syntax match Error "\t"
 
 augroup END
 
@@ -231,6 +232,7 @@ nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
 nnoremap <Leader>h :set invhlsearch<CR>:set hlsearch?<CR>
 nnoremap <Leader>p :set invpaste<CR>:set paste?<CR>
+nnoremap <Leader>l :set invlist<CR>:set list?<CR>
 
 " Write buffer using sudo
 command W write !sudo tee % > /dev/null
