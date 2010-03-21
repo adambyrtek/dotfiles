@@ -42,7 +42,7 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
 
 main = do
     host <- fmap nodeName getSystemID
-    xmproc <- spawnPipe "/usr/bin/xmobar"
+    xmobarProc <- spawnPipe "/usr/bin/xmobar"
     xmonad $ withUrgencyHook NoUrgencyHook gnomeConfig
         { modMask = mod4Mask
         --, terminal = "xterm"
@@ -50,7 +50,7 @@ main = do
         , manageHook = myManageHook <+> manageHook gnomeConfig 
         , layoutHook = myLayout
         , logHook = dynamicLogWithPP $ defaultPP
-                        { ppOutput = hPutStrLn xmproc
+                        { ppOutput = hPutStrLn xmobarProc
                         , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
                         , ppTitle = xmobarColor "green" "" . shorten 50
                         , ppUrgent = xmobarColor "yellow" "red" . xmobarStrip
