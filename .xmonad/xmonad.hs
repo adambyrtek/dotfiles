@@ -1,34 +1,51 @@
 import Data.Ratio ((%))
+import System.Posix.Unistd
 
-import XMonad
+import XMonad hiding ( (|||) )
 import XMonad.Actions.CycleWS
 import XMonad.Config.Gnome
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.IM
+import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.NoBorders
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Tabbed
 import XMonad.ManageHook
 import XMonad.Util.EZConfig
 
-myManageHook :: [ManageHook]
-myManageHook = [ resource =? "Do" --> doIgnore ]
+myManageHook = composeAll 
+               [ resource =? "Do" --> doIgnore
+               , className =? "Xmessage" --> doFloat
+               , manageDocks
+               ]
 
-myLayout = avoidStruts $ smartBorders $ tiled ||| Mirror tiled ||| Full ||| gridIM (1%7) (ClassName "psi")
+myLayout = avoidStruts $ smartBorders $ tiled ||| Mirror tiled ||| simpleTabbed ||| gridIM (1%7) (Title "Buddy List")
     where 
-        tiled = Tall nmaster delta ratio
-        nmaster = 1
-        delta = 3/100
-        ratio = 1/2
+        tiled = ResizableTall 1 (3/100) (1/2) [1]
 
-main = xmonad $ gnomeConfig
-    { modMask = mod4Mask
-    , manageHook = manageHook gnomeConfig <+> composeAll myManageHook
-    , layoutHook = myLayout
-    }
-    `additionalKeysP`
-        [ ("M-S-l", spawn "gnome-screensaver-command -l")
-        , ("M-p", spawn "gmrun")
-        , ("M-[", prevWS)
-        , ("M-]", nextWS)
-        , ("M-S-[", shiftToPrev)
-        , ("M-S-]", shiftToNext)
-        ]
+myKeys =
+         [ ("M-S-l", spawn "gnome-screensaver-command -l")
+         , ("M-p", spawn "gmrun")
+         , ("M-[", prevWS)
+         , ("M-]", nextWS)
+         , ("M-S-[", shiftToPrev)
+         , ("M-S-]", shiftToNext)
+         , ("M-C-k", sendMessage $ MirrorExpand)
+         , ("M-C-j", sendMessage $ MirrorShrink)
+         , ("M-C-h", sendMessage $ Shrink)
+         , ("M-C-l", sendMessage $ Expand)
+         --, ("M-f", sendMessage $ JumpToLayout "Full")
+         ]
+
+main = do
+    host <- fmap nodeName getSystemID
+    conf <- dzen gnomeConfig
+    xmonad $ conf
+        { modMask = mod4Mask
+        --, terminal = "xterm"
+        , focusedBorderColor = "#ffff00"
+        , manageHook = myManageHook <+> manageHook conf 
+        , layoutHook = myLayout
+        }
+        `additionalKeysP` myKeys
