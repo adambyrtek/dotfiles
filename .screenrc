@@ -4,9 +4,6 @@ escape ``
 # Don't show startup message
 startup_message off
 
-# Use visual bell
-vbell off
-
 # Put hardcopies in home directory
 hardcopydir $HOME
 
@@ -14,10 +11,7 @@ hardcopydir $HOME
 caption always " %H  %-Lw%{= kw}%50> %n%f* %t %{-}%+Lw%< "
 
 # Bigger scrollback buffer
-defscrollback 4096
-
-# Use UTF-8 by default
-defutf8 on
+defscrollback 10000
 
 # Time after which screen is considered silent
 silencewait 10
@@ -25,10 +19,17 @@ silencewait 10
 # Interactive applications don't clutter the buffer
 altscreen on
 
-# New bindings
+# Ignore case in searches
+ignorecase on
+
+# Disable software flow control
+defflow off
+
+# New key bindings
 bind = next
 bind - prev
 bind w windowlist -b
 bind o focus
-bind q only
+bind m monitor
 bind s silence
+bind x remove
