@@ -14,6 +14,8 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
 import XMonad.ManageHook
+import XMonad.Prompt
+import XMonad.Prompt.Shell
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
@@ -50,6 +52,8 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("<XF86AudioMute>" , spawn "amixer -q set Master toggle")
          , ("<XF86AudioRaiseVolume>" , spawn "amixer -q set Master 2dB+")
          , ("<XF86Display>", spawn "xrandr --auto")
+         -- Shell prompt
+         , ("M-S-p", shellPrompt defaultXPConfig)
          ]
          ++
          -- Use view instead of greedyView for all workspaces
