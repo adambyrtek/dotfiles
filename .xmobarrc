@@ -1,5 +1,5 @@
 Config { font = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u"
-       , bgColor = "#000000"
+       , bgColor = "#222222"
        , fgColor = "#AFAF87"
        , position = Top 
        , lowerOnStart = True
