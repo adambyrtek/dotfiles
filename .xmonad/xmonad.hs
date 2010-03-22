@@ -31,16 +31,25 @@ myLayout = avoidStruts $ smartBorders $ (im $ tiled ||| Mirror tiled ||| Grid) |
 
 myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("M-p", spawn "gmrun")
+         -- Cycling between workspaces
          , ("M-[", prevWS)
          , ("M-]", nextWS)
          , ("M-S-[", shiftToPrev)
          , ("M-S-]", shiftToNext)
+         -- Resize resizable layouts
          , ("M-C-k", sendMessage $ MirrorExpand)
          , ("M-C-j", sendMessage $ MirrorShrink)
          , ("M-C-h", sendMessage $ Shrink)
          , ("M-C-l", sendMessage $ Expand)
+         -- Maximize
          , ("M-f", sendMessage $ JumpToLayout "Full")
+         -- Focus window with urgency flag
          , ("M-u", focusUrgent)
+         -- Multimedia keys
+         , ("<XF86AudioLowerVolume>" , spawn "amixer -q set Master 2dB-")
+         , ("<XF86AudioMute>" , spawn "amixer -q set Master toggle")
+         , ("<XF86AudioRaiseVolume>" , spawn "amixer -q set Master 2dB+")
+         , ("<XF86Display>", spawn "xrandr --auto")
          ]
          ++
          -- Use view instead of greedyView for all workspaces
