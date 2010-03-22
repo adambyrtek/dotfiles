@@ -50,6 +50,14 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
                                       , ("S-", windows . W.shift)]
     ]
 
+myLogHook proc = dynamicLogWithPP $ defaultPP
+                 { ppOutput = hPutStrLn proc
+                 , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
+                 , ppTitle = xmobarColor "green" "" . shorten 50
+                 , ppUrgent = xmobarColor "yellow" "red" . xmobarStrip
+                 , ppSep = " | "
+                 }
+
 main = do
     host <- fmap nodeName getSystemID
     xmobarProc <- spawnPipe "/usr/bin/xmobar"
@@ -59,12 +67,6 @@ main = do
         , focusedBorderColor = "#ffff00"
         , manageHook = myManageHook <+> manageHook gnomeConfig 
         , layoutHook = myLayout
-        , logHook = dynamicLogWithPP $ defaultPP
-                        { ppOutput = hPutStrLn xmobarProc
-                        , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
-                        , ppTitle = xmobarColor "green" "" . shorten 50
-                        , ppUrgent = xmobarColor "yellow" "red" . xmobarStrip
-                        , ppSep = " | "
-                        }
+        , logHook = myLogHook xmobarProc
         }
         `additionalKeysP` myKeys
