@@ -86,7 +86,7 @@ set directory=~/Temp,~/tmp,/var/tmp,/tmp
 let $PATH=$PATH.":/opt/local/bin"
 
 " Tab doesn't break indentation in list mode
-set lcs=tab:>-,trail:%,eol:$
+set listchars=tab:>-,trail:%,eol:$
 
 " Disable showing of bookmarks by default
 if has("gui_running")
