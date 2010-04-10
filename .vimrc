@@ -195,9 +195,6 @@ vnoremap <silent> <Up> gk
 " Easier omni-completion
 inoremap <C-F> <C-X><C-O>
 
-" Space can be used for paging
-nnoremap <Space> <PageDown>
-
 " Surround visual selection
 vnoremap ,) di()<Esc>P2l
 vnoremap ,} di{}<Esc>P2l
@@ -227,12 +224,14 @@ nnoremap <Leader>a :b#<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
-"nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
+nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
 nnoremap <Leader>t :TlistToggle<CR>
 nnoremap <Leader>T :!ctags -R .<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
+
+" Toggles
 nnoremap <Leader>h :set invhlsearch<CR>:set hlsearch?<CR>
 nnoremap <Leader>p :set invpaste<CR>:set paste?<CR>
 nnoremap <Leader>l :set invlist<CR>:set list?<CR>
