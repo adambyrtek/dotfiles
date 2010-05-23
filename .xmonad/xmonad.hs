@@ -27,9 +27,9 @@ myManageHook = composeAll [ manageDocks
                ]
 
 myLayout = avoidStruts $ smartBorders $ (im $ tiled ||| Mirror tiled ||| Grid) ||| Full
-    where 
+    where
         tiled = ResizableTall 1 (3/100) (1/2) [1]
-        im = withIM (1%6) (Title "Buddy List") 
+        im = withIM (1%6) (Or (Title "Buddy List") (ClassName "psi"))
 
 myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("M-p", spawn "gmrun")
@@ -73,7 +73,7 @@ myLogHook proc = dynamicLogWithPP $ defaultPP
 
 main = do
     host <- fmap nodeName getSystemID
-    xmobarProc <- spawnPipe "/usr/bin/xmobar"
+    xmobarProc <- spawnPipe "xmobar"
     xmonad $ withUrgencyHook NoUrgencyHook gnomeConfig
         { modMask = mod4Mask
         --, terminal = "xterm"
