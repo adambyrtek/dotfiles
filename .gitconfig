@@ -1,7 +1,5 @@
 [color]
-	diff = auto
-	status = auto
-	branch = auto
+	ui = auto
 [user]
 	email = adambyrtek@gmail.com
 	name = Adam Byrtek
