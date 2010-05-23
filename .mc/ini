@@ -86,38 +86,6 @@ permission_mode=0
 filetype_mode=1
 xterm_title=0
 
-[Dirs]
-other_dir=/home/alpha
-current_is_left=1
-
-[New Left Panel]
-display=listing
-reverse=0
-case_sensitive=1
-sort_order=name
-list_mode=user
-user_format=half type,name,|,size
-user_status0=half type,name,|,size,|,perm
-user_status1=half type,name,|,size,|,perm
-user_status2=half type,name,|,size,|,perm
-user_status3=half type,name
-user_status4=half type,name,|,size,|,perm
-user_mini_status=1
-
-[New Right Panel]
-display=listing
-reverse=0
-case_sensitive=1
-sort_order=name
-list_mode=user
-user_format=half type,name,|,size
-user_status0=half type,name,|,size,|,perm
-user_status1=half type,name,|,size,|,perm
-user_status2=half type,name,|,size,|,perm
-user_status3=half type,name
-user_status4=half type,name,|,size,|,perm
-user_mini_status=1
-
 [Misc]
 ftpfs_password=alpha@debian
 ftp_proxy_host=gate
