@@ -231,6 +231,9 @@ nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
 
+" Open file in the same directory
+nnoremap <Leader>E :e <C-R>=expand('%:h')<cr>/
+
 " Toggles
 nnoremap <Leader>h :set invhlsearch<CR>:set hlsearch?<CR>
 nnoremap <Leader>p :set invpaste<CR>:set paste?<CR>
