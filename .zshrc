@@ -253,7 +253,7 @@ title() {
     t=$(print -Pn "%40>...>$1" | tr -d "\n")
 
     case $TERM in
-        screen)
+        screen*)
         # Update screen title
         print -Pn "\ek$t\e\\"
         ;;
