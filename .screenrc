@@ -1,4 +1,4 @@
-# Different escape character
+# Custom escape character
 escape ``
 
 # Don't show startup message
@@ -7,8 +7,11 @@ startup_message off
 # Put hardcopies in home directory
 hardcopydir $HOME
 
-# Nice status bar at the bottom with list of tabs
-caption always " %H  %-Lw%{= kw}%50> %n%f* %t %{-}%+Lw%< "
+# Use at least one backtick for status bar auto-refresh
+backtick 1 1 1 /bin/sh -c 'cat /proc/loadavg | cut -d" " -f1'
+
+# Status bar with all windows shown as tabs
+caption always " %{B}%H%{k}  %-Lw%{= bW}%50> %n%f %t %{-}%+Lw%<  %=%{B}%1`%{k} "
 
 # Bigger scrollback buffer
 defscrollback 10000
@@ -27,6 +30,9 @@ defflow off
 
 # Assume terminal that supports 256 colors
 term "screen-256color"
+
+# Time to keep messages visible
+msgwait 1
 
 # New key bindings
 bind = next
