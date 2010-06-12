@@ -14,7 +14,7 @@ export EDITOR=vim
 export VISUAL=$EDITOR
 export LANG=en_US.UTF-8
 export GREP_OPTIONS="--color=auto -i"
-export GREP_COLOR=32
+export GREP_COLOR="1;33"
 export EMAIL="adambyrtek@gmail.com"
 
 # Ruby gems installed in home directory, always require rubygems
