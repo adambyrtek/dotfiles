@@ -13,6 +13,12 @@ backtick 1 1 1 /bin/sh -c 'cat /proc/loadavg | cut -d" " -f1'
 # Status bar with all windows shown as tabs
 caption always " %{B}%H%{k}  %-Lw%{= bW}%50> %n%f %t %{-}%+Lw%<  %=%{B}%1`%{k} "
 
+# Hardstatus for xterm title
+defhstatus "screen ^En: ^Et"
+
+# Display messages in caption not in hardstatus
+hardstatus off
+
 # Bigger scrollback buffer
 defscrollback 10000
 
