@@ -88,6 +88,9 @@ let $PATH=$PATH.":/opt/local/bin"
 " Tab doesn't break indentation in list mode
 set listchars=tab:>-,trail:%,eol:$
 
+" Grep always recursive.
+set grepprg=grep\ -rn\ $*\ /dev/null
+
 " Disable showing of bookmarks by default
 if has("gui_running")
     let g:showmarks_enable=1
@@ -116,6 +119,9 @@ let Tlist_Use_Right_Window=1
 
 " Focus tag list window when opened
 let Tlist_GainFocus_On_ToggleOpen=1
+
+" Show relative paths in buffer explorer
+let g:bufExplorerShowRelativePath=1
 
 " Tags for custom languages
 " http://vim-taglist.sourceforge.net/extend.html
@@ -233,6 +239,9 @@ nnoremap <Leader>e :BufExplorer<CR>
 
 " Edit file in the same directory
 nnoremap <Leader>E :e <C-R>=expand('%:h')<CR>/
+
+" Diff against the version on disk.
+nnoremap <Leader>u :w !diff -u - %<CR>
 
 " Toggles
 nnoremap <Leader>h :set invhlsearch<CR>:set hlsearch?<CR>
