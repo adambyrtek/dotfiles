@@ -34,6 +34,9 @@ ignorecase on
 # Disable software flow control
 defflow off
 
+# Disable visual bell (enabled in the global configuration)
+vbell off
+
 # Assume terminal that supports 256 colors
 term "screen-256color"
 
