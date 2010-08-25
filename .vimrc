@@ -10,9 +10,6 @@ set nocompatible
 " Show partial commands in status
 set showcmd
 
-" Line numbering
-"set number
-
 " No wrapping of display
 set nowrap
 
@@ -89,7 +86,7 @@ let $PATH=$PATH.":/opt/local/bin"
 set listchars=tab:>-,trail:%,eol:$
 
 " Grep always recursive.
-set grepprg=grep\ -rn\ $*\ /dev/null
+set grepprg=grep\ -rHn\ $*\ /dev/null
 
 " Disable showing of bookmarks by default
 if has("gui_running")
@@ -201,9 +198,6 @@ vnoremap <silent> <Up> gk
 " Easier omni-completion
 inoremap <C-F> <C-X><C-O>
 
-" x in visual mode deletes to the black hole.
-vnoremap x "_x
-
 " Paste in visual mode shouldn't replace the default register
 vnoremap p "_xP
 
@@ -244,16 +238,27 @@ nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
 
 " Edit file based on current file or directory
-nnoremap <Leader>o :e <C-R>=expand('%:p:h')<CR>/
-nnoremap <Leader>O :e <C-R>=expand('%:p')<CR>
+nnoremap <Leader>o :e <C-R>=expand('%:p')<CR>
+nnoremap <Leader>O :e <C-R>=expand('%:p:h')<CR>/
 
 " Diff against the version on disk.
 nnoremap <Leader>u :w !diff -u - %<CR>
 
+" Write buffer using sudo
+nnoremap <Leader>W :w !sudo tee % > /dev/null<CR>
+
 " Toggles
-nnoremap <Leader>h :setl invhlsearch<CR>:setl hlsearch?<CR>
+nnoremap <Leader>h :set invhlsearch<CR>:set hlsearch?<CR>
 nnoremap <Leader>p :set invpaste<CR>:set paste?<CR>
 nnoremap <Leader>l :set invlist<CR>:set list?<CR>
+nnoremap <Leader>s :set invspell<CR>:set spell?<CR>
 
-" Write buffer using sudo
-command W write !sudo tee % > /dev/null
+" Bash like keys for the command line
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+
+" Fast switching between windows
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-H> <C-W>h
+nnoremap <C-L> <C-W>l
