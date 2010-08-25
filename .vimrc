@@ -201,6 +201,12 @@ vnoremap <silent> <Up> gk
 " Easier omni-completion
 inoremap <C-F> <C-X><C-O>
 
+" x in visual mode deletes to the black hole.
+vnoremap x "_x
+
+" Paste in visual mode shouldn't replace the default register
+vnoremap p "_xP
+
 " Surround visual selection
 vnoremap ,) di()<Esc>P2l
 vnoremap ,} di{}<Esc>P2l
@@ -237,14 +243,15 @@ nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
 
-" Edit file in the same directory
-nnoremap <Leader>E :e <C-R>=expand('%:h')<CR>/
+" Edit file based on current file or directory
+nnoremap <Leader>o :e <C-R>=expand('%:p:h')<CR>/
+nnoremap <Leader>O :e <C-R>=expand('%:p')<CR>
 
 " Diff against the version on disk.
 nnoremap <Leader>u :w !diff -u - %<CR>
 
 " Toggles
-nnoremap <Leader>h :set invhlsearch<CR>:set hlsearch?<CR>
+nnoremap <Leader>h :setl invhlsearch<CR>:setl hlsearch?<CR>
 nnoremap <Leader>p :set invpaste<CR>:set paste?<CR>
 nnoremap <Leader>l :set invlist<CR>:set list?<CR>
 

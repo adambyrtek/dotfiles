@@ -9,7 +9,7 @@ set lines=40
 if has("gui_macvim")
     set guifont=DejaVu\ Sans\ Mono:h13
 else
-    set guifont=Inconsolata\ 11
+    set guifont=Inconsolata\ 12
 endif
 
 " No toolbar
