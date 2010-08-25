@@ -1,10 +1,17 @@
 ! Appearance
 xterm*reverseVideo: on
 xterm*faceName: Inconsolata
-xterm*faceSize: 11
+xterm*faceSize: 12
 ! Make Left Alt behave correctly
 xterm*metaSendsEscape: true
 ! Enable 256-color mode
 XTerm*termName: xterm-256color
 ! Set urgency flag on bell
 XTerm*bellIsUrgent: true
+! No hinting, subpixel rendering
+Xft.dpi:        96
+Xft.antialias:  1
+Xft.hinting:    0
+Xft.hintstyle:  hintnone
+Xft.rgba:       rgb
+Xft.lcdfilter:  lcddefault
