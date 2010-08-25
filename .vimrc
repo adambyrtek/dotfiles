@@ -131,6 +131,9 @@ let g:qb_hotkey = "<Leader>q"
 " Prefer symmetric encryption
 let g:GPGPreferSymmetric = 1
 
+" Using Esc causes problems on some platforms
+let g:CommandTCancelMap = '<C-c>'
+
 " Autocommands
 augroup vimrc
     au!
