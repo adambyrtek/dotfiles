@@ -201,14 +201,6 @@ inoremap <C-F> <C-X><C-O>
 " Paste in visual mode shouldn't replace the default register
 vnoremap p "_xP
 
-" Surround visual selection
-vnoremap ,) di()<Esc>P2l
-vnoremap ,} di{}<Esc>P2l
-vnoremap ,] di[]<Esc>P2l
-vnoremap ,> di<><Esc>P2l
-vnoremap ," di""<Esc>P2l
-vnoremap ,' di''<Esc>P2l
-
 " Clever tabs
 function! InsertTabWrapper(direction)
     let col = col('.') - 1
