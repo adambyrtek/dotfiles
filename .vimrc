@@ -134,6 +134,9 @@ let g:GPGPreferSymmetric = 1
 " Using Esc causes problems on some platforms
 let g:CommandTCancelMap = '<C-c>'
 
+" Case sensitive matching when pattern contains uppercase characters
+let g:CommandTSmartCaseMatching = 1
+
 " Autocommands
 augroup vimrc
     au!
