@@ -436,6 +436,19 @@ Following is a list of all available options:
       on the screen rather than moving as the number of matches changes during
       typing.
 
+                                                *g:CommandTSmartCaseMatching*
+  |g:CommandTSmartCaseMatching|                  boolean (default: 0)
+
+      By default Command-T file matching is not case sensitive. When smart
+      case matching is enabled it becomes case sensitive for patterns
+      containing at least one uppercase character; otherwise the matching
+      ignores case as usual.
+
+      For example when smart case matching is enabled "foba" will match both
+      FooBar.java and foobar.cc but "FoBa" will match only FooBar.java.
+      
+      This behavior is analogous the *smartcase* Vim option.
+
 As well as the basic options listed above, there are a number of settings that
 can be used to override the default key mappings used by Command-T. For
 example, to set <C-x> as the mapping for cancelling (dismissing) the Command-T

@@ -32,10 +32,13 @@ typedef struct
     long    str_len;                // length of same
     char    *abbrev_p;              // pointer to search string (abbreviation)
     long    abbrev_len;             // length of same
+    int     abbrev_mixed_case;      // boolean: true if abbrev contains
+                                    // some uppercase characters
     double  max_score_per_char;
     int     dot_file;               // boolean: true if str is a dot-file
     int     always_show_dot_files;  // boolean
     int     never_show_dot_files;   // boolean
+    int     smart_case_matching;    // boolean
 } matchinfo_t;
 
 double recursive_match(matchinfo_t *m,  // sharable meta-data
@@ -66,8 +69,10 @@ double recursive_match(matchinfo_t *m,  // sharable meta-data
                         dot_file_match = 1; // so this must be a match
                 }
             }
-            else if (d >= 'A' && d <= 'Z')
-                d += 'a' - 'A'; // add 32 to downcase
+            else if (!m->smart_case_matching || !m->abbrev_mixed_case)
+                if (d >= 'A' && d <= 'Z')
+                    d += 'a' - 'A'; // add 32 to downcase
+
             if (c == d)
             {
                 found = 1;
@@ -134,21 +139,29 @@ VALUE CommandTMatch_initialize(int argc, VALUE *argv, VALUE self)
     if (rb_scan_args(argc, argv, "21", &str, &abbrev, &options) == 2)
         options = Qnil;
     str             = StringValue(str);
-    abbrev          = StringValue(abbrev); // already downcased by caller
+    abbrev          = StringValue(abbrev);
 
     // check optional options hash for overrides
     VALUE always_show_dot_files = CommandT_option_from_hash("always_show_dot_files", options);
     VALUE never_show_dot_files = CommandT_option_from_hash("never_show_dot_files", options);
+    VALUE smart_case_matching = CommandT_option_from_hash("smart_case_matching", options);
 
     matchinfo_t m;
     m.str_p                 = RSTRING_PTR(str);
     m.str_len               = RSTRING_LEN(str);
     m.abbrev_p              = RSTRING_PTR(abbrev);
     m.abbrev_len            = RSTRING_LEN(abbrev);
+    m.abbrev_mixed_case     = 0;
     m.max_score_per_char    = (1.0 / m.str_len + 1.0 / m.abbrev_len) / 2;
     m.dot_file              = 0;
     m.always_show_dot_files = always_show_dot_files == Qtrue;
     m.never_show_dot_files  = never_show_dot_files == Qtrue;
+    m.smart_case_matching   = smart_case_matching == Qtrue;
+
+    // check if abbrev is mixed case
+    for (long i = 0; i < m.abbrev_len; i++)
+        if (m.abbrev_p[i] >= 'A' && m.abbrev_p[i] <= 'Z')
+            m.abbrev_mixed_case = 1;
 
     // calculate score
     double score = 1.0;

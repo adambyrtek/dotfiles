@@ -91,8 +91,12 @@ VALUE CommandTMatcher_initialize(int argc, VALUE *argv, VALUE self)
     VALUE never_show_dot_files = CommandT_option_from_hash("never_show_dot_files", options);
     if (never_show_dot_files != Qtrue)
         never_show_dot_files = Qfalse;
+    VALUE smart_case_matching = CommandT_option_from_hash("smart_case_matching", options);
+    if (smart_case_matching != Qtrue)
+        smart_case_matching = Qfalse;
     rb_iv_set(self, "@always_show_dot_files", always_show_dot_files);
     rb_iv_set(self, "@never_show_dot_files", never_show_dot_files);
+    rb_iv_set(self, "@smart_case_matching", smart_case_matching);
     return Qnil;
 }
 
@@ -140,18 +144,19 @@ VALUE CommandTMatcher_matches_for(VALUE self, VALUE abbrev)
     VALUE scanner = rb_iv_get(self, "@scanner");
     VALUE always_show_dot_files = rb_iv_get(self, "@always_show_dot_files");
     VALUE never_show_dot_files = rb_iv_get(self, "@never_show_dot_files");
-    VALUE options = Qnil;
+    VALUE smart_case_matching = rb_iv_get(self, "@smart_case_matching");
+
+    VALUE options = rb_hash_new();
     if (always_show_dot_files == Qtrue)
-    {
-        options = rb_hash_new();
         rb_hash_aset(options, ID2SYM(rb_intern("always_show_dot_files")), always_show_dot_files);
-    }
     else if (never_show_dot_files == Qtrue)
-    {
-        options = rb_hash_new();
         rb_hash_aset(options, ID2SYM(rb_intern("never_show_dot_files")), never_show_dot_files);
-    }
-    abbrev = rb_funcall(abbrev, rb_intern("downcase"), 0);
+    if (smart_case_matching == Qtrue)
+        rb_hash_aset(options, ID2SYM(rb_intern("smart_case_matching")), smart_case_matching);
+
+    if (smart_case_matching != Qtrue)
+        abbrev = rb_funcall(abbrev, rb_intern("downcase"), 0);
+
     VALUE paths = rb_funcall(scanner, rb_intern("paths"), 0);
     for (long i = 0, max = RARRAY_LEN(paths); i < max; i++)
     {
