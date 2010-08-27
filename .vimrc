@@ -238,6 +238,7 @@ nnoremap <Leader>T :TlistToggle<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
+nnoremap <Leader>s :SrcExplToggle<CR>
 
 " Edit file based on current file or directory
 nnoremap <Leader>o :e <C-R>=expand('%:p')<CR>
@@ -250,10 +251,11 @@ nnoremap <Leader>u :w !diff -u - %<CR>
 nnoremap <Leader>W :w !sudo tee % > /dev/null<CR>
 
 " Toggles
-nnoremap <Leader>h :set invhlsearch<CR>:set hlsearch?<CR>
-nnoremap <Leader>p :set invpaste<CR>:set paste?<CR>
-nnoremap <Leader>l :set invlist<CR>:set list?<CR>
-nnoremap <Leader>s :set invspell<CR>:set spell?<CR>
+nnoremap <Leader>gh :set invhlsearch<CR>:set hlsearch?<CR>
+nnoremap <Leader>gp :set invpaste<CR>:set paste?<CR>
+nnoremap <Leader>gl :set invlist<CR>:set list?<CR>
+nnoremap <Leader>gs :set invspell<CR>:set spell?<CR>
+nnoremap <Leader>gn :set invnumber<CR>:set number?<CR>
 
 " Bash like keys for the command line
 cnoremap <C-A> <Home>
