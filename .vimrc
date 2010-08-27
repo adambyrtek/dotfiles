@@ -1,5 +1,9 @@
 " Color scheme
-colorscheme elflord
+if &t_Co >= 256
+    colorscheme desert256
+else
+    colorscheme elflord
+endif
 
 " Syntax highlighting
 syntax on
