@@ -1,7 +1,7 @@
 ! Appearance
 XTerm*reverseVideo: on
-XTerm*faceName: Inconsolata
-XTerm*faceSize: 12
+XTerm*faceName: Droid\ Sans\ Mono
+XTerm*faceSize: 10
 XTerm*borderWidth: 0
 ! Make Left Alt behave correctly
 XTerm*metaSendsEscape: true
