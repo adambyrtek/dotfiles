@@ -20,14 +20,17 @@ set nowrap
 " Wrap lines on screen at whitespaces
 set linebreak
 
-" Don't distinguish case in patterns
+" Don't distinguish case in patterns...
 set ignorecase
 
-" But distinguish case if capital letter is used in pattern
+" ...except when capital letter is used in a pattern
 set smartcase
 
 " No backups
 set nobackup
+
+" No swap files
+"set noswapfile
 
 " Tab indents and Backspace deindents
 set smarttab
@@ -75,7 +78,7 @@ set wildmenu
 set wildmode=list:longest
 
 " Custom status line with filetype
-set statusline=%<%f\ %h%m%r%y%=%-14.(%l,%c%V%)\ %P
+set statusline=%.50f\ %h%m%r%y\ %=\ %([%{Tlist_Get_Tagname_By_Line()}]%)\ %-10.(%l,%c%V%)\ %P
 
 " Show matching parenthesis
 set showmatch
@@ -109,6 +112,9 @@ let Tlist_Show_One_File=1
 
 " Close tag list if it is the only window
 let Tlist_Exit_OnlyWindow=1
+
+" Preprocess all files
+let Tlist_Process_File_Always=1
 
 " Don't show fold column in tag list
 let Tlist_Enable_Fold_Column=0
@@ -182,7 +188,7 @@ augroup vimrc
                 \ endif
 
     " ShowMarks highlight colors
-    autocmd VimEnter *
+    autocmd ColorScheme *
                 \ highlight ShowMarksHLl guibg=#660000 |
                 \ highlight ShowMarksHLu guibg=#660000 |
                 \ highlight ShowMarksHLo guibg=#660000 |
