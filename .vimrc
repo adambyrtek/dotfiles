@@ -89,8 +89,8 @@ let $PATH=$PATH.":/opt/local/bin"
 " Tab doesn't break indentation in list mode
 set listchars=tab:>-,trail:%,eol:$
 
-" Grep always recursive.
-set grepprg=grep\ -rHn\ $*\ /dev/null
+" Grep options
+set grepprg=egrep\ -n\ $*\ /dev/null
 
 " Disable showing of bookmarks by default
 if has("gui_running")
