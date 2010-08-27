@@ -66,6 +66,9 @@
 'showmarks_include'	showmarks.txt	/*'showmarks_include'*
 'showmarks_textother'	showmarks.txt	/*'showmarks_textother'*
 'showmarks_textupper'	showmarks.txt	/*'showmarks_textupper'*
+,b	camelcasemotion.txt	/*,b*
+,e	camelcasemotion.txt	/*,e*
+,w	camelcasemotion.txt	/*,w*
 :CommandT	command-t.txt	/*:CommandT*
 :CommandTFlush	command-t.txt	/*:CommandTFlush*
 :MatchDebug	matchit.txt	/*:MatchDebug*
@@ -219,6 +222,16 @@ bufexplorer-usage	bufexplorer.txt	/*bufexplorer-usage*
 bufexplorer-windowlayout	bufexplorer.txt	/*bufexplorer-windowlayout*
 bufexplorer.txt	bufexplorer.txt	/*bufexplorer.txt*
 buffer-explorer	bufexplorer.txt	/*buffer-explorer*
+camelcasemotion-configuration	camelcasemotion.txt	/*camelcasemotion-configuration*
+camelcasemotion-dependencies	camelcasemotion.txt	/*camelcasemotion-dependencies*
+camelcasemotion-description	camelcasemotion.txt	/*camelcasemotion-description*
+camelcasemotion-history	camelcasemotion.txt	/*camelcasemotion-history*
+camelcasemotion-installation	camelcasemotion.txt	/*camelcasemotion-installation*
+camelcasemotion-known-problems	camelcasemotion.txt	/*camelcasemotion-known-problems*
+camelcasemotion-todo	camelcasemotion.txt	/*camelcasemotion-todo*
+camelcasemotion-usage	camelcasemotion.txt	/*camelcasemotion-usage*
+camelcasemotion.txt	camelcasemotion.txt	/*camelcasemotion.txt*
+camelcasemotion.vim	camelcasemotion.txt	/*camelcasemotion.vim*
 command-t	command-t.txt	/*command-t*
 command-t-authors	command-t.txt	/*command-t-authors*
 command-t-commands	command-t.txt	/*command-t-commands*
@@ -262,6 +275,7 @@ g:CommandTNeverShowDotFiles	command-t.txt	/*g:CommandTNeverShowDotFiles*
 g:CommandTScanDotDirectories	command-t.txt	/*g:CommandTScanDotDirectories*
 g:CommandTSelectNextMap	command-t.txt	/*g:CommandTSelectNextMap*
 g:CommandTSelectPrevMap	command-t.txt	/*g:CommandTSelectPrevMap*
+g:CommandTSmartCaseMatching	command-t.txt	/*g:CommandTSmartCaseMatching*
 g:CommandTToggleFocusMap	command-t.txt	/*g:CommandTToggleFocusMap*
 g:bufExplorerDefaultHelp	bufexplorer.txt	/*g:bufExplorerDefaultHelp*
 g:bufExplorerDetailedHelp	bufexplorer.txt	/*g:bufExplorerDetailedHelp*
@@ -476,6 +490,7 @@ showmarks-contents	showmarks.txt	/*showmarks-contents*
 showmarks-highlighting	showmarks.txt	/*showmarks-highlighting*
 showmarks-mappings	showmarks.txt	/*showmarks-mappings*
 showmarks.txt	showmarks.txt	/*showmarks.txt*
+smartcase	command-t.txt	/*smartcase*
 surround	surround.txt	/*surround*
 surround-author	surround.txt	/*surround-author*
 surround-customizing	surround.txt	/*surround-customizing*
