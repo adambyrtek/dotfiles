@@ -29,7 +29,7 @@ set smartcase
 " No backups
 set nobackup
 
-" Indentation can be deleted with Backspace
+" Tab indents and Backspace deindents
 set smarttab
 
 " Indent and tab with spaces
@@ -181,7 +181,7 @@ augroup vimrc
                 \     exe "normal g`\"" |
                 \ endif
 
-    " ShowMarks highlight colors and highlight tabs
+    " ShowMarks highlight colors
     autocmd VimEnter *
                 \ highlight ShowMarksHLl guibg=#660000 |
                 \ highlight ShowMarksHLu guibg=#660000 |

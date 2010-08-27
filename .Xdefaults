@@ -2,6 +2,7 @@
 XTerm*reverseVideo: on
 XTerm*faceName: Inconsolata
 XTerm*faceSize: 12
+XTerm*borderWidth: 0
 ! Make Left Alt behave correctly
 XTerm*metaSendsEscape: true
 ! Enable 256-color mode
