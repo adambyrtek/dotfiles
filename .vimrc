@@ -92,10 +92,8 @@ set listchars=tab:>-,trail:%,eol:$
 " Grep options
 set grepprg=egrep\ -n\ $*\ /dev/null
 
-" Disable showing of bookmarks by default
-if has("gui_running")
-    let g:showmarks_enable=1
-else
+" Visible bookmars enabled only in GUI mode.
+if !has("gui_running")
     let g:showmarks_enable=0
 endif
 
@@ -185,14 +183,11 @@ augroup vimrc
 
     " ShowMarks highlight colors and highlight tabs
     autocmd VimEnter *
-                \ if has('gui') |
-                \     highlight ShowMarksHLl guibg=#660000 |
-                \     highlight ShowMarksHLu guibg=#660000 |
-                \     highlight ShowMarksHLo guibg=#660000 |
-                \     highlight ShowMarksHLm guibg=#660000 |
-                \     highlight SignColumn   guibg=#111111 |
-                \ endif |
-                \ syntax match Error "\t"
+                \ highlight ShowMarksHLl guibg=#660000 |
+                \ highlight ShowMarksHLu guibg=#660000 |
+                \ highlight ShowMarksHLo guibg=#660000 |
+                \ highlight ShowMarksHLm guibg=#660000 |
+                \ highlight SignColumn   guibg=#111111
 
 augroup END
 
