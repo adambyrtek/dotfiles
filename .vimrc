@@ -1,13 +1,23 @@
 " vim:fdm=marker
 
-" {{{ Vim settings
+" {{{ Color scheme and font
 
 " Color scheme
-if &t_Co >= 256
+if &t_Co >= 256 || has("gui_running")
     colorscheme desert256
 else
     colorscheme elflord
 endif
+
+" Font settings for GUI
+if has("gui_macvim")
+    set guifont=DejaVu\ Sans\ Mono:h13
+else
+    set guifont=Droid\ Sans\ Mono\ 10
+endif
+
+" }}}
+" {{{ Vim settings
 
 " Syntax highlighting
 syntax on
@@ -75,7 +85,7 @@ set wildmenu
 " Completion similar to command line
 set wildmode=list:longest
 
-" Custom status line with filetype
+" Status line with flags, filetype, current tag and position
 set statusline=%.50f\ %h%m%r%y\ %=\ %([%{Tlist_Get_Tagname_By_Line()}]%)\ %-10.(%l,%c%V%)\ %P
 
 " Show matching parenthesis
@@ -96,10 +106,16 @@ set listchars=tab:>-,trail:%,eol:$
 " Grep options
 set grepprg=egrep\ -n\ $*\ /dev/null
 
+" No GUI toolbar
+set guioptions-=T
+
+" No GUI popups
+set guioptions+=c
+
 " }}}
 " {{{ Variables for plugins
 
-" Visible bookmars enabled only in GUI mode.
+" Visible bookmars enabled only in GUI mode
 if !has("gui_running")
     let g:showmarks_enable=0
 endif
