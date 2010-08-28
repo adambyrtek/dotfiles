@@ -1,5 +1,69 @@
+# vim:fdm=marker
+
 # ~/.zshrc
 # Sourced for interactive shells only
+
+# {{{ Aliases and public functions
+
+# Aliases
+alias !=history
+alias ...='../..'
+alias ....='../../..'
+alias .....='../../../../'
+alias l="${PAGER:-less}"
+alias e="${EDITOR:-vim}"
+alias g=grep
+alias s=screen
+alias o=open
+alias psa="ps aux"
+alias psgrep="ps aux | grep"
+calc () { echo $* | bc -l }
+vimgrep() { vim -c "vimgrep /$1/ $*[2,-1]" -c copen }
+beep() { printf "\a" }
+
+# Default parameters
+alias dirs="dirs -v"
+alias history="history -iD"
+alias du="du -chs"
+alias df="df -h"
+alias pstree="pstree -h"
+alias diff="diff -uN"
+alias tree="tree -F"
+
+# Emulate useful Mac OS X commands
+if which xdg-open > /dev/null; then
+    alias open="xdg-open"
+fi
+if which xclip > /dev/null; then
+    alias pbcopy="xclip -i"
+    alias pbpaste="xclip -o"
+fi
+
+# Sync history from disk
+alias h="fc -R"
+
+# Colorized ls
+if which dircolors > /dev/null; then
+    eval $(dircolors -b)
+fi
+if [[ -n $MACOSX ]]; then
+    # BSD has its own way
+    alias ls="ls -hGF"
+else
+    alias ls="ls -hF --color=auto"
+fi
+alias ll="ls -l"
+alias la="ls -A"
+alias lla="ls -lA"
+
+# Man pages displayed in vim
+if which vim > /dev/null; then
+    man() {
+        /usr/bin/man $* | \
+            col -b | \
+            vim -R -c 'set ft=man nomod nolist' -
+    }
+fi
 
 # Package management for Debian
 if which aptitude > /dev/null; then
@@ -24,65 +88,19 @@ if which pacman > /dev/null; then
     alias sp="sudo pacman"
 fi
 
-# Aliases
-alias !=history
-alias '...'='../..'
-alias '....'='../../..'
-alias '.....'='../../../../'
-alias l="${PAGER:-less}"
-alias e="${EDITOR:-vim}"
-alias g=grep
-alias s=screen
-alias o=open
-alias psa=ps aux
-alias psgrep="ps aux | grep"
-calc () { echo $* | bc -l }
-vimgrep() { vim -c "vimgrep /$1/ $*[2,-1]" -c copen }
-si() { sudo /etc/init.d/$1 $2 }
-beep() { printf "\a" }
+# Package management for MacPorts
+if which port > /dev/null; then
+    alias p=port
+    alias sp="sudo port"
+fi
 
 # Global aliases
 alias -g '***'='**/*'
 
-# Default parameters
-alias dirs="dirs -v"
-alias history="history -iD"
-alias du="du -chs"
-alias df="df -h"
-alias pstree="pstree -h"
-alias diff="diff -uN"
-alias tree="tree -F"
+# }}}
+# {{{ Command prompt
 
-# Emulate commands from Mac OS X
-if which xdg-open > /dev/null; then
-    alias open="xdg-open"
-fi
-if which xclip > /dev/null; then
-    alias pbcopy="xclip -i"
-    alias pbpaste="xclip -o"
-fi
-
-# Sync history from disk
-alias h="fc -R"
-
-# Colorized ls
-if which dircolors > /dev/null; then
-    eval $(dircolors -b)
-fi
-if [[ -z $MACOSX ]]; then
-    alias ls="ls -hF --color=auto"
-else
-    # BSD has its own way
-    alias ls="ls -hGF"
-fi
-alias ll="ls -l"
-alias la="ls -A"
-alias lla="ls -lA"
-
-# Load colors module
 autoload colors && colors
-
-# Initialize VCS info module
 autoload vcs_info
 
 # Prompt inspired by http://kriener.org/articles/2009/06/04/zsh-prompt-magic
@@ -141,6 +159,9 @@ _rprompt '()' $BR_BRIGHT_BLACK $PR_WHITE
 # Spelling correction prompt
 SPROMPT="%{${bg[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
 
+# }}}
+# {{{ Zsh variables
+
 # History file
 HISTFILE=~/.zsh_history
 
@@ -156,16 +177,18 @@ LISTMAX=0
 # Slash not a part of a word
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
+# }}}
+# {{{ Key bindings
+
 # Set Emacs style editing
 bindkey -e
 
-# Ctrl-Left/Right
+# Ctrl-Left/Right behave like in Bash
 bindkey '\e[1;5D' backward-word
 bindkey '\e[1;5C' forward-word
 
-# Ctrl-P/Ctrl-N
-bindkey "^N" history-beginning-search-forward
-bindkey "^P" history-beginning-search-backward
+# }}}
+# {{{ Completion
 
 # Enable completion
 autoload -U compinit && compinit
@@ -198,6 +221,9 @@ zstyle ':completion:*:*:*:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;32'
 
 # Cache expensive completions
 zstyle ':completion:*' use-cache on
+
+# }}}
+# {{{ Zsh options
 
 # Append to history file instantly
 setopt incappendhistory
@@ -247,6 +273,9 @@ setopt transientrprompt
 # Print the exit value for commands with non-zero exit status
 setopt printexitvalue
 
+# }}}
+# {{{ Hooks
+
 # Set screen or xterm title
 title() {
     # Truncate long command and join lines
@@ -254,18 +283,18 @@ title() {
 
     case $TERM in
         screen*)
-        # Update screen title
-        print -Pn "\ek$t\e\\"
-        ;;
+            # Update screen title
+            print -Pn "\ek$t\e\\"
+            ;;
         xterm*|rxvt)
-        # Update xterm window title
-        print -Pn "\e]0;$t\a"
-        ;;
+            # Update xterm window title
+            print -Pn "\e]0;$t\a"
+            ;;
     esac
 }
 
 # Hook run before showing prompt
-precmd() { 
+precmd() {
     title "zsh %1~"
     vcs_info prompt
 }
@@ -276,14 +305,12 @@ preexec() { title "$1" }
 # Hook run on each directory change
 chpwd() { ls }
 
-# man pages displayed in vim
-if which vim > /dev/null; then
-    man() {
-        /usr/bin/man $* | col -b | vim -R -c 'set ft=man nomod nolist' -
-    }
-fi
+# }}}
+# {{{ Extra initialization
 
 # Enable lesspipe if present
 if which lesspipe > /dev/null; then
     eval $(lesspipe)
 fi
+
+# }}}
