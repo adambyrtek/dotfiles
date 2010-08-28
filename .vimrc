@@ -1,3 +1,7 @@
+" vim:fdm=marker
+
+" {{{ Vim settings
+
 " Color scheme
 if &t_Co >= 256
     colorscheme desert256
@@ -7,6 +11,9 @@ endif
 
 " Syntax highlighting
 syntax on
+
+" File type detection
+filetype plugin indent on
 
 " Turn off Vi compatibility
 set nocompatible
@@ -25,12 +32,6 @@ set ignorecase
 
 " ...except when capital letter is used in a pattern
 set smartcase
-
-" No backups
-set nobackup
-
-" No swap files
-"set noswapfile
 
 " Tab indents and Backspace deindents
 set smarttab
@@ -62,13 +63,10 @@ set scrolloff=6
 " Buffers can be hidden
 set hidden
 
-" File type detection
-filetype plugin indent on
-
 " Show indicator on wrapped lines
 set showbreak=+
 
-" Show ruler with file postion
+" Show ruler with file position
 set ruler
 
 " Show menu with available completions
@@ -83,17 +81,23 @@ set statusline=%.50f\ %h%m%r%y\ %=\ %([%{Tlist_Get_Tagname_By_Line()}]%)\ %-10.(
 " Show matching parenthesis
 set showmatch
 
+" No backups
+set nobackup
+
+" No swap files
+"set noswapfile
+
 " Directories to use for swap files
 set directory=~/Temp,~/tmp,/var/tmp,/tmp
-
-" Add local directory to path (to access Subversion on Mac)
-let $PATH=$PATH.":/opt/local/bin"
 
 " Tab doesn't break indentation in list mode
 set listchars=tab:>-,trail:%,eol:$
 
 " Grep options
 set grepprg=egrep\ -n\ $*\ /dev/null
+
+" }}}
+" {{{ Variables for plugins
 
 " Visible bookmars enabled only in GUI mode.
 if !has("gui_running")
@@ -145,7 +149,9 @@ let g:CommandTCancelMap = '<C-c>'
 " Case sensitive matching when pattern contains uppercase characters
 let g:CommandTSmartCaseMatching = 1
 
-" Autocommands
+" }}}
+" {{{ Autocommands
+
 augroup vimrc
     au!
 
@@ -196,6 +202,9 @@ augroup vimrc
                 \ highlight SignColumn   guibg=#111111
 
 augroup END
+
+" }}}
+" {{{ Keyboard mappings
 
 " Mappings to move through wrapped lines
 " http://www.vim.org/tips/tip.php?tip_id=308
@@ -267,3 +276,5 @@ nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-H> <C-W>h
 nnoremap <C-L> <C-W>l
+
+" }}}
