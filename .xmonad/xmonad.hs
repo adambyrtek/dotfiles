@@ -16,6 +16,7 @@ import XMonad.Layout.Tabbed
 import XMonad.ManageHook
 import XMonad.Prompt
 import XMonad.Prompt.Shell
+import XMonad.Prompt.Window
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
@@ -32,7 +33,6 @@ myLayout = avoidStruts $ smartBorders $ (im $ tiled ||| Mirror tiled ||| Grid) |
         im = withIM (1%6) (Or (Title "Buddy List") (ClassName "psi"))
 
 myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
-         , ("M-p", spawn "gmrun")
          -- Cycling between workspaces
          , ("M-[", prevWS)
          , ("M-]", nextWS)
@@ -53,7 +53,10 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("<XF86AudioRaiseVolume>" , spawn "amixer -q set Master 2dB+")
          , ("<XF86Display>", spawn "xrandr --auto")
          -- Shell prompt
-         , ("M-S-p", shellPrompt defaultXPConfig)
+         , ("M-p", shellPrompt amberXPConfig { borderColor = "#333333" })
+         , ("M-S-p", spawn "gmrun")
+         , ("M-w", windowPromptGoto greenXPConfig { borderColor = "#333333" })
+         , ("M-S-w", windowPromptBring greenXPConfig { borderColor = "#333333" })
          ]
          ++
          -- Use view instead of greedyView for all workspaces
@@ -76,7 +79,7 @@ main = do
     xmobarProc <- spawnPipe "xmobar"
     xmonad $ withUrgencyHook NoUrgencyHook gnomeConfig
         { modMask = mod4Mask
-        , terminal = "xterm"
+        , terminal = "terminal"
         , normalBorderColor = "#222222"
         , focusedBorderColor = "#666666"
         , manageHook = myManageHook <+> manageHook gnomeConfig 
