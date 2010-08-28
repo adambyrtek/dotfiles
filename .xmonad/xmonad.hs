@@ -32,6 +32,11 @@ myLayout = avoidStruts $ smartBorders $ (im $ tiled ||| Mirror tiled ||| Grid) |
         tiled = ResizableTall 1 (3/100) (1/2) [1]
         im = withIM (1%6) (Or (Title "Buddy List") (ClassName "psi"))
 
+myXPConfig = amberXPConfig
+             { borderColor = "#333333"
+             , showCompletionOnTab = True
+             }
+
 myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          -- Cycling between workspaces
          , ("M-[", prevWS)
@@ -53,10 +58,10 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("<XF86AudioRaiseVolume>" , spawn "amixer -q set Master 2dB+")
          , ("<XF86Display>", spawn "xrandr --auto")
          -- Shell prompt
-         , ("M-p", shellPrompt amberXPConfig { borderColor = "#333333" })
+         , ("M-p", shellPrompt myXPConfig)
          , ("M-S-p", spawn "gmrun")
-         , ("M-w", windowPromptGoto greenXPConfig { borderColor = "#333333" })
-         , ("M-S-w", windowPromptBring greenXPConfig { borderColor = "#333333" })
+         , ("M-w", windowPromptGoto myXPConfig)
+         , ("M-S-w", windowPromptBring myXPConfig)
          ]
          ++
          -- Use view instead of greedyView for all workspaces
