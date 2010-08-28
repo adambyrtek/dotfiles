@@ -46,7 +46,7 @@ set smartcase
 " Tab indents and Backspace deindents
 set smarttab
 
-" Indent and tab with spaces
+" Use spaces instead of tabs
 set expandtab
 
 " Number of spaces to use for indent
@@ -100,8 +100,11 @@ set nobackup
 " Directories to use for swap files
 set directory=~/Temp,~/tmp,/var/tmp,/tmp
 
-" Tab doesn't break indentation in list mode
-set listchars=tab:>-,trail:%,eol:$
+" Always display special characters
+set list
+
+" Special characters to show
+set listchars=tab:>·,trail:·
 
 " Grep options
 set grepprg=egrep\ -n\ $*\ /dev/null
@@ -145,13 +148,13 @@ let Tlist_Use_Right_Window=1
 " Focus tag list window when opened
 let Tlist_GainFocus_On_ToggleOpen=1
 
-" Show relative paths in buffer explorer
-let g:bufExplorerShowRelativePath=1
-
 " Tags for custom languages
 " http://vim-taglist.sourceforge.net/extend.html
 let tlist_actionscript_settings='actionscript;c:class;f:method;p:property;v:variable'
 let tlist_tex_settings='latex;s:sections;g:graphics;l:labels'
+
+" Show relative paths in buffer explorer
+let g:bufExplorerShowRelativePath=1
 
 " Qbuf hotkey
 let g:qb_hotkey = "<Leader>q"
@@ -171,36 +174,35 @@ let g:CommandTSmartCaseMatching = 1
 augroup vimrc
     au!
 
-    " Mail mode for It's All Text
-    autocmd BufNewFile,BufRead mail.google.com.* setf mail
+    " Additional filetype mappings
+    autocmd BufNewFile,BufRead mail.google.com.* setfiletype mail
+    autocmd BufNewFile,BufRead *.erb setfiletype eruby
 
-    " Mail has spelling and wrapping
+    " Mail
     autocmd FileType mail setl spell
     autocmd FileType mail setl wrap
-    autocmd FileType mail setl tw=0
 
-    " LaTeX compiler
+    " LaTeX
     autocmd FileType tex compiler tex
 
-    " PHP syntaxt error checking
+    " PHP
     autocmd FileType php setl makeprg=php5\ -l\ %
     autocmd FileType php setl errorformat=%m\ in\ %f\ on\ line\ %l
 
-    " Python syntax error checking
+    " Python
     " http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
     autocmd FileType python setl makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
     autocmd FileType python setl efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
     autocmd FileType python setl tags+=$HOME/.python/tags
 
-    " Ruby indentation
+    " Ruby
     autocmd FileType ruby setl shiftwidth=2
     autocmd FileType ruby setl tags+=$HOME/.gems/tags
+
+    " Embedded Ruby
     autocmd FileType eruby setl shiftwidth=2
 
-    " Correct type for ERB files
-    autocmd BufNewFile,BufRead *.erb setl ft=eruby
-
-    " YAML indentation
+    " YAML
     autocmd FileType yaml setl shiftwidth=2
 
     " Go to last known position
@@ -230,9 +232,6 @@ nnoremap <silent> <Down> gj
 nnoremap <silent> <Up> gk
 vnoremap <silent> <Down> gj
 vnoremap <silent> <Up> gk
-
-" Easier omni-completion
-inoremap <C-F> <C-X><C-O>
 
 " Paste in visual mode shouldn't replace the default register
 vnoremap p "_xP
@@ -277,11 +276,11 @@ nnoremap <Leader>u :w !diff -u - %<CR>
 nnoremap <Leader>W :w !sudo tee % > /dev/null<CR>
 
 " Toggles
-nnoremap <Leader>gh :set invhlsearch<CR>:set hlsearch?<CR>
-nnoremap <Leader>gp :set invpaste<CR>:set paste?<CR>
-nnoremap <Leader>gl :set invlist<CR>:set list?<CR>
-nnoremap <Leader>gs :set invspell<CR>:set spell?<CR>
-nnoremap <Leader>gn :set invnumber<CR>:set number?<CR>
+nnoremap <Leader>gh :set hlsearch!<CR>:set hlsearch?<CR>
+nnoremap <Leader>gp :set paste!<CR>:set paste?<CR>
+nnoremap <Leader>gl :set list!<CR>:set list?<CR>
+nnoremap <Leader>gs :set spell!<CR>:set spell?<CR>
+nnoremap <Leader>gn :set number!<CR>:set number?<CR>
 
 " Bash like keys for the command line
 cnoremap <C-A> <Home>
