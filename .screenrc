@@ -46,8 +46,9 @@ msgwait 1
 # New key bindings
 bind = next
 bind - prev
+bind f fit
 bind w windowlist -b
-bind o focus
 bind m monitor
 bind s silence
+bind o focus
 bind x remove
