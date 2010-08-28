@@ -270,7 +270,7 @@ nnoremap <Leader>o :e <C-R>=expand('%:p')<CR>
 nnoremap <Leader>O :e <C-R>=expand('%:p:h')<CR>/
 
 " Diff against the version on disk.
-nnoremap <Leader>u :w !diff -u - %<CR>
+nnoremap <Leader>u :w !diff -u % -<CR>
 
 " Write buffer using sudo
 nnoremap <Leader>W :w !sudo tee % > /dev/null<CR>
