@@ -76,8 +76,9 @@ main = do
     xmobarProc <- spawnPipe "xmobar"
     xmonad $ withUrgencyHook NoUrgencyHook gnomeConfig
         { modMask = mod4Mask
-        --, terminal = "xterm"
-        , focusedBorderColor = "#ffff00"
+        , terminal = "xterm"
+        , normalBorderColor = "#222222"
+        , focusedBorderColor = "#666666"
         , manageHook = myManageHook <+> manageHook gnomeConfig 
         , layoutHook = myLayout
         , logHook = myLogHook xmobarProc
