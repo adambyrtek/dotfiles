@@ -62,6 +62,8 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("M-S-p", spawn "gmrun")
          , ("M-w", windowPromptGoto myXPConfig)
          , ("M-S-w", windowPromptBring myXPConfig)
+         -- Switch to previous workspace
+         , ("M-0", toggleWS)
          ]
          ++
          -- Use view instead of greedyView for all workspaces
