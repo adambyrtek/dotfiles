@@ -1,8 +1,0 @@
-#site template
-#  server ftp.discoveroman.co.uk
-#  url http://discoveroman.co.uk
-#  username discoveroman.co.uk
-#  password PASS
-#  local /home/alpha/www/discover/oman/www
-#  remote /htdocs
-#  exclude /pma
