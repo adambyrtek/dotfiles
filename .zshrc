@@ -157,7 +157,7 @@ _lprompt '[]' $BR_BRIGHT_BLACK $PR_WHITE
 _rprompt '()' $BR_BRIGHT_BLACK $PR_WHITE
 
 # Spelling correction prompt
-SPROMPT="%{${bg[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
+SPROMPT="%{${fg_bold[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
 
 # }}}
 # {{{ Zsh variables
@@ -199,7 +199,7 @@ bindkey '\ee' edit-command-line
 autoload -U compinit && compinit
 
 # Display message when no matches are found
-zstyle ':completion:*:warnings' format "%{${fg_bold[yellow]}%}No matches for:%{$reset_color%} %d"
+zstyle ':completion:*:warnings' format "%{${fg_bold[yellow]}%}zsh: no matches for%{$reset_color%} %d"
 
 # Colors in completion
 if [ -n "$LS_COLORS" ]; then
