@@ -210,7 +210,7 @@ fi
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # Grouping for completion types
-zstyle ':completion:*:descriptions' format "%{${fg_bold[magenta]}%}* %d%{$reset_color%}"
+zstyle ':completion:*:descriptions' format "%{${fg_bold[magenta]}%}= %d =%{$reset_color%}"
 zstyle ':completion:*' group-name ""
 
 # Split manual pages by sections
