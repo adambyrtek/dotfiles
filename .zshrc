@@ -198,19 +198,19 @@ bindkey '\ee' edit-command-line
 # Enable completion
 autoload -U compinit && compinit
 
+# Display message when no matches are found
+zstyle ':completion:*:warnings' format "%{${fg_bold[yellow]}%}No matches for:%{$reset_color%} %d"
+
 # Colors in completion
 if [ -n "$LS_COLORS" ]; then
     zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi
 
-# Show completion indicator
-#zstyle ":completion:*" show-completer true
-
-# Case insensitive completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+# Smart case matching
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # Grouping for completion types
-zstyle ':completion:*:descriptions' format "%{${fg[magenta]}%}-* %d *-%{$reset_color%}"
+zstyle ':completion:*:descriptions' format "%{${fg_bold[magenta]}%}* %d%{$reset_color%}"
 zstyle ':completion:*' group-name ""
 
 # Split manual pages by sections
@@ -222,6 +222,7 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 # Describe all command options
 zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:options' auto-description '%d*'
+zstyle ':completion:*:options' list-separator '#'
 
 # Process completion shows all processes with colors
 zstyle ':completion:*:*:*:*:processes' command  'ps -A -o pid,user,cmd'
