@@ -1,5 +1,7 @@
-# Up and Down search through history.
+# Up and Down search through history
 "\e[A": history-search-backward
 "\e[B": history-search-forward
-# Single Tab shows list of completions.
+# Single Tab shows list of completions
 set show-all-if-ambiguous on
+# Disable beep
+set bell-style none
