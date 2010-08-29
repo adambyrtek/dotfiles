@@ -187,6 +187,11 @@ bindkey -e
 bindkey '\e[1;5D' backward-word
 bindkey '\e[1;5C' forward-word
 
+# Edit command line in external editor
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '\ee' edit-command-line
+
 # }}}
 # {{{ Completion
 
@@ -200,6 +205,9 @@ fi
 
 # Show completion indicator
 #zstyle ":completion:*" show-completer true
+
+# Case insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # Grouping for completion types
 zstyle ':completion:*:descriptions' format "%{${fg[magenta]}%}-* %d *-%{$reset_color%}"
