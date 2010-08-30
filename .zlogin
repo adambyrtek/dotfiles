@@ -1,7 +1,5 @@
 # ~/.zlogin
 # Sourced for login shells only
 
-if which figlet > /dev/null; then
-    figlet $(hostname)
-fi
-uptime
+# Display a calendar to distinguish a login shell
+cal -3
