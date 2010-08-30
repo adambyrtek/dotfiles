@@ -285,9 +285,10 @@ nnoremap <Leader>W :w !sudo tee % > /dev/null<CR>
 " Toggles
 nnoremap <Leader>gh :set hlsearch!<CR>:set hlsearch?<CR>
 nnoremap <Leader>gp :set paste!<CR>:set paste?<CR>
-nnoremap <Leader>gl :set list!<CR>:set list?<CR>
-nnoremap <Leader>gs :set spell!<CR>:set spell?<CR>
-nnoremap <Leader>gn :set number!<CR>:set number?<CR>
+nnoremap <Leader>gl :setl list!<CR>:setl list?<CR>
+nnoremap <Leader>gs :setl spell!<CR>:setl spell?<CR>
+nnoremap <Leader>gn :setl number!<CR>:setl number?<CR>
+nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
 
 " Bash like keys for the command line
 cnoremap <C-A> <Home>
