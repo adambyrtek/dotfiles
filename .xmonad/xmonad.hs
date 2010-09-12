@@ -10,6 +10,8 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.LayoutCombinators
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
@@ -27,7 +29,7 @@ myManageHook = composeAll [ manageDocks
                , className =? "Gimp" --> doFloat
                ]
 
-myLayout = avoidStruts $ smartBorders $ (im $ tiled ||| Mirror tiled ||| Grid) ||| Full
+myLayout = avoidStruts $ smartBorders $ mkToggle (single FULL) (im $ tiled ||| Mirror tiled ||| Grid)
     where
         tiled = ResizableTall 1 (3/100) (1/2) [1]
         im = withIM (1%6) (Or (Title "Buddy List") (ClassName "psi"))
@@ -48,8 +50,8 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("M-C-j", sendMessage $ MirrorShrink)
          , ("M-C-h", sendMessage $ Shrink)
          , ("M-C-l", sendMessage $ Expand)
-         -- Maximize
-         , ("M-f", sendMessage $ JumpToLayout "Full")
+         -- Toggle fullscreen
+         , ("M-f", sendMessage $ Toggle FULL)
          -- Focus window with urgency flag
          , ("M-u", focusUrgent)
          -- Multimedia keys
@@ -63,7 +65,7 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("M-w", windowPromptGoto myXPConfig)
          , ("M-S-w", windowPromptBring myXPConfig)
          -- Switch to previous workspace
-         , ("M-0", toggleWS)
+         , ("M-o", toggleWS)
          ]
          ++
          -- Use view instead of greedyView for all workspaces
