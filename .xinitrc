@@ -36,7 +36,6 @@ case "$1" in
         #trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --height 12 --alpha 0 --tint 0x222222 &
         exec xmonad
         ;;
-    i3)
     *)
         exec i3
         ;;
