@@ -10,11 +10,10 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.LayoutCombinators
+import XMonad.Layout.MouseResizableTile
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.Tabbed
 import XMonad.ManageHook
 import XMonad.Prompt
 import XMonad.Prompt.Shell
@@ -29,9 +28,9 @@ myManageHook = composeAll [ manageDocks
                , className =? "Gimp" --> doFloat
                ]
 
-myLayout = avoidStruts $ smartBorders $ mkToggle (single FULL) (im $ tiled ||| Mirror tiled ||| Grid)
+myLayout = avoidStruts $ smartBorders $ mkToggle (single FULL) layouts
     where
-        tiled = ResizableTall 1 (3/100) (1/2) [1]
+        layouts = im $ mouseResizableTile ||| mouseResizableTileMirrored ||| Grid
         im = withIM (1%6) (Or (Title "Buddy List") (ClassName "psi"))
 
 myXPConfig = amberXPConfig
@@ -45,11 +44,9 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("M-]", nextWS)
          , ("M-S-[", shiftToPrev)
          , ("M-S-]", shiftToNext)
-         -- Resize resizable layouts
-         , ("M-C-k", sendMessage $ MirrorExpand)
-         , ("M-C-j", sendMessage $ MirrorShrink)
-         , ("M-C-h", sendMessage $ Shrink)
-         , ("M-C-l", sendMessage $ Expand)
+         -- Resize slave windows
+         , ("M-u", sendMessage $ ShrinkSlave)
+         , ("M-i", sendMessage $ ExpandSlave)
          -- Toggle fullscreen
          , ("M-f", sendMessage $ Toggle FULL)
          -- Focus window with urgency flag
