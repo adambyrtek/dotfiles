@@ -3,21 +3,24 @@ if [[ "$1" == "xfce4" ]]; then
     exec startxfce4
 fi
 
-# Disable Caps-Lock
-echo "clear Lock" | xmodmap -
+# Polish layout and remap Caps-Lock to Ctrl
+setxkbmap -layout pl -option ctrl:nocaps
 
 # Faster keyboard repeat rate
 xset r rate 300 70
 
-# Black background
+# Black background by default
 xsetroot -bg black
 xsetroot -cursor_name left_ptr
+
+# Set background with Nitogen
+nitrogen --restore
 
 # Hide pointer when not active
 unclutter &
 
 # Startup applications
-blueman-applet &
+#blueman-applet &
 #nm-applet &
 wicd-client &
 
@@ -29,9 +32,12 @@ case "$1" in
         xcompmgr -cC -t-3 -l-5 -r5 &
         exec openbox
         ;;
-    *)
-        # XMonad is the default
-        trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --height 12 --alpha 0 --tint 0x222222 &
+    xmonad)
+        #trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --height 12 --alpha 0 --tint 0x222222 &
         exec xmonad
+        ;;
+    i3)
+    *)
+        exec i3
         ;;
 esac
