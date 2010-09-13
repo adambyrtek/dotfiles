@@ -6,6 +6,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Config.Desktop
 import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
@@ -82,7 +83,7 @@ myLogHook proc = dynamicLogWithPP $ defaultPP
 
 main = do
     xmobarProc <- spawnPipe "xmobar"
-    xmonad $ withUrgencyHook NoUrgencyHook $ gnomeConfig
+    xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
         { modMask = mod4Mask
         , terminal = "xterm"
         , normalBorderColor = "#222222"
