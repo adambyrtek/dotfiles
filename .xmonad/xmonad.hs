@@ -60,8 +60,8 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          -- Shell prompt
          , ("M-p", shellPrompt myXPConfig)
          , ("M-S-p", spawn "gmrun")
-         , ("M-w", windowPromptGoto myXPConfig)
-         , ("M-S-w", windowPromptBring myXPConfig)
+         --, ("M-w", windowPromptGoto myXPConfig)
+         --, ("M-S-w", windowPromptBring myXPConfig)
          -- Switch to previous workspace
          , ("M-o", toggleWS)
          ]
