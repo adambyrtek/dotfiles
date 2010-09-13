@@ -9,6 +9,7 @@ import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
@@ -25,9 +26,10 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
-myManageHook = composeAll
-               [ resource =? "Do" --> doIgnore
-               , className =? "Xmessage" --> doFloat
+myManageHook = composeOne
+               [ resource =? "Do" -?> doIgnore
+               , className =? "Xmessage" -?> doCenterFloat
+               --, isFullscreen -?> doFullFloat
                ]
 
 myLayoutHook = smartBorders $ mkToggle (single FULL) $ layouts
@@ -42,10 +44,10 @@ myXPConfig = amberXPConfig
 
 myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          -- Cycling between workspaces
-         , ("M-[", prevWS)
-         , ("M-]", nextWS)
-         , ("M-S-[", shiftToPrev)
-         , ("M-S-]", shiftToNext)
+         , ("M-[", moveTo Prev HiddenWS)
+         , ("M-]", moveTo Next HiddenWS)
+         , ("M-S-[", shiftTo Prev HiddenWS)
+         , ("M-S-]", shiftTo Next HiddenWS)
          -- Resize slave windows
          , ("M-u", sendMessage $ ShrinkSlave)
          , ("M-i", sendMessage $ ExpandSlave)
