@@ -54,7 +54,7 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          -- Toggle fullscreen
          , ("M-f", sendMessage $ Toggle FULL)
          -- Focus window with urgency flag
-         , ("M-u", focusUrgent)
+         , ("M-0", focusUrgent)
          -- Multimedia keys
          , ("<XF86AudioLowerVolume>" , spawn "amixer -q set Master 2dB-")
          , ("<XF86AudioMute>" , spawn "amixer -q set Master toggle")
