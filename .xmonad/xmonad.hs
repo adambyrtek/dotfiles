@@ -3,6 +3,7 @@ import System.Posix.Unistd
 
 import XMonad hiding ( (|||) )
 import XMonad.Actions.CycleWS
+import XMonad.Config.Desktop
 import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -22,13 +23,12 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
-myManageHook = composeAll [ manageDocks
-               , resource =? "Do" --> doIgnore
+myManageHook = composeAll
+               [ resource =? "Do" --> doIgnore
                , className =? "Xmessage" --> doFloat
-               , className =? "Gimp" --> doFloat
                ]
 
-myLayout = avoidStruts $ smartBorders $ mkToggle (single FULL) layouts
+myLayoutHook = smartBorders $ mkToggle (single FULL) $ layouts
     where
         layouts = mouseResizableTile ||| mouseResizableTileMirrored ||| (im $ Grid)
         im = withIM (1%6) (Or (Title "Buddy List") (ClassName "psi"))
@@ -81,15 +81,14 @@ myLogHook proc = dynamicLogWithPP $ defaultPP
                  }
 
 main = do
-    host <- fmap nodeName getSystemID
     xmobarProc <- spawnPipe "xmobar"
-    xmonad $ withUrgencyHook NoUrgencyHook gnomeConfig
+    xmonad $ withUrgencyHook NoUrgencyHook $ gnomeConfig
         { modMask = mod4Mask
-        , terminal = "terminal"
+        , terminal = "xterm"
         , normalBorderColor = "#222222"
         , focusedBorderColor = "#666666"
-        , manageHook = myManageHook <+> manageHook gnomeConfig 
-        , layoutHook = myLayout
+        , manageHook = myManageHook <+> manageHook gnomeConfig
+        , layoutHook = desktopLayoutModifiers myLayoutHook
         , logHook = myLogHook xmobarProc
         }
         `additionalKeysP` myKeys
