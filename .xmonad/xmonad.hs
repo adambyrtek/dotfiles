@@ -3,6 +3,7 @@ import System.Posix.Unistd
 
 import XMonad hiding ( (|||) )
 import XMonad.Actions.CycleWS
+import XMonad.Actions.UpdatePointer
 import XMonad.Config.Desktop
 import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
@@ -90,6 +91,6 @@ main = do
         , focusedBorderColor = "#666666"
         , manageHook = myManageHook <+> manageHook gnomeConfig
         , layoutHook = desktopLayoutModifiers myLayoutHook
-        , logHook = myLogHook xmobarProc
+        , logHook = myLogHook xmobarProc >> updatePointer (Relative 0.5 0.5)
         }
         `additionalKeysP` myKeys
