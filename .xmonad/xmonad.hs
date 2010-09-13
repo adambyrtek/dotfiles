@@ -30,7 +30,7 @@ myManageHook = composeAll [ manageDocks
 
 myLayout = avoidStruts $ smartBorders $ mkToggle (single FULL) layouts
     where
-        layouts = im $ mouseResizableTile ||| mouseResizableTileMirrored ||| Grid
+        layouts = mouseResizableTile ||| mouseResizableTileMirrored ||| (im $ Grid)
         im = withIM (1%6) (Or (Title "Buddy List") (ClassName "psi"))
 
 myXPConfig = amberXPConfig
