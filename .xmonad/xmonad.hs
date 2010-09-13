@@ -15,9 +15,8 @@ import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.MouseResizableTile
-import XMonad.Layout.MultiToggle
-import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
+import XMonad.Layout.ToggleLayouts
 import XMonad.ManageHook
 import XMonad.Prompt
 import XMonad.Prompt.Shell
@@ -29,16 +28,16 @@ import XMonad.Util.Run
 myManageHook = composeOne
                [ resource =? "Do" -?> doIgnore
                , className =? "Xmessage" -?> doCenterFloat
-               --, isFullscreen -?> doFullFloat
+               , isFullscreen -?> doFullFloat
                ]
 
-myLayoutHook = smartBorders $ mkToggle (single FULL) $ layouts
+myLayoutHook = smartBorders $ toggleLayouts Full $ layouts
     where
         layouts = mouseResizableTile ||| mouseResizableTileMirrored ||| (im $ Grid)
         im = withIM (1%6) (Or (Title "Buddy List") (ClassName "psi"))
 
 myXPConfig = amberXPConfig
-             { borderColor = "#333333"
+             { borderColor = "#222222"
              , showCompletionOnTab = True
              }
 
@@ -52,21 +51,24 @@ myKeys = [ ("M-S-l", spawn "gnome-screensaver-command -l")
          , ("M-u", sendMessage $ ShrinkSlave)
          , ("M-i", sendMessage $ ExpandSlave)
          -- Toggle fullscreen
-         , ("M-f", sendMessage $ Toggle FULL)
+         , ("M-f", sendMessage $ ToggleLayout)
          -- Focus window with urgency flag
          , ("M-0", focusUrgent)
-         -- Multimedia keys
-         , ("<XF86AudioLowerVolume>" , spawn "amixer -q set Master 2dB-")
-         , ("<XF86AudioMute>" , spawn "amixer -q set Master toggle")
-         , ("<XF86AudioRaiseVolume>" , spawn "amixer -q set Master 2dB+")
-         , ("<XF86Display>", spawn "xrandr --auto")
+         -- Switch to previous workspace
+         , ("M-o", toggleWS)
          -- Shell prompt
          , ("M-p", shellPrompt myXPConfig)
          , ("M-S-p", spawn "gmrun")
          --, ("M-w", windowPromptGoto myXPConfig)
          --, ("M-S-w", windowPromptBring myXPConfig)
-         -- Switch to previous workspace
-         , ("M-o", toggleWS)
+         -- Terminals
+         , ("M-x", spawn "xterm")
+         , ("M-S-x", spawn "gnome-terminal")
+         -- Multimedia keys
+         , ("<XF86AudioLowerVolume>" , spawn "amixer -q set Master 2dB-")
+         , ("<XF86AudioMute>" , spawn "amixer -q set Master toggle")
+         , ("<XF86AudioRaiseVolume>" , spawn "amixer -q set Master 2dB+")
+         , ("<XF86Display>", spawn "xrandr --auto")
          ]
          ++
          -- Use view instead of greedyView for all workspaces
@@ -89,10 +91,11 @@ main = do
     xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
         { modMask = mod4Mask
         , terminal = "xterm"
+        , borderWidth = 1
         , normalBorderColor = "#222222"
-        , focusedBorderColor = "#666666"
+        , focusedBorderColor = "#3388aa"
         , manageHook = myManageHook <+> manageHook gnomeConfig
         , layoutHook = desktopLayoutModifiers myLayoutHook
-        , logHook = myLogHook xmobarProc >> updatePointer (Relative 0.5 0.5)
+        , logHook = myLogHook xmobarProc >> updatePointer (Relative (95/100) (95/100))
         }
         `additionalKeysP` myKeys
