@@ -1,0 +1,2 @@
+# Maintain the pitch when the playback speed is increased.
+af=scaletempo
