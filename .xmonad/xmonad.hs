@@ -34,7 +34,7 @@ myManageHook = composeOne
 myLayoutHook = smartBorders $ toggleLayouts Full $ layouts
     where
         layouts = mouseResizableTile ||| mouseResizableTileMirrored ||| (im $ Grid)
-        im = withIM (1%6) (Or (Title "Buddy List") (ClassName "psi"))
+        im = withIM (1%6) (Or (Or (Title "Buddy List") (Title "Contact List")) (ClassName "psi"))
 
 myXPConfig = amberXPConfig
              { borderColor = "#222222"
