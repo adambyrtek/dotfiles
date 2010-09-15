@@ -56,7 +56,7 @@ myKeys conf =
     -- Toggle fullscreen
     , ("M-f", sendMessage $ ToggleLayout)
     -- Focus window with urgency flag
-    , ("M-0", focusUrgent)
+    , ("M-\\", focusUrgent)
     -- Switch to previous workspace
     , ("M-o", toggleWS)
     -- Shell prompt
