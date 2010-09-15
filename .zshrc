@@ -178,7 +178,7 @@ LISTMAX=0
 WORDCHARS="${WORDCHARS:s#/#}"
 
 # }}}
-# {{{ Key bindings
+# {{{ Key and ZLE bindings
 
 # Set Emacs style editing
 bindkey -e
@@ -191,6 +191,10 @@ bindkey '\e[1;5C' forward-word
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\ee' edit-command-line
+
+# Quote URLs pasted on the command line
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
 
 # }}}
 # {{{ Completion
