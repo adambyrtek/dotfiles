@@ -174,8 +174,8 @@ SAVEHIST=1000000
 # Show as many completions as fit on the screen
 LISTMAX=0
 
-# Slash not a part of a word
-WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+# Slash should not be treated as part of a word
+WORDCHARS="${WORDCHARS:s#/#}"
 
 # }}}
 # {{{ Key bindings
