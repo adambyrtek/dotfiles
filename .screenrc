@@ -8,7 +8,7 @@ startup_message off
 backtick 1 1 1 /bin/sh -c 'cat /proc/loadavg | cut -d" " -f1'
 
 # Status bar with all windows shown as tabs
-caption always " %{B}%H%{k}  %-Lw%{= bW}%50> %n%f %t %{-}%+Lw%<  %=%{B}%1`%{k} "
+caption always " %{b}%H%{-}  %-Lw%{= kW}%50> %n%f %t %{-}%+Lw%<  %=%{b}%1`%{-} "
 
 # Hardstatus for xterm title
 defhstatus "screen ^En: ^Et"
