@@ -68,11 +68,6 @@ myKeys conf =
     -- Terminals
     , ("M-x", spawn "xterm")
     , ("M-S-x", spawn "gnome-terminal")
-    -- Multimedia keys
-    , ("<XF86AudioLowerVolume>" , spawn "amixer -q set Master 2dB-")
-    , ("<XF86AudioMute>" , spawn "amixer -q set Master toggle")
-    , ("<XF86AudioRaiseVolume>" , spawn "amixer -q set Master 2dB+")
-    , ("<XF86Display>", spawn "xrandr --auto")
     ]
     ++
     -- Use view instead of greedyView for all workspaces

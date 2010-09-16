@@ -1,0 +1,11 @@
+"amixer -q set Master 2dB-"
+    XF86AudioLowerVolume
+
+"amixer -q set Master toggle"
+    XF86AudioMute
+
+"amixer -q set Master 2dB+"
+    XF86AudioRaiseVolume
+
+"xrandr --auto"
+    XF86Display

@@ -13,6 +13,9 @@ xset r rate 300 70
 xsetroot -bg black
 xsetroot -cursor_name left_ptr
 
+# Multimedia key bindings
+xbindkeys &
+
 # Set background with Nitogen
 nitrogen --restore
 
