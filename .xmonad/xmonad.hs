@@ -44,6 +44,7 @@ myXPConfig = amberXPConfig
     }
 
 myKeys conf =
+    -- GNOME screen lock
     [ ("M-S-l", spawn "gnome-screensaver-command -l")
     -- Cycling between workspaces
     , ("M-[", moveTo Prev HiddenWS)
@@ -76,9 +77,15 @@ myKeys conf =
     ++
     -- Use view instead of greedyView for all workspaces
     [ (modMasks ++ [key], action tag)
-    | (tag, key) <- zip (XMonad.workspaces conf) "123456789"
+    | (tag, key) <- zip (workspaces conf) "123456789"
     , (modMasks, action) <- [ ("M-", windows . W.view) -- was W.greedyView
                             , ("M-S-", windows . W.shift) ]
+    ]
+
+myMouse conf =
+    -- Switch workspaces with a scroll wheel
+    [ ((modMask conf, button4), \_ -> moveTo Next HiddenWS)
+    , ((modMask conf, button5), \_ -> moveTo Prev HiddenWS)
     ]
 
 myLogHook proc = dynamicLogWithPP $ defaultPP
@@ -100,6 +107,7 @@ myConfig logProc = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
     , logHook = myLogHook logProc -- >> updatePointer (Relative (95/100) (95/100))
     }
     `additionalKeysP` myKeys (myConfig logProc)
+    `additionalMouseBindings` myMouse (myConfig logProc)
 
 main = do
     xmobarProc <- spawnPipe "xmobar"
