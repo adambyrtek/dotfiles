@@ -26,8 +26,10 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
 myManageHook = composeOne
-    [ resource =? "Do" -?> doIgnore
-    , className =? "Xmessage" -?> doCenterFloat
+    [ appName =? "Do" -?> doIgnore
+    , appName =? "xmessage" -?> doCenterFloat
+    , appName =? "gcalctool" -?> doCenterFloat
+    , title =? "Chromium Options" -?> doCenterFloat
     , isFullscreen -?> doFullFloat
     ]
 
@@ -35,8 +37,7 @@ myLayoutHook = smartBorders $ toggleLayouts Full $ layouts
     where
         layouts = mouseResizableTile ||| mouseResizableTileMirrored ||| (im $ Grid)
         im = withIM (1%6)
-            (Or (Or (Title "Buddy List") (Title "Contact List")) 
-                (ClassName "psi"))
+            (Or (Title "Buddy List") (Title "Contact List"))
 
 myXPConfig = amberXPConfig
     { borderColor = "#222222"
@@ -79,8 +80,8 @@ myKeys conf =
 
 myMouse conf =
     -- Switch workspaces with a scroll wheel
-    [ ((modMask conf, button4), \_ -> moveTo Next HiddenWS)
-    , ((modMask conf, button5), \_ -> moveTo Prev HiddenWS)
+    [ ((modMask conf, button4), \_ -> moveTo Prev HiddenWS)
+    , ((modMask conf, button5), \_ -> moveTo Next HiddenWS)
     ]
 
 myLogHook proc = dynamicLogWithPP $ defaultPP
