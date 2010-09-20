@@ -234,6 +234,7 @@ zstyle ':completion:*:*:*:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;32'
 
 # Cache expensive completions
 zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # }}}
 # {{{ Zsh options

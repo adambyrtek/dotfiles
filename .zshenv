@@ -1,6 +1,9 @@
 # ~/.zshenv
 # Sourced for all shells
 
+# Local Zsh functions
+fpath=("$HOME/.zsh/functions" $fpath)
+
 # Detect Mac OS X
 if [[ -n $SECURITYSESSIONID ]]; then
     export MACOSX="1"
