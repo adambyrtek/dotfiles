@@ -40,6 +40,9 @@ term "screen-256color"
 # Time to keep messages visible
 msgwait 1
 
+# Hack to allow bright colors
+attrcolor b ".I"
+
 # New key bindings
 bind = next
 bind - prev
