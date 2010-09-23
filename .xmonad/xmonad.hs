@@ -30,6 +30,7 @@ myManageHook = composeOne
     , appName =? "xmessage" -?> doCenterFloat
     , appName =? "gcalctool" -?> doCenterFloat
     , title =? "Chromium Options" -?> doCenterFloat
+    , appName =? "update-manager" -?> doCenterFloat
     , isFullscreen -?> doFullFloat
     ]
 
