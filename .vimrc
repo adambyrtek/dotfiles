@@ -1,6 +1,6 @@
 " vim:fdm=marker
 
-" {{{ Color scheme and font
+" {{{ Appearance
 
 " Color scheme
 if &t_Co >= 256 || has("gui_running")
@@ -50,7 +50,7 @@ set smarttab
 set expandtab
 
 " Number of spaces to use for indent
-set shiftwidth=4
+set shiftwidth=2
 
 " Incremental search
 set incsearch
@@ -175,6 +175,9 @@ let g:CommandTSmartCaseMatching = 1
 " Don't use bold in outlines
 let g:otl_bold_headers = 0
 
+" Wiki list
+let g:vimwiki_list = [{ 'path': '~/exocortex/' }]
+
 " }}}
 " {{{ Autocommands
 
@@ -203,14 +206,7 @@ augroup vimrc
     autocmd FileType python setl tags+=$HOME/.python/tags
 
     " Ruby
-    autocmd FileType ruby setl shiftwidth=2
     autocmd FileType ruby setl tags+=$HOME/.gems/tags
-
-    " Embedded Ruby
-    autocmd FileType eruby setl shiftwidth=2
-
-    " YAML
-    autocmd FileType yaml setl shiftwidth=2
 
     " Go to last known position
     autocmd BufReadPost *
