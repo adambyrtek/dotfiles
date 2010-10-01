@@ -52,6 +52,9 @@ set expandtab
 " Number of spaces to use for indent
 set shiftwidth=2
 
+" Number of spaces to use for Tab in insert mode
+set softtabstop=2
+
 " Incremental search
 set incsearch
 
@@ -175,8 +178,11 @@ let g:CommandTSmartCaseMatching = 1
 " Don't use bold in outlines
 let g:otl_bold_headers = 0
 
-" Wiki list
+" List of available wikies
 let g:vimwiki_list = [{ 'path': '~/exocortex/' }]
+
+" Vimwiki default browser
+let g:vimwiki_browsers = ['xdg-open']
 
 " }}}
 " {{{ Autocommands
@@ -207,6 +213,10 @@ augroup vimrc
 
     " Ruby
     autocmd FileType ruby setl tags+=$HOME/.gems/tags
+
+    " Wiki
+    autocmd FileType vimwiki setl spell
+    autocmd FileType vimwiki iab <buffer> -- —
 
     " Go to last known position
     autocmd BufReadPost *
