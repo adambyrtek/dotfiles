@@ -118,6 +118,9 @@ set guioptions-=T
 " No GUI popups
 set guioptions+=c
 
+" Default global replace
+set gdefault
+
 " }}}
 " {{{ Variables
 
@@ -265,6 +268,9 @@ endfunction
 inoremap <Tab> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 
+" Tab in normal mode
+nmap <Tab> %
+
 " Leader shortcuts to frequent actions
 nnoremap <Leader>a :b#<CR>
 nnoremap <Leader>w :w<CR>
@@ -277,6 +283,7 @@ nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
 nnoremap <Leader>s :SrcExplToggle<CR>
+nnoremap <leader>v `[V`]
 
 " Edit file based on current file or directory
 nnoremap <Leader>o :e <C-R>=expand('%:p')<CR>
@@ -297,13 +304,23 @@ nnoremap <Leader>gn :setl number!<CR>:setl number?<CR>
 nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
 
 " Bash like keys for the command line
-cnoremap <C-A> <Home>
-cnoremap <C-E> <End>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
 
 " Fast switching between windows
-nnoremap <C-J> <C-W>j
-nnoremap <C-K> <C-W>k
-nnoremap <C-H> <C-W>h
-nnoremap <C-L> <C-W>l
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
+
+" Forget about arrow keys
+nnoremap <Up> <nop>
+nnoremap <Down> <nop>
+nnoremap <Left> <nop>
+nnoremap <Right> <nop>
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
 
 " }}}
