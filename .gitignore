@@ -1,4 +1,15 @@
-# Ignore everything that hasn't been explicitly added
 /*
+!/.fonts
+!/.gems
+!/.i3
+!/.macports
+!/.mutt
+!/.python
+/.python/lib
 !/.vim/
 !/.xmonad/
+/.xmonad/history
+/.xmonad/xmonad-i386-linux
+/.xmonad/xmonad.errors
+/.xmonad/xmonad.hi
+/.xmonad/xmonad.o
