@@ -1,5 +1,12 @@
 " vim:fdm=marker
 
+" {{{ Pathogen
+
+" Initialize Pathogen, has to be on the top
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
+" }}}
 " {{{ Appearance
 
 " Color scheme
