@@ -78,7 +78,7 @@ function! vimwiki#open_link(cmd, link, ...) "{{{
       if g:vimwiki_dir_link == ''
         call s:edit_file(a:cmd, VimwikiGet('path').a:link)
       else
-        call s:edit_file(a:cmd,
+        call s:edit_file(a:cmd, 
               \ VimwikiGet('path').a:link.
               \ g:vimwiki_dir_link.
               \ VimwikiGet('ext'))
@@ -86,7 +86,7 @@ function! vimwiki#open_link(cmd, link, ...) "{{{
     else
       call s:edit_file(a:cmd, VimwikiGet('path').a:link.VimwikiGet('ext'))
     endif
-
+    
     if exists('vimwiki_prev_link')
       let b:vimwiki_prev_link = vimwiki_prev_link
     endif
@@ -145,7 +145,7 @@ function! s:get_links(pat) "{{{
   " if current wiki is temporary -- was added by an arbitrary wiki file then do
   " not search wiki files in subdirectories. Or it would hang the system if
   " wiki file was created in $HOME or C:/ dirs.
-  if VimwikiGet('temp')
+  if VimwikiGet('temp') 
     let search_dirs = ''
   else
     let search_dirs = '**/'
@@ -360,7 +360,7 @@ function! s:update_wiki_links(old_fname, new_fname) " {{{
   while idx < len(dirs_keys)
     let dir = dirs_keys[idx]
     let new_dir = dirs_vals[idx]
-    call s:update_wiki_links_dir(dir,
+    call s:update_wiki_links_dir(dir, 
           \ new_dir.old_fname, new_dir.new_fname)
     let idx = idx + 1
   endwhile
@@ -603,12 +603,12 @@ function! vimwiki#nested_syntax(filetype, start, end, textSnipHl) abort "{{{
   " regular one.
   " Perl syntax file has perlFunctionName which is usually has no effect due to
   " 'contained' flag. Now we have 'syntax include' that makes all the groups
-  " included as 'contained' into specific group.
+  " included as 'contained' into specific group. 
   " Here perlFunctionName (with quite an angry regexp "\h\w*[^:]") clashes with
   " the rest syntax rules as now it has effect being really 'contained'.
   " Clear it!
   if ft =~ 'perl'
-    syntax clear perlFunctionName
+    syntax clear perlFunctionName 
   endif
 endfunction "}}}
 
@@ -815,7 +815,7 @@ function! vimwiki#TO_header(inner, visual) "{{{
   if !search('^\(=\+\).\+\1\s*$', 'bcW')
     return
   endif
-
+  
   let sel_start = line("'<")
   let sel_end = line("'>")
   let block_start = line(".")
@@ -823,7 +823,7 @@ function! vimwiki#TO_header(inner, visual) "{{{
 
   let level = vimwiki#count_first_sym(getline('.'))
 
-  let is_header_selected = sel_start == block_start
+  let is_header_selected = sel_start == block_start 
         \ && sel_start != sel_end
 
   if a:visual && is_header_selected

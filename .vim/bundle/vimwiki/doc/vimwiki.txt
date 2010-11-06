@@ -276,7 +276,7 @@ INSERT MODE                                           *vimwiki-table-mappings*
                         *vimwiki_i_<CR>*
 <CR>                    Goto table cell down to the current, create new row if
                         on the last one.
-
+                        
                         *vimwiki_i_<Tab>*
 <Tab>                   Goto next table cell, create new row if on the last
                         cell.
@@ -381,10 +381,10 @@ ic                      Inner column in a table.
 
 *:VimwikiTable*
     Create a table with 5 cols and 2 rows.
-
+    
     :VimwikiTable cols rows
     Create a table with a given cols and rows
-
+    
     :VimwikiTable cols
     Create a table with a given cols and 2 rows
 
@@ -411,7 +411,7 @@ ic                      Inner column in a table.
     |--------+--------+--------+--------+--------|
     | value2 | value3 | value1 | value4 | value5 |
 <
-
+    
     Commands are mapped to <A-Left> and <A-Right> respectively.
 
 
@@ -792,7 +792,7 @@ or >
 %title Title of the page                                       *vimwiki-title*
 
 When you htmlize your wiki page you have default title which is the filename
-of the page.
+of the page. 
 Place >
 
 %title My books
@@ -866,7 +866,7 @@ It is possible to toggle several list items using visual mode.
 9. Tables                                                     *vimwiki-tables*
 
 Use :VimwikiTable command to create default table with 5 columns and 2 rows: >
-
+ 
  |   |   |   |   |   |
  |---+---+---+---+---|
  |   |   |   |   |   |
@@ -1094,7 +1094,7 @@ This header.tpl could look like: >
     <body>
         <div class="contents">
 
-where
+where 
   %title% is replaced by a wiki page name or by a |vimwiki-title|
   %root_path% is replaced by a count of ../ for pages buried in subdirs:
     if you have wikilink [[dir1/dir2/dir3/my page in a subdir]] then
@@ -1339,7 +1339,7 @@ Consider you do not like spaces in filenames (as some vimwiki users do).
 In that case you can set up bad symbols that would be converted to
 |g:vimwiki_stripsym|: >
     let g:vimwiki_badsyms = ' '
-
+    
 Now files for all [[links with spaces]] would be created like
 'links_with_spaces'.
 
@@ -1450,10 +1450,10 @@ just: >
  let g:vimwiki_browsers=['C:\Program Files\Firefox\firefox.exe']
 
 or redefine VimwikiWeblinkHandler function: >
-  function! VimwikiWeblinkHandler(weblink)
+  function! VimwikiWeblinkHandler(weblink) 
     let browser = 'C:\Program Files\Firefox\firefox.exe'
     execute '!start "'.browser.'" ' . a:weblink
-  endfunction
+  endfunction 
 
 
 ------------------------------------------------------------------------------
@@ -1557,14 +1557,14 @@ Default: 0
 ------------------------------------------------------------------------------
 *g:vimwiki_html_header_numbering_sym*
 
-Ending symbol for |g:vimwiki_html_header_numbering|.
+Ending symbol for |g:vimwiki_html_header_numbering|. 
 
 Value           Description~
 '.'             Dot would be added to the end of header's number.
 ')'             Closing bracket would be added to the end of header's number.
 etc.
 
-With
+With 
     let g:vimwiki_html_header_numbering = '.'
 headers would look like: >
     1. Header1
@@ -1741,7 +1741,7 @@ Maxim Kim.
       date if it has corresponding diary page.
     * FIX: Issue 80: Debian Lenny GUI Vim 7.2 has problems with toggling inner
       todo list items.
-    * FIX: Issue 81: Don't convert WikiWord as a link in html when
+    * FIX: Issue 81: Don't convert WikiWord as a link in html when 
       `let g:vimwiki_camel_case = 0`
 
 0.9.9~
@@ -1750,7 +1750,7 @@ Maxim Kim.
       later.
     * NEW: Tables are redesigned. Syntax is changed. Now they are
       auto-formattable. You can navigate them with <tab> and <cr> in insert
-      mode. See |vimwiki-syntax-tables| and |vimwiki-tables| for more details.
+      mode. See |vimwiki-syntax-tables| and |vimwiki-tables| for more details. 
     * NEW: Keyword STARTED: is added.
     * NEW: Words TODO:, DONE:, STARTED:, XXX:, FIXME:, FIXED: are highlighed
       inside headers.
@@ -1771,7 +1771,7 @@ Maxim Kim.
     * NEW: Rename |g:vimwiki_fold_empty_lines| to
       |g:vimwiki_fold_trailing_empty_lines|.
     * NEW: One can use '-' along with '*' to start unordered list item.
-    * NEW: List items could be started from the first column.
+    * NEW: List items could be started from the first column. 
       As a result some limitations appeared:
         - a space after *, - or # for a list item is mandatory.
         - |g:vimwiki_fold_trailing_empty_lines| if set to 0 folds one trailing
@@ -1782,7 +1782,7 @@ Maxim Kim.
     * NEW: Centered headers. Start header with at least one space to make it
       html centered.
     * NEW: Change in default css: header's colors.
-    * NEW: Vimwiki is aware of |GetLatestVimScripts| now.
+    * NEW: Vimwiki is aware of |GetLatestVimScripts| now. 
     * FIX: Use <del> tag instead of custom <span class="strike"> in html.
     * FIX: There are no text styling in htmlized quoted text.
     * FIX: set default value of g:vimwiki_fold_lists to 0 as written in this

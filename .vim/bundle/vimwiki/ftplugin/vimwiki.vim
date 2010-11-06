@@ -81,7 +81,7 @@ function! VimwikiFoldLevel(lnum) "{{{
   " List item folding...
   if g:vimwiki_fold_lists
     let base_level = s:get_base_level(a:lnum)
-
+    
     let rx_list_item = '\('.
           \ g:vimwiki_rxListBullet.'\|'.g:vimwiki_rxListNumber.
           \ '\)'
@@ -92,7 +92,7 @@ function! VimwikiFoldLevel(lnum) "{{{
       let level = s:get_li_level(a:lnum)
       let leveln = s:get_li_level(nnum)
       let adj = s:get_li_level(s:get_start_list(rx_list_item, a:lnum))
-
+      
       if leveln > level
         return ">".(base_level+leveln-adj)
       else
@@ -189,7 +189,7 @@ function! s:get_start_list(rx_item, lnum) "{{{
 endfunction "}}}
 
 function! VimwikiFoldText() "{{{
-  let line = substitute(getline(v:foldstart), '\t',
+  let line = substitute(getline(v:foldstart), '\t', 
         \ repeat(' ', &tabstop), 'g')
   return line.' ['.(v:foldend - v:foldstart).']'
 endfunction "}}}

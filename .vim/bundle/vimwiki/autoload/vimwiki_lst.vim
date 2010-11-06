@@ -171,7 +171,7 @@ function! s:get_child_items(lnum) "{{{
     call add(result, lnum)
     let lnum = s:next_list_item(lnum)
   endwhile
-
+  
   return result
 endfunction "}}}
 
@@ -195,7 +195,7 @@ function! s:get_sibling_items(lnum) "{{{
     endif
     let lnum = s:prev_list_item(lnum)
   endwhile
-
+  
   return result
 endfunction "}}}
 

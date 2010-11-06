@@ -163,7 +163,7 @@ function! s:safe_html(line) "{{{
 
   let tags = join(split(g:vimwiki_valid_html_tags, '\s*,\s*'), '\|')
   let line = substitute(line,'<\%(/\?\%('
-        \.tags.'\)\%(\s\{-1}\S\{-}\)\{-}/\?>\)\@!',
+        \.tags.'\)\%(\s\{-1}\S\{-}\)\{-}/\?>\)\@!', 
         \'\&lt;', 'g')
   let line = substitute(line,'\%(</\?\%('
         \.tags.'\)\%(\s\{-1}\S\{-}\)\{-}/\?\)\@<!>',
@@ -623,7 +623,7 @@ endfunction "}}}
 function! s:close_tag_table(table, ldest) "{{{
   " The first element of table list is a string which tells us if table should be centered.
   " The rest elements are rows which are lists of columns:
-  " ['center',
+  " ['center', 
   "   ['col1', 'col2', 'col3'],
   "   ['col1', 'col2', 'col3'],
   "   ['col1', 'col2', 'col3']
@@ -922,7 +922,7 @@ function! s:process_tag_h(line, id) "{{{
 
     let h_text = s:trim(strpart(line, h_level, len(line) - h_level * 2))
     if g:vimwiki_html_header_numbering
-      let num = matchstr(h_number,
+      let num = matchstr(h_number, 
             \ '^\(\d.\)\{'.(g:vimwiki_html_header_numbering-1).'}\zs.*')
       if !empty(num)
         let num .= g:vimwiki_html_header_numbering_sym

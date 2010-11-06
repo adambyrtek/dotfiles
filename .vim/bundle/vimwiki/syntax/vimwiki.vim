@@ -63,12 +63,12 @@ execute 'syntax match VimwikiTodo /'. g:vimwiki_rxTodo .'/'
 
 " Tables
 " execute 'syntax match VimwikiTable /'.g:vimwiki_rxTable.'/'
-syntax match VimwikiTableRow /^\s*|.\+|\s*$/
+syntax match VimwikiTableRow /^\s*|.\+|\s*$/ 
       \ transparent contains=VimwikiCellSeparator,VimwikiLinkT,
       \ VimwikiNoExistsLinkT,VimwikiEmoticons,VimwikiTodo,
       \ VimwikiBoldT,VimwikiItalicT,VimwikiBoldItalicT,VimwikiItalicBoldT,
       \ VimwikiDelTextT,VimwikiSuperScriptT,VimwikiSubScriptT,VimwikiCodeT
-syntax match VimwikiCellSeparator
+syntax match VimwikiCellSeparator 
       \ /\%(|\)\|\%(-\@<=+\-\@=\)\|\%([|+]\@<=-\+\)/ contained
 
 " List items
@@ -227,7 +227,7 @@ let b:current_syntax="vimwiki"
 let nested = VimwikiGet('nested_syntaxes')
 if !empty(nested)
   for [hl_syntax, vim_syntax] in items(nested)
-    call vimwiki#nested_syntax(vim_syntax,
+    call vimwiki#nested_syntax(vim_syntax, 
           \ '^\s*{{{\%(.*[[:blank:][:punct:]]\)\?'.
           \ hl_syntax.'\%([[:blank:][:punct:]].*\)\?',
           \ '^\s*}}}', 'VimwikiPre')
