@@ -1,6 +1,6 @@
 [submodule ".vim/bundle/rails"]
 	path = .vim/bundle/rails
-	url = http://github.com/tpope/vim-rails.git
+	url = https://github.com/tpope/vim-rails.git
 [submodule ".vim/bundle/nerdcommenter"]
 	path = .vim/bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
