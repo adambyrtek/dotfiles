@@ -194,6 +194,9 @@ let g:vimwiki_list = [{ 'path': '~/exocortex/' }]
 " Vimwiki default browser
 let g:vimwiki_browsers = ['xdg-open']
 
+" Ack binary on Debian/Ubuntu
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+
 " }}}
 " {{{ Autocommands
 
