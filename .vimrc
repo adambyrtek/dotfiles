@@ -135,18 +135,6 @@ set gdefault
 let mapleader = "\\"
 let maplocalleader = ","
 
-" Visible bookmars enabled only in GUI mode
-if !has("gui_running")
-    let g:showmarks_enable = 0
-endif
-
-" Show only manual bookmarks on the margin
-let g:showmarks_include = "abcdef"
-
-" Highlight whole line when bookmark is set
-let g:showmarks_hlline_lower = 1
-let g:showmarks_hlline_upper = 1
-
 " Tag list shows only tags for current file
 let Tlist_Show_One_File = 1
 
@@ -233,14 +221,6 @@ augroup vimrc
                 \ if line("'\"") > 0 && line("'\"") <= line("$") |
                 \     exe "normal g`\"" |
                 \ endif
-
-    " ShowMarks highlight colors
-    autocmd ColorScheme *
-                \ highlight ShowMarksHLl guibg=#660000 |
-                \ highlight ShowMarksHLu guibg=#660000 |
-                \ highlight ShowMarksHLo guibg=#660000 |
-                \ highlight ShowMarksHLm guibg=#660000 |
-                \ highlight SignColumn   guibg=#111111
 
 augroup END
 
