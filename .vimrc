@@ -185,9 +185,6 @@ let g:CommandTCancelMap = '<C-c>'
 " Case sensitive matching when pattern contains uppercase characters
 let g:CommandTSmartCaseMatching = 1
 
-" Don't use bold in outlines
-let g:otl_bold_headers = 0
-
 " List of available wikies
 let g:vimwiki_list = [{ 'path': '~/exocortex/' }]
 
@@ -195,7 +192,7 @@ let g:vimwiki_list = [{ 'path': '~/exocortex/' }]
 let g:vimwiki_browsers = ['xdg-open']
 
 " Ack binary on Debian/Ubuntu
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+let g:ackprg = 'ack-grep -H --nocolor --nogroup --column'
 
 " }}}
 " {{{ Autocommands
