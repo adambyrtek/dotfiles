@@ -5,21 +5,25 @@
 
 # {{{ Aliases and public functions
 
-# Aliases
 alias !=history
 alias ...='../..'
 alias ....='../../..'
 alias .....='../../../../'
+
 alias l="${PAGER:-less}"
 alias e="${EDITOR:-vim}"
 alias g=grep
 alias s=screen
 alias o=open
+alias x="dtrx -v --one=here"
+d() { dict $* | less }
+
 alias psa="ps aux"
-alias psgrep="ps aux | grep"
-calc () { echo $* | bc -l }
+psgrep() { ps aux | grep $* }
+calc() { echo $* | bc -l }
 vimgrep() { vim -c "vimgrep /$1/ $*[2,-1]" -c copen }
 beep() { printf "\a" }
+webshare() { python -m SimpleHTTPServer $* }
 
 # Default parameters
 alias dirs="dirs -v"
