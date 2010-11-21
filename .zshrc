@@ -50,7 +50,7 @@ alias h="fc -R"
 if which dircolors > /dev/null; then
     eval $(dircolors -b)
 fi
-if [[ -n $MACOSX ]]; then
+if [[ -n $IS_MACOSX || -n $IS_FREEBSD ]]; then
     # BSD has its own way
     alias ls="ls -hGF"
 else

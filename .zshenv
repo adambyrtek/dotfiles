@@ -5,8 +5,11 @@
 fpath=("$HOME/.zsh/functions" $fpath)
 
 # Detect Mac OS X
-if [[ -n $SECURITYSESSIONID ]]; then
-    export MACOSX="1"
+if [[ $(uname) == "Darwin" ]]; then
+    export IS_MACOSX="1"
+fi
+if [[ $(uname) == "FreeBSD" ]]; then
+    export IS_FREEBSD="1"
 fi
 
 # Basic environment
@@ -32,14 +35,14 @@ export PYTHONSTARTUP="$HOME/.pythonrc.py"
 export PATH="$PATH:."
 
 # MacPorts
-if [[ -n $MACOSX && -d /opt/local ]]; then
+if [[ -n $IS_MACOSX && -d /opt/local ]]; then
     export PATH="/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql83/bin:$PATH"
     export MANPATH="/opt/local/share/man:$MANPATH"
     export DISPLAY=":0.0"
 fi
 
 # Java on Mac OS X
-if [[ -n $MACOSX ]]; then
+if [[ -n $IS_MACOSX ]]; then
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
     export ANT_HOME="/Developer/Java/ant"
 fi
