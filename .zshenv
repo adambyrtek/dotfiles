@@ -23,12 +23,12 @@ export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;33"
 export EMAIL="adambyrtek@gmail.com"
 
-# Ruby gems installed in home directory, always require rubygems
-#export RUBYOPT="-rubygems"
+# Ruby gems installed in home directory
 export GEM_HOME="$HOME/.gems"
+export RB_USER_INSTALL="1"
 export PATH="$PATH:$GEM_HOME/bin"
 
-# Startup file for Python interpreter
+# Startup file for the Python interpreter
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 
 # Current directory always at the end
