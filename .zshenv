@@ -24,7 +24,7 @@ export GREP_COLOR="1;33"
 export EMAIL="adambyrtek@gmail.com"
 
 # Ruby gems installed in home directory, always require rubygems
-export RUBYOPT="-rubygems"
+#export RUBYOPT="-rubygems"
 export GEM_HOME="$HOME/.gems"
 export PATH="$PATH:$GEM_HOME/bin"
 
