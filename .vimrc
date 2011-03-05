@@ -50,6 +50,9 @@ set ignorecase
 " ...except when capital letter is used in a pattern
 set smartcase
 
+" Try to infer correct case during completion
+set infercase
+
 " Tab indents and Backspace deindents
 set smarttab
 
