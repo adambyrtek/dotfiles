@@ -188,6 +188,10 @@ let g:ackprg = 'ack-grep -H --nocolor --nogroup --column'
 augroup vimrc
     au!
 
+    " Highlight in the current buffer only
+    autocmd WinEnter * setl cursorline
+    autocmd WinLeave * setl nocursorline
+
     " Additional filetype mappings
     autocmd BufNewFile,BufRead mail.google.com.* setfiletype mail
     autocmd BufNewFile,BufRead *.erb setfiletype eruby
