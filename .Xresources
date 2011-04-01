@@ -1,3 +1,5 @@
+! Include Solarized theme
+#include ".Xresources-solarized"
 ! Appearance
 XTerm*reverseVideo: on
 XTerm*faceName: Droid\ Sans\ Mono
