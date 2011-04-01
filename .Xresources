@@ -1,7 +1,8 @@
 ! Include Solarized theme
 #include ".Xresources-solarized"
 ! Appearance
-XTerm*reverseVideo: on
+!XTerm*foreground: gray
+!XTerm*background: black
 XTerm*faceName: Droid\ Sans\ Mono
 XTerm*faceSize: 10
 XTerm*borderWidth: 0
