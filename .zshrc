@@ -69,6 +69,11 @@ if which vim > /dev/null; then
     }
 fi
 
+# Ack on Debian is called ack-grep
+if which ack-grep > /dev/null; then
+  alias ack=ack-grep
+fi
+
 # Package management for Debian
 if which aptitude > /dev/null; then
     alias a=aptitude
