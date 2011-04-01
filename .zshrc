@@ -8,6 +8,10 @@
 # Local Zsh functions
 fpath=("$HOME/.zsh/functions" $fpath)
 
+# Unique path array
+typeset -U path
+path=($path /usr/local/bin $HOME/bin $HOME/.python/bin)
+
 # Detect Mac OS X
 if [[ $(uname) == "Darwin" ]]; then
     export IS_MACOSX="1"
@@ -17,7 +21,6 @@ if [[ $(uname) == "FreeBSD" ]]; then
 fi
 
 # Basic environment
-export PATH="$PATH:/usr/local/bin:$HOME/bin:$HOME/.python/bin"
 export PAGER="less"
 export LESS="-R -X -M -i -S"
 export EDITOR="vim"
@@ -30,13 +33,13 @@ export EMAIL="adambyrtek@gmail.com"
 # Ruby gems installed in home directory
 export GEM_HOME="$HOME/.gems"
 export RB_USER_INSTALL="1"
-export PATH="$PATH:$GEM_HOME/bin"
+path=($path "$GEM_HOME/bin")
 
 # Startup file for the Python interpreter
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 
 # Current directory always at the end
-export PATH="$PATH:."
+path=($path .)
 
 # MacPorts
 if [[ -n $IS_MACOSX && -d /opt/local ]]; then
