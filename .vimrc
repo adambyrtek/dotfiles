@@ -10,9 +10,20 @@ call pathogen#helptags()
 " {{{ Appearance
 
 " Color scheme
-if &t_Co >= 256 || has("gui_running")
+if has("gui_running")
     colorscheme desert256
+    "let g:zenburn_high_Contrast=1
+    "colorscheme zenburn
+    "colorscheme solarized
+    "colorscheme ir_black
+elseif &t_Co >= 256
+    colorscheme desert256
+    "let g:zenburn_high_Contrast=1
+    "colorscheme zenburn
+    "let g:solarized_termcolors=16
+    "colorscheme solarized
 else
+    " The only reasonable 16-color theme
     colorscheme elflord
 endif
 
@@ -218,10 +229,6 @@ augroup vimrc
 
     " Ruby
     autocmd FileType ruby setl tags+=$HOME/.gems/tags
-
-    " Wiki
-    autocmd FileType vimwiki setl spell
-    autocmd FileType vimwiki iab <buffer> -- —
 
     " Go to last known position
     autocmd BufReadPost *
