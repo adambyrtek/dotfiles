@@ -238,6 +238,9 @@ LISTMAX=0
 # Slash should not be treated as part of a word
 WORDCHARS="${WORDCHARS:s#/#}"
 
+# Report time for commands taking more than a minute
+REPORTTIME=60
+
 # }}}
 # {{{ Key and ZLE bindings
 
@@ -290,8 +293,12 @@ zstyle ':completion:*:options' auto-description '%d*'
 zstyle ':completion:*:options' list-separator '#'
 
 # Process completion shows all processes with colors
-zstyle ':completion:*:*:*:*:processes' command  'ps -A -o pid,user,cmd'
-zstyle ':completion:*:*:*:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;32'
+zstyle ':completion:*:*:*:*:processes' force-list always
+zstyle ':completion:*:*:*:*:processes' command 'ps -A -o pid,user,cmd'
+zstyle ':completion:*:*:*:*:processes' list-colors "=(#b) #([0-9]#)*=0=$color[green]"
+
+# List all processes for killall
+zstyle ':completion:*:processes-names' command "ps -eo cmd= | sed 's:\([^ ]*\).*:\1:;s:\(/[^ ]*/\)::;/^\[/d'"
 
 # Cache expensive completions
 zstyle ':completion:*' use-cache on
