@@ -5,9 +5,6 @@
 
 # {{{ Environment variables
 
-# Local Zsh functions
-fpath=("$HOME/.zsh/functions" $fpath)
-
 # Unique path array
 typeset -U path
 path=($path /usr/local/bin $HOME/bin $HOME/.python/bin)
@@ -159,69 +156,16 @@ fi
 alias -g '***'='**/*'
 
 # }}}
-# {{{ Command prompt
-
-autoload colors && colors
-autoload vcs_info
-
-# Prompt inspired by http://kriener.org/articles/2009/06/04/zsh-prompt-magic
-for COLOR in RED GREEN YELLOW WHITE BLACK CYAN; do
-    eval PR_$COLOR='%{$fg[${(L)COLOR}]%}'
-    eval PR_BRIGHT_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
-done
-PR_RESET="%{${reset_color}%}";
-
-FMT_BRANCH="${PR_GREEN}%b%u%c${PR_RESET}"
-FMT_ACTION="(${PR_CYAN}%a${PR_RESET}%)"
-FMT_PATH="%R${PR_YELLOW}/%S"
-
-zstyle ':vcs_info:*:prompt:*' check-for-changes false
-zstyle ':vcs_info:*:prompt:*' unstagedstr '?'
-zstyle ':vcs_info:*:prompt:*' stagedstr '!'
-zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}//" "${FMT_PATH}"
-zstyle ':vcs_info:*:prompt:*' formats "${FMT_BRANCH}//" "${FMT_PATH}"
-zstyle ':vcs_info:*:prompt:*' nvcsformats "" "%~"
-
-_lprompt() {
-    local brackets=$1
-    local color1=$2
-    local color2=$3
-
-    local bracket_open="${color1}${brackets[1]}${PR_RESET}"
-    local bracket_close="${color1}${brackets[2]}"
-
-    local git='$vcs_info_msg_0_'
-    local cwd="${color2}%B%1~%b"
-
-    PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}%# ${PR_RESET}"
-}
-
-_rprompt() {
-    local brackets=$1
-    local color1=$2
-    local color2=$3
-
-    local bracket_open="${color1}${brackets[1]}${PR_RESET}"
-    local bracket_close="${color1}${brackets[2]}${PR_RESET}"
-    local colon="${color1}:"
-    local at="${color1}@${PR_RESET}"
-
-    local user_host="${color2}%n${at}${color2}%m"
-    local vcs_cwd='${${vcs_info_msg_1_%%.}/${HOME}/~}'
-    local cwd="${color2}%B%30<..<${vcs_cwd}%<<%b"
-    local inner="${user_host}${colon}${cwd}"
-
-    RPROMPT="${PR_RESET}${bracket_open}${inner}${bracket_close}${PR_RESET}"
-}
-
-_lprompt '[]' $BR_BRIGHT_BLACK $PR_WHITE
-_rprompt '()' $BR_BRIGHT_BLACK $PR_WHITE
-
-# Spelling correction prompt
-SPROMPT="%{${fg_bold[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
-
-# }}}
 # {{{ Zsh variables
+
+# Autoload all local functions
+fpath=(~/.zsh/functions $fpath)
+autoload -U "" ~/.zsh/functions/*(N:t)
+
+# Enable auto-execution of functions
+typeset -ga preexec_functions
+typeset -ga precmd_functions
+typeset -ga chpwd_functions
 
 # History file
 HISTFILE=~/.zsh_history
@@ -240,6 +184,9 @@ WORDCHARS="${WORDCHARS:s#/#}"
 
 # Report time for commands taking more than a minute
 REPORTTIME=60
+
+# Spelling correction prompt
+SPROMPT="%{${fg_bold[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
 
 # }}}
 # {{{ Key and ZLE bindings
@@ -295,7 +242,7 @@ zstyle ':completion:*:options' list-separator '#'
 # Process completion shows all processes with colors
 zstyle ':completion:*:*:*:*:processes' force-list always
 zstyle ':completion:*:*:*:*:processes' command 'ps -A -o pid,user,cmd'
-zstyle ':completion:*:*:*:*:processes' list-colors "=(#b) #([0-9]#)*=0=$color[green]"
+zstyle ':completion:*:*:*:*:processes' list-colors "=(#b) #([0-9]#)*=0=$fg[green]"
 
 # List all processes for killall
 zstyle ':completion:*:processes-names' command "ps -eo cmd= | sed 's:\([^ ]*\).*:\1:;s:\(/[^ ]*/\)::;/^\[/d'"
@@ -356,7 +303,10 @@ setopt transientrprompt
 setopt printexitvalue
 
 # }}}
-# {{{ Hooks
+# {{{ Prompt and title
+
+# Prompt defined in a separate function
+vcs_prompt
 
 # Set screen or xterm title
 title() {
@@ -376,16 +326,16 @@ title() {
 }
 
 # Hook run before showing prompt
-precmd() {
-    title "zsh %1~"
-    vcs_info prompt
-}
+precmd_functions+=precmd_title
+precmd_title() { title "zsh %1~" }
 
 # Hook run before executing command
-preexec() { title "$1" }
+preexec_functions+=preexec_title
+preexec_title() { title "$1" }
 
 # Hook run on each directory change
-chpwd() { ls }
+chpwd_functions+=chpwd_ls
+chpwd_ls() { ls }
 
 # }}}
 # {{{ Extra initialization
