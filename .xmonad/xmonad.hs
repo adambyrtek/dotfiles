@@ -98,8 +98,10 @@ myConfig logProc = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
     { modMask = mod4Mask
     , terminal = "xterm"
     , borderWidth = 2
-    , normalBorderColor = "#222222"
-    , focusedBorderColor = "#3388aa"
+    -- Base03 in the Solarized color scheme
+    , normalBorderColor = "#002b36"
+    -- Green in the Solarized color scheme
+    , focusedBorderColor = "#859900"
     , manageHook = myManageHook <+> manageHook gnomeConfig
     , layoutHook = desktopLayoutModifiers myLayoutHook
     , logHook = myLogHook logProc -- >> updatePointer (Relative (95/100) (95/100))
