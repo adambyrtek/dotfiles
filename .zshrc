@@ -244,6 +244,7 @@ zstyle ':completion:*:options' list-separator '#'
 
 # Process completion shows all processes with colors
 zstyle ':completion:*:*:*:*:processes' force-list always
+zstyle ':completion:*:*:*:*:processes' menu yes select
 zstyle ':completion:*:*:*:*:processes' command 'ps -A -o pid,user,cmd'
 zstyle ':completion:*:*:*:*:processes' list-colors "=(#b) #([0-9]#)*=0=${color[green]}"
 
