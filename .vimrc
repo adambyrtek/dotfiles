@@ -15,7 +15,7 @@ if has("gui_running") || &t_Co >= 256
     "colorscheme wombat256
     "let g:zenburn_high_Contrast=1
     "colorscheme zenburn
-    "let g:solarized_style="dark"
+    let g:solarized_style="dark"
     "colorscheme solarized
 else
     " The only reasonable 16-color theme
