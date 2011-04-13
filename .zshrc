@@ -5,6 +5,9 @@
 
 # {{{ Environment variables
 
+# Preload color variables
+autoload colors && colors
+
 # Unique path array
 typeset -U path
 path=($path /usr/local/bin $HOME/bin $HOME/.python/bin)
@@ -242,7 +245,7 @@ zstyle ':completion:*:options' list-separator '#'
 # Process completion shows all processes with colors
 zstyle ':completion:*:*:*:*:processes' force-list always
 zstyle ':completion:*:*:*:*:processes' command 'ps -A -o pid,user,cmd'
-zstyle ':completion:*:*:*:*:processes' list-colors "=(#b) #([0-9]#)*=0=$fg[green]"
+zstyle ':completion:*:*:*:*:processes' list-colors "=(#b) #([0-9]#)*=0=${color[green]}"
 
 # List all processes for killall
 zstyle ':completion:*:processes-names' command "ps -eo cmd= | sed 's:\([^ ]*\).*:\1:;s:\(/[^ ]*/\)::;/^\[/d'"
