@@ -40,6 +40,12 @@ term "screen-256color"
 # Time to keep messages visible
 msgwait 1
 
+# Start counting from one
+bind c screen 1
+bind ^c screen 1
+bind 0 select 10
+screen 1
+
 # New key bindings
 bind = next
 bind - prev
@@ -53,7 +59,8 @@ bind x remove
 # Alt bindings
 bindkey ^[[1;3D prev
 bindkey ^[[1;3C next
-bindkey ^[0 select 0
+bindkey ^[- prev
+bindkey ^[= next
 bindkey ^[1 select 1
 bindkey ^[2 select 2
 bindkey ^[3 select 3
@@ -63,3 +70,4 @@ bindkey ^[6 select 6
 bindkey ^[7 select 7
 bindkey ^[8 select 8
 bindkey ^[9 select 9
+bindkey ^[0 select 10
