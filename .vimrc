@@ -319,4 +319,7 @@ inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
 
+" Semicolon to enter the command mode
+nnoremap ; :
+
 " }}}
