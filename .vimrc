@@ -269,6 +269,7 @@ nmap <Tab> %
 
 " Leader shortcuts to frequent actions
 nnoremap <Leader>a :b#<CR>
+nnoremap <Leader>A :A<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
