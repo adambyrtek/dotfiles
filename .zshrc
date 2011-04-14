@@ -195,23 +195,55 @@ REPORTTIME=60
 SPROMPT="%{${fg_bold[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
 
 # }}}
-# {{{ Key and ZLE bindings
+# {{{ Zsh options
 
-# Set Emacs style editing
-bindkey -e
+# Append to history file instantly
+setopt incappendhistory
 
-# Ctrl-Left/Right behave like in Bash
-bindkey '\e[1;5D' backward-word
-bindkey '\e[1;5C' forward-word
+# Save timestamps in history file
+setopt extendedhistory
 
-# Edit command line in external editor
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '\ee' edit-command-line
+# Ignore entries starting with space in history
+setopt histignorespace
 
-# Quote URLs pasted on the command line
-autoload -U url-quote-magic
-zle -N self-insert url-quote-magic
+# Ignore duplicates in history
+setopt histignoredups
+
+# Safe redirections
+setopt noclobber
+
+# Don't show completion menu
+setopt noautomenu
+
+# Show list of completions
+setopt autolist
+
+# Enter directories without cd
+setopt autocd
+
+# Add every directory to the stack
+setopt autopushd
+
+# Ignore duplicates on the stack
+setopt pushdignoredups
+
+# Spelling correction
+setopt correct
+
+# No beep when showing list of completions
+setopt nolistbeep
+
+# No line editor beep at all
+setopt nobeep
+
+# Dynamic variable substitution in prompt
+setopt promptsubst
+
+# Erase the right prompt after a line is accepted
+setopt transientrprompt
+
+# Print the exit value for commands with non-zero exit status
+setopt printexitvalue
 
 # }}}
 # {{{ Completion
@@ -262,55 +294,28 @@ zstyle ':completion:*' cache-path ~/.cache/zsh
 compdef _gnu_generic ack-grep
 
 # }}}
-# {{{ Zsh options
+# {{{ Key bindings
 
-# Append to history file instantly
-setopt incappendhistory
+# Set Emacs style editing
+bindkey -e
 
-# Save timestamps in history file
-setopt extendedhistory
+# Ctrl-Left/Right behave like in Bash
+bindkey '\e[1;5D' backward-word
+bindkey '\e[1;5C' forward-word
 
-# Ignore entries starting with space in history
-setopt histignorespace
+# Edit command line in external editor
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '\ee' edit-command-line
 
-# Ignore duplicates in history
-setopt histignoredups
+# Quote URLs pasted on the command line
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
 
-# Safe redirections
-setopt noclobber
-
-# Don't show completion menu
-setopt noautomenu
-
-# Show list of completions
-setopt autolist
-
-# Enter directories without cd
-setopt autocd
-
-# Add every directory to the stack
-setopt autopushd
-
-# Ignore duplicates on the stack
-setopt pushdignoredups
-
-# Spelling correction
-setopt correct
-
-# No beep when showing list of completions
-setopt nolistbeep
-
-# No line editor beep at all
-setopt nobeep
-
-# Dynamic variable substitution in prompt
-setopt promptsubst
-
-# Erase the right prompt after a line is accepted
-setopt transientrprompt
-
-# Print the exit value for commands with non-zero exit status
-setopt printexitvalue
+# Force menu selection
+zle -C complete-menu complete-word _generic
+zstyle ':completion:complete-menu:*' menu yes select
+bindkey "^[m" complete-menu
 
 # }}}
 # {{{ Prompt and title
