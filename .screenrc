@@ -11,7 +11,7 @@ backtick 1 1 1 true
 sorendition "= wk"
 
 # Status bar with all windows shown as tabs
-caption always " %{m}%H%{-}  %-Lw%{mW}%50> %n%f %t %{-}%+Lw%<  %=%{m}%u%{-} "
+caption always " %{m}%H%{-}  %-Lw%{kW}%50> %n%f %t %{-}%+Lw%<  %=%{m}%u%{-} "
 
 # Hardstatus for xterm title
 defhstatus "screen ^En: ^Et"
