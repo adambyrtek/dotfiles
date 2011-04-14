@@ -258,6 +258,9 @@ zstyle ':completion:*:processes-names' command "ps -eo cmd= | sed 's:\([^ ]*\).*
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.cache/zsh
 
+# Generic completion
+compdef _gnu_generic ack-grep
+
 # }}}
 # {{{ Zsh options
 
