@@ -17,24 +17,24 @@ let g:solarized_style='dark'
 
 " Default color schemes
 if has("gui_running")
-    colorscheme zenburn
-    "colorscheme solarized
+  colorscheme zenburn
+  "colorscheme solarized
 else
-    if &t_Co >= 256
-        colorscheme wombat256mod
-        "colorscheme desert256
-    else
-        colorscheme elflord
-        " Only with Solarized terminal colors
-        "colorscheme solarized
-    endif
+  if &t_Co >= 256
+    colorscheme wombat256mod
+    "colorscheme desert256
+  else
+    colorscheme elflord
+    " Only with Solarized terminal colors
+    "colorscheme solarized
+  endif
 endif
 
 " Font settings for GUI
 if has("gui_macvim")
-    set guifont=DejaVu\ Sans\ Mono:h13
+  set guifont=DejaVu\ Sans\ Mono:h13
 else
-    set guifont=Droid\ Sans\ Mono\ 10
+  set guifont=Droid\ Sans\ Mono\ 10
 endif
 
 " }}}
@@ -203,41 +203,41 @@ let g:ackprg = 'ack-grep -H --nocolor --nogroup --column'
 " {{{ Autocommands
 
 augroup vimrc
-    au!
+  au!
 
-    " Highlight in the current buffer only
-    autocmd WinEnter * setl cursorline
-    autocmd WinLeave * setl nocursorline
+  " Highlight in the current buffer only
+  autocmd WinEnter * setl cursorline
+  autocmd WinLeave * setl nocursorline
 
-    " Additional filetype mappings
-    autocmd BufNewFile,BufRead mail.google.com.* setfiletype mail
-    autocmd BufNewFile,BufRead *.erb setfiletype eruby
+  " Additional filetype mappings
+  autocmd BufNewFile,BufRead mail.google.com.* setfiletype mail
+  autocmd BufNewFile,BufRead *.erb setfiletype eruby
 
-    " Mail
-    autocmd FileType mail setl spell
-    autocmd FileType mail setl wrap
+  " Mail
+  autocmd FileType mail setl spell
+  autocmd FileType mail setl wrap
 
-    " LaTeX
-    autocmd FileType tex compiler tex
+  " LaTeX
+  autocmd FileType tex compiler tex
 
-    " PHP
-    autocmd FileType php setl makeprg=php5\ -l\ %
-    autocmd FileType php setl errorformat=%m\ in\ %f\ on\ line\ %l
+  " PHP
+  autocmd FileType php setl makeprg=php5\ -l\ %
+  autocmd FileType php setl errorformat=%m\ in\ %f\ on\ line\ %l
 
-    " Python
-    " http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
-    autocmd FileType python setl makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
-    autocmd FileType python setl efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-    autocmd FileType python setl tags+=$HOME/.python/tags
+  " Python
+  " http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
+  autocmd FileType python setl makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
+  autocmd FileType python setl efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+  autocmd FileType python setl tags+=$HOME/.python/tags
 
-    " Ruby
-    autocmd FileType ruby setl tags+=$HOME/.gems/tags
+  " Ruby
+  autocmd FileType ruby setl tags+=$HOME/.gems/tags
 
-    " Go to last known position
-    autocmd BufReadPost *
-                \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                \     exe "normal g`\"" |
-                \ endif
+  " Go to last known position
+  autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \     exe "normal g`\"" |
+        \ endif
 
 augroup END
 
@@ -258,14 +258,14 @@ vnoremap p "_xP
 
 " Clever tabs
 function! InsertTabWrapper(direction)
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<Tab>"
-    elseif "backward" == a:direction
-        return "\<C-P>"
-    else
-        return "\<C-N>"
-    endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<Tab>"
+  elseif "backward" == a:direction
+    return "\<C-P>"
+  else
+    return "\<C-N>"
+  endif
 endfunction
 
 " Mapping for tab completion
