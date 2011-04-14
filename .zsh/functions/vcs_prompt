@@ -25,14 +25,14 @@ zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}//" "${FM
 zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}//"              "${FMT_PATH}"
 zstyle ':vcs_info:*:prompt:*' nvcsformats   ""                             "%~"
 
-precmd_functions+=prompt_precmd
-function prompt_precmd {
+precmd_functions+=VCS_PROMPT_precmd
+function VCS_PROMPT_precmd {
     vcs_info 'prompt'
     psvar=()
     psvar[1]=$ZSH_HISTORY_MUTED
 }
 
-function lprompt {
+function VCS_PROMPT_lprompt {
     local brackets=$1
     local color1=$2
     local color2=$3
@@ -48,7 +48,7 @@ function lprompt {
     PROMPT="${PR_RESET}${muted}${bracket_open}${git}${cwd}${bracket_close}%# ${PR_RESET}"
 }
 
-function rprompt {
+function VCS_PROMPT_rprompt {
     local brackets=$1
     local color1=$2
     local color2=$3
@@ -65,10 +65,10 @@ function rprompt {
     RPROMPT="${PR_RESET}${bracket_open}${user_host}${colon}${cwd}${bracket_close}${PR_RESET}"
 }
 
-if [ $UID -eq 0 ]; then
-  lprompt '<>' $PR_BRIGHT_RED $PR_RED
-  rprompt '()' $PR_BRIGHT_RED $PR_RED
+if [[ $UID -eq 0 ]]; then
+  VCS_PROMPT_lprompt '<>' $PR_BRIGHT_RED $PR_RED
+  VCS_PROMPT_rprompt '()' $PR_BRIGHT_RED $PR_RED
 else
-  lprompt '[]' $PR_WHITE $PR_WHITE
-  rprompt '()' $PR_WHITE $PR_WHITE
+  VCS_PROMPT_lprompt '[]' $PR_WHITE $PR_WHITE
+  VCS_PROMPT_rprompt '()' $PR_WHITE $PR_WHITE
 fi

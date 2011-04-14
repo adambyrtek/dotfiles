@@ -112,6 +112,9 @@ alias ll="ls -l"
 alias la="ls -A"
 alias lla="ls -lA"
 
+# cd lists the new directory
+cd() { builtin cd $* && ls }
+
 # Man pages displayed in vim
 if which vim > /dev/null; then
     man() {
@@ -165,7 +168,7 @@ alias -g '***'='**/*'
 fpath=(~/.zsh/functions $fpath)
 autoload -U "" ~/.zsh/functions/*(N:t)
 
-# Enable auto-execution of functions
+# Enable registration of hooks
 typeset -ga preexec_functions
 typeset -ga precmd_functions
 typeset -ga chpwd_functions
@@ -336,10 +339,6 @@ precmd_title() { title "zsh %1~" }
 # Hook run before executing command
 preexec_functions+=preexec_title
 preexec_title() { title "$1" }
-
-# Hook run on each directory change
-chpwd_functions+=chpwd_ls
-chpwd_ls() { ls }
 
 # }}}
 # {{{ Extra initialization
