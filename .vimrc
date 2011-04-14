@@ -2,24 +2,32 @@
 
 " {{{ Pathogen
 
-" Initialize Pathogen, has to be on the top
+" Initialize Pathogen, has to be at the top
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
 " }}}
 " {{{ Appearance
 
-" Color scheme
-if has("gui_running") || &t_Co >= 256
-    colorscheme desert256
-    "colorscheme wombat256
-    "let g:zenburn_high_Contrast=1
-    "colorscheme zenburn
-    let g:solarized_style="dark"
+" Color settings
+set background=dark
+let g:solarized_style='dark'
+"let g:solarized_termcolors=16
+"let g:zenburn_high_Contrast=1
+
+" Default color schemes
+if has("gui_running")
+    colorscheme zenburn
     "colorscheme solarized
 else
-    " The only reasonable 16-color theme
-    colorscheme elflord
+    if &t_Co >= 256
+        colorscheme wombat256mod
+        "colorscheme desert256
+    else
+        colorscheme elflord
+        " Only with Solarized terminal colors
+        "colorscheme solarized
+    endif
 endif
 
 " Font settings for GUI
