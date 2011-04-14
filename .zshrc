@@ -67,7 +67,7 @@ alias e="${EDITOR:-vim}"
 alias g=grep
 alias s=screen
 alias o=open
-alias x="dtrx -v --one=here"
+x() { $* > /dev/null 2>&1 &! }
 d() { dict $* | less }
 
 alias psa="ps aux"
@@ -85,6 +85,7 @@ alias df="df -h"
 alias pstree="pstree -h"
 alias diff="diff -uN"
 alias tree="tree -F"
+alias dtrx="dtrx -v --one=here"
 
 # Emulate useful Mac OS X commands
 if which xdg-open > /dev/null; then
