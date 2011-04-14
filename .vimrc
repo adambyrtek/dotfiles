@@ -11,9 +11,9 @@ call pathogen#helptags()
 
 " Color settings
 set background=dark
-let g:solarized_style='dark'
-"let g:solarized_termcolors=16
-"let g:zenburn_high_Contrast=1
+let g:solarized_style = 'dark'
+"let g:solarized_termcolors = 16
+"let g:zenburn_high_Contrast = 1
 
 " Default color schemes
 if has("gui_running")
@@ -149,8 +149,8 @@ set gdefault
 " {{{ Variables
 
 " Leader key bindings
-let mapleader = "\\"
-let maplocalleader = ","
+let mapleader = '\'
+let maplocalleader = ','
 
 " Tag list shows only tags for current file
 let Tlist_Show_One_File = 1
@@ -190,9 +190,6 @@ let g:CommandTCancelMap = '<C-c>'
 " Case sensitive matching when pattern contains uppercase characters
 let g:CommandTSmartCaseMatching = 1
 
-" List of available wikies
-let g:vimwiki_list = [{ 'path': '~/exocortex/' }]
-
 " Vimwiki default browser
 let g:vimwiki_browsers = ['xdg-open']
 
@@ -205,7 +202,7 @@ let g:ackprg = 'ack-grep -H --nocolor --nogroup --column'
 augroup vimrc
   au!
 
-  " Highlight in the current buffer only
+  " Highlight the cursor line in the current buffer
   autocmd WinEnter * setl cursorline
   autocmd WinLeave * setl nocursorline
 
@@ -227,7 +224,7 @@ augroup vimrc
   " Python
   " http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
   autocmd FileType python setl makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
-  autocmd FileType python setl efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+  autocmd FileType python setl errorformat=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
   autocmd FileType python setl tags+=$HOME/.python/tags
 
   " Ruby
