@@ -4,14 +4,14 @@ escape ``
 # Don't show startup message
 startup_message off
 
-# Use at least one backtick to refrest the status bar
+# Use at least one backtick to refresh the status bar
 backtick 1 1 1 true
 
 # Default colors
 sorendition "= wk"
 
 # Status bar with all windows shown as tabs
-caption always " %{m}%H%{-}  %-Lw%{mW}%50> %n%f %t %{-}%+Lw%<  %=%{m}%u%{-}%1` "
+caption always " %{m}%H%{-}  %-Lw%{mW}%50> %n%f %t %{-}%+Lw%<  %=%{m}%u%{-} "
 
 # Hardstatus for xterm title
 defhstatus "screen ^En: ^Et"
@@ -43,12 +43,6 @@ term "screen-256color"
 # Time to keep messages visible
 msgwait 1
 
-# Start counting from one
-bind c screen 1
-bind ^c screen 1
-bind 0 select 10
-screen 1
-
 # New key bindings
 bind = next
 bind - prev
@@ -64,13 +58,3 @@ bindkey ^[[1;3D prev
 bindkey ^[[1;3C next
 bindkey ^[- prev
 bindkey ^[= next
-bindkey ^[1 select 1
-bindkey ^[2 select 2
-bindkey ^[3 select 3
-bindkey ^[4 select 4
-bindkey ^[5 select 5
-bindkey ^[6 select 6
-bindkey ^[7 select 7
-bindkey ^[8 select 8
-bindkey ^[9 select 9
-bindkey ^[0 select 10
