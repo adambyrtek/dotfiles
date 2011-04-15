@@ -23,6 +23,7 @@ import XMonad.Prompt.Shell
 import XMonad.Prompt.Window
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
+import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Run
 
 myManageHook = composeOne
@@ -100,6 +101,16 @@ myLogHook proc = dynamicLogWithPP $ defaultPP
     , ppUrgent = xmobarColor "yellow" "red" . xmobarStrip
     , ppSep = " | "
     }
+
+{-data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)-}
+
+{-instance UrgencyHook LibNotifyUrgencyHook where-}
+    {-urgencyHook LibNotifyUrgencyHook w = do-}
+        {-name <- getName w-}
+        {-ws <- gets windowset-}
+        {-whenJust (W.findTag w ws) (flash name)-}
+      {-where flash name index =-}
+                {-safeSpawn "notify-send" (show name ++ " requests attention on workspace " ++ index)-}
 
 myConfig logProc = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
     { modMask = mod4Mask
