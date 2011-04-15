@@ -206,8 +206,9 @@ augroup vimrc
   autocmd WinLeave * setl nocursorline
 
   " Additional filetype mappings
-  autocmd BufNewFile,BufRead mail.google.com.* setfiletype mail
-  autocmd BufNewFile,BufRead *.erb setfiletype eruby
+  autocmd BufNewFile,BufRead mail.google.com.* set filetype=mail
+  autocmd BufNewFile,BufRead *.erb set filetype=eruby
+  autocmd BufNewFile,BufRead *.md set filetype=markdown
 
   " Mail
   autocmd FileType mail setl spell
