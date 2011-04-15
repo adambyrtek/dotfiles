@@ -41,9 +41,16 @@ myLayoutHook = smartBorders $ toggleLayouts Full $ layouts
         im = withIM (1%6)
             (Or (Title "Buddy List") (Title "Contact List"))
 
-myXPConfig = amberXPConfig
-    { borderColor = "#222222"
+myXPConfig = defaultXPConfig
+    { font = "xft:Droid Sans Mono-10"
+    , height = 20
+    , fgColor = "#eee8d5" -- Solarized base2
+    , bgColor = "#073642" -- Solarized base02
+    , fgHLight = "#073642" -- Solarized base02
+    , bgHLight = "#cb4b16" -- Solarized orange
+    , promptBorderWidth = 0
     , showCompletionOnTab = True
+    , position = Top
     }
 
 myKeys conf =
@@ -98,13 +105,11 @@ myConfig logProc = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
     { modMask = mod4Mask
     , terminal = "xterm"
     , borderWidth = 2
-    -- Base03 in the Solarized color scheme
-    , normalBorderColor = "#002b36"
-    -- Green in the Solarized color scheme
-    , focusedBorderColor = "#859900"
+    , normalBorderColor = "#002b36" -- Solarized base03
+    , focusedBorderColor = "#859900" -- Solarized green
     , manageHook = myManageHook <+> manageHook gnomeConfig
     , layoutHook = desktopLayoutModifiers myLayoutHook
-    , logHook = myLogHook logProc -- >> updatePointer (Relative (95/100) (95/100))
+    , logHook = myLogHook logProc
     }
     `additionalKeysP` myKeys (myConfig logProc)
     `additionalMouseBindings` myMouse (myConfig logProc)
