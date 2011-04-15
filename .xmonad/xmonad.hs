@@ -103,17 +103,22 @@ myLogHook proc = dynamicLogWithPP $ defaultPP
     , ppSep = " | "
     }
 
-{-data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)-}
+myUrgencyConfig = urgencyConfig
+    { suppressWhen = Focused
+    , remindWhen = Repeatedly 3 10
+    }
 
-{-instance UrgencyHook LibNotifyUrgencyHook where-}
-    {-urgencyHook LibNotifyUrgencyHook w = do-}
-        {-name <- getName w-}
-        {-ws <- gets windowset-}
-        {-whenJust (W.findTag w ws) (flash name)-}
-      {-where flash name index =-}
-                {-safeSpawn "notify-send" (show name ++ " requests attention on workspace " ++ index)-}
+data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
+instance UrgencyHook LibNotifyUrgencyHook where
+    urgencyHook LibNotifyUrgencyHook w = do
+        name <- getName w
+        ws <- gets windowset
+        whenJust (W.findTag w ws) (flash name)
+      where flash name index =
+                safeSpawn "notify-send" [ "Urgency @ workspace " ++ index
+                                        , show name ]
 
-myConfig = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
+myConfig = ewmh $ withUrgencyHookC LibNotifyUrgencyHook myUrgencyConfig $ gnomeConfig
     { modMask = mod4Mask
     , terminal = "xterm"
     , borderWidth = 2
@@ -121,6 +126,8 @@ myConfig = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
     , focusedBorderColor = "#859900" -- Solarized green
     , manageHook = myManageHook <+> manageHook gnomeConfig
     , layoutHook = desktopLayoutModifiers myLayoutHook
+    , logHook = logHook gnomeConfig
+    , startupHook = startupHook gnomeConfig
     }
     `additionalKeysP` myKeys myConfig
     `additionalMouseBindings` myMouse myConfig
