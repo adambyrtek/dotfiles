@@ -95,6 +95,7 @@ myMouse conf =
     ]
 
 myLogHook proc = dynamicLogWithPP $ defaultPP
+    -- xmobar log hook, not used anymore
     { ppOutput = hPutStrLn proc
     , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
     , ppTitle = xmobarColor "green" "" . shorten 50
@@ -112,7 +113,7 @@ myLogHook proc = dynamicLogWithPP $ defaultPP
       {-where flash name index =-}
                 {-safeSpawn "notify-send" (show name ++ " requests attention on workspace " ++ index)-}
 
-myConfig logProc = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
+myConfig = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
     { modMask = mod4Mask
     , terminal = "xterm"
     , borderWidth = 2
@@ -120,11 +121,9 @@ myConfig logProc = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
     , focusedBorderColor = "#859900" -- Solarized green
     , manageHook = myManageHook <+> manageHook gnomeConfig
     , layoutHook = desktopLayoutModifiers myLayoutHook
-    , logHook = myLogHook logProc
     }
-    `additionalKeysP` myKeys (myConfig logProc)
-    `additionalMouseBindings` myMouse (myConfig logProc)
+    `additionalKeysP` myKeys myConfig
+    `additionalMouseBindings` myMouse myConfig
 
 main = do
-    xmobarProc <- spawnPipe "xmobar"
-    xmonad $ myConfig xmobarProc
+    xmonad $ myConfig
