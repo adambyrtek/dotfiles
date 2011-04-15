@@ -170,9 +170,8 @@ let Tlist_Use_Right_Window = 1
 " Focus tag list window when opened
 let Tlist_GainFocus_On_ToggleOpen = 1
 
-" Tags for custom languages
+" Tags for LaTeX
 " http://vim-taglist.sourceforge.net/extend.html
-let tlist_actionscript_settings = 'actionscript;c:class;f:method;p:property;v:variable'
 let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels'
 
 " Show relative paths in buffer explorer
