@@ -298,7 +298,7 @@ nnoremap <Leader>O :e <C-R>=expand('%:p:h')<CR>/
 nnoremap <Leader>u :w !diff -u % -<CR>
 
 " Write buffer using sudo
-nnoremap <Leader>W :w !sudo tee % > /dev/null<CR>
+command! W w !sudo tee % > /dev/null
 
 " Toggles
 nnoremap <Leader>gh :set hlsearch!<CR>:set hlsearch?<CR>
