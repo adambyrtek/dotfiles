@@ -112,6 +112,9 @@ set wildmenu
 " Completion similar to command line
 set wildmode=list:longest
 
+" Saner insert mode completion
+set completeopt=longest,menuone,preview
+
 " Status line with flags, filetype, current tag and position
 set statusline=%.50f\ %h%m%r%y\ %=\ %([%{Tlist_Get_Tagname_By_Line()}]%)\ %-10.(%l,%c%V%)\ %P
 
