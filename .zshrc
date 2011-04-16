@@ -14,10 +14,10 @@ path=($path /usr/local/bin $HOME/bin $HOME/.python/bin)
 
 # Detect Mac OS X
 if [[ $(uname) == "Darwin" ]]; then
-    export IS_MACOSX="1"
+  export IS_MACOSX="1"
 fi
 if [[ $(uname) == "FreeBSD" ]]; then
-    export IS_FREEBSD="1"
+  export IS_FREEBSD="1"
 fi
 
 # Basic environment
@@ -27,7 +27,7 @@ export EDITOR="vim"
 export VISUAL="$EDITOR"
 export LANG="en_US.UTF-8"
 export GREP_OPTIONS="--color=auto"
-export GREP_COLOR="1;33"
+export GREP_COLOR="${color[bold]};${color[yellow]}"
 export EMAIL="adambyrtek@gmail.com"
 
 # Ruby gems installed in home directory
@@ -38,20 +38,17 @@ path=($path "$GEM_HOME/bin")
 # Startup file for the Python interpreter
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 
-# Current directory always at the end
-path=($path .)
-
 # MacPorts
 if [[ -n $IS_MACOSX && -d /opt/local ]]; then
-    export PATH="/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql83/bin:$PATH"
-    export MANPATH="/opt/local/share/man:$MANPATH"
-    export DISPLAY=":0.0"
+  export PATH="/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql83/bin:$PATH"
+  export MANPATH="/opt/local/share/man:$MANPATH"
+  export DISPLAY=":0.0"
 fi
 
 # Java on Mac OS X
 if [[ -n $IS_MACOSX ]]; then
-    export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
-    export ANT_HOME="/Developer/Java/ant"
+  export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
+  export ANT_HOME="/Developer/Java/ant"
 fi
 
 # }}}
@@ -67,7 +64,7 @@ alias e="${EDITOR:-vim}"
 alias g=grep
 alias s=screen
 alias o=open
-x() { $* > /dev/null 2>&1 &! }
+x() { sudo -u "$USER" -i $* > /dev/null 2>&1 &! }
 d() { dict $* | less }
 
 alias psa="ps aux"
@@ -89,11 +86,11 @@ alias dtrx="dtrx -v --one=here"
 
 # Emulate useful Mac OS X commands
 if which xdg-open > /dev/null; then
-    alias open="xdg-open"
+  alias open="xdg-open"
 fi
 if which xclip > /dev/null; then
-    alias pbcopy="xclip -i"
-    alias pbpaste="xclip -o"
+  alias pbcopy="xclip -i"
+  alias pbpaste="xclip -o"
 fi
 
 # Sync history from disk
@@ -101,13 +98,13 @@ alias h="fc -R"
 
 # Colorized ls
 if which dircolors > /dev/null; then
-    eval $(dircolors -b)
+  eval $(dircolors -b)
 fi
 if [[ -n $IS_MACOSX || -n $IS_FREEBSD ]]; then
-    # BSD has its own way
-    alias ls="ls -hGF"
+  # BSD has its own way
+  alias ls="ls -hGF"
 else
-    alias ls="ls -hF --color=auto"
+  alias ls="ls -hF --color=auto"
 fi
 alias ll="ls -l"
 alias la="ls -A"
@@ -118,11 +115,11 @@ cd() { builtin cd $* && ls }
 
 # Man pages displayed in vim
 if which vim > /dev/null; then
-    man() {
-        /usr/bin/man $* | \
-            col -b | \
-            vim -R -c 'set ft=man nomod nolist' -
-    }
+  man() {
+    /usr/bin/man $* | \
+      col -b | \
+      vim -R -c 'set ft=man nomod nolist' -
+  }
 fi
 
 # Ack on Debian is called ack-grep
@@ -132,31 +129,31 @@ fi
 
 # Package management for Debian
 if which aptitude > /dev/null; then
-    alias a=aptitude
-    alias sa="sudo aptitude"
+  alias a=aptitude
+  alias sa="sudo aptitude"
 elif which apt-get > /dev/null; then
-    alias a=apt-get
-    alias sa="sudo apt-get"
+  alias a=apt-get
+  alias sa="sudo apt-get"
 fi
 
 # Package management for Gentoo
 if which emerge > /dev/null; then
-    alias em=emerge
-    alias sem="sudo emerge"
-    alias es="esearch -c"
-    alias eq=equery
+  alias em=emerge
+  alias sem="sudo emerge"
+  alias es="esearch -c"
+  alias eq=equery
 fi
 
 # Package management for Arch Linux
 if which pacman > /dev/null; then
-    alias p=pacman
-    alias sp="sudo pacman"
+  alias p=pacman
+  alias sp="sudo pacman"
 fi
 
 # Package management for MacPorts
 if which port > /dev/null; then
-    alias p=port
-    alias sp="sudo port"
+  alias p=port
+  alias sp="sudo port"
 fi
 
 # Global aliases
@@ -257,7 +254,7 @@ zstyle ':completion:*:warnings' format "%{${fg_bold[yellow]}%}zsh: no matches fo
 
 # Colors in completion
 if [ -n "$LS_COLORS" ]; then
-    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi
 
 # Smart case matching
@@ -326,19 +323,19 @@ vcs_prompt
 
 # Set screen or xterm title
 title() {
-    # Truncate long command and join lines
-    t=$(print -Pn "%40>...>$1" | tr -d "\n")
+  # Truncate long command and join lines
+  t=$(print -Pn "%40>...>$1" | tr -d "\n")
 
-    case $TERM in
-        screen*)
-            # Update screen title
-            print -Pn "\ek$t\e\\"
-            ;;
-        xterm*|rxvt)
-            # Update xterm window title
-            print -Pn "\e]0;$t\a"
-            ;;
-    esac
+  case $TERM in
+    screen*)
+      # Update screen title
+      print -Pn "\ek$t\e\\"
+      ;;
+    xterm*|rxvt)
+      # Update xterm window title
+      print -Pn "\e]0;$t\a"
+      ;;
+  esac
 }
 
 # Hook run before showing prompt
@@ -354,7 +351,7 @@ preexec_title() { title "$1" }
 
 # Enable lesspipe if present
 if which lesspipe > /dev/null; then
-    eval $(lesspipe)
+  eval $(lesspipe)
 fi
 
 # }}}
