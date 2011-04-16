@@ -125,10 +125,7 @@ set showmatch
 set nobackup
 
 " No swap files
-"set noswapfile
-
-" Directories to use for swap files
-set directory=~/Temp,~/tmp,/var/tmp,/tmp
+set noswapfile
 
 " Always display special characters
 set list
@@ -137,7 +134,7 @@ set list
 set listchars=tab:>·,trail:·
 
 " Grep options
-set grepprg=egrep\ -n\ $*\ /dev/null
+set grepprg=grep\ -HERn\ $*\ /dev/null
 
 " No GUI toolbar
 set guioptions-=T
