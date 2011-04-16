@@ -94,20 +94,12 @@ myMouse conf =
     , ((modMask conf, button5), \_ -> moveTo Next HiddenWS)
     ]
 
-myLogHook proc = dynamicLogWithPP $ defaultPP
-    -- xmobar log hook, not used anymore
-    { ppOutput = hPutStrLn proc
-    , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
-    , ppTitle = xmobarColor "green" "" . shorten 50
-    , ppUrgent = xmobarColor "yellow" "red" . xmobarStrip
-    , ppSep = " | "
-    }
-
 myUrgencyConfig = urgencyConfig
     { suppressWhen = Focused
     , remindWhen = Repeatedly 3 10
     }
 
+-- Displays desktop notification on urgency
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 instance UrgencyHook LibNotifyUrgencyHook where
     urgencyHook LibNotifyUrgencyHook w = do
