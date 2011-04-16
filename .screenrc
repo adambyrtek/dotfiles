@@ -43,17 +43,11 @@ term "screen-256color"
 # Time to keep messages visible
 msgwait 1
 
-# New key bindings
+# Additional key bindings
 bind = next
 bind - prev
-bind f fit
-bind w windowlist -b
-bind m monitor
-bind s silence
-bind o focus
-bind x remove
 
-# Alt bindings
+# Alt key bindings
 bindkey ^[[1;3D prev
 bindkey ^[[1;3C next
 bindkey ^[- prev
