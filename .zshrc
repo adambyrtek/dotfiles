@@ -65,7 +65,7 @@ alias g=grep
 alias s=screen
 alias o=open
 x() { sudo -u "$USER" -i $* > /dev/null 2>&1 &! }
-d() { dict $* | less }
+d() { dict $* | colorit | less }
 
 alias psa="ps aux"
 psgrep() { ps aux | grep $* }
