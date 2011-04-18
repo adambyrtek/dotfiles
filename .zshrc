@@ -81,6 +81,7 @@ alias du="du -chs"
 alias df="df -h"
 alias pstree="pstree -h"
 alias diff="diff -uN"
+alias cdiff="colordiff -uN"
 alias tree="tree -F"
 alias dtrx="dtrx -v --one=here"
 
