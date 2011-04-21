@@ -94,23 +94,7 @@ myMouse conf =
     , ((modMask conf, button5), \_ -> moveTo Next HiddenWS)
     ]
 
-myUrgencyConfig = urgencyConfig
-    { suppressWhen = Focused
-    , remindWhen = Repeatedly 3 10
-    }
-
--- Displays desktop notification on urgency
-data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
-instance UrgencyHook LibNotifyUrgencyHook where
-    urgencyHook LibNotifyUrgencyHook w = do
-        name <- getName w
-        ws <- gets windowset
-        whenJust (W.findTag w ws) (flash name)
-      where flash name index =
-                safeSpawn "notify-send" [ "Urgency @ workspace " ++ index
-                                        , show name ]
-
-myConfig = ewmh $ withUrgencyHookC LibNotifyUrgencyHook myUrgencyConfig $ gnomeConfig
+myConfig = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
     { modMask = mod4Mask
     , terminal = "xterm"
     , borderWidth = 2
