@@ -1,7 +1,6 @@
 ! Include Solarized theme
 #include ".Xresources-solarized"
 ! Appearance
-XTerm*reverseVideo: true
 !XTerm*foreground: gray
 !XTerm*background: black
 XTerm*faceName: Droid\ Sans\ Mono
@@ -15,3 +14,5 @@ XTerm*metaSendsEscape: true
 XTerm*termName: xterm-256color
 ! Set urgency flag on bell
 XTerm*bellIsUrgent: true
+! Blink the cursor
+XTerm*cursorBlink: true

@@ -1,2 +1,4 @@
-# Maintain the pitch when the playback speed is increased.
+# Maintain the pitch when the playback speed is increased
 af=scaletempo
+# Most Polish subtitles are in CP1250
+subcp=cp1250
