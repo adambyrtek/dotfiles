@@ -4,3 +4,6 @@ set show-all-if-ambiguous on
 set bell-style none
 # Ignore case during completion
 set completion-ignore-case on
+# Ctrl-Left/Right move between words
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
