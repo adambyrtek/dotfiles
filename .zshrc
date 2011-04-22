@@ -298,9 +298,11 @@ compdef _gnu_generic ack-grep
 # Set Emacs style editing
 bindkey -e
 
-# Ctrl-Left/Right behave like in Bash
+# Ctrl-Left/Right move between words
 bindkey '\e[1;5D' backward-word
 bindkey '\e[1;5C' forward-word
+bindkey '\e[5D' backward-word
+bindkey '\e[5C' forward-word
 
 # Edit command line in external editor
 autoload -U edit-command-line

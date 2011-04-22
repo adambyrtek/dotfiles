@@ -50,5 +50,3 @@ bind - prev
 # Alt key bindings
 bindkey ^[[1;3D prev
 bindkey ^[[1;3C next
-bindkey ^[- prev
-bindkey ^[= next
