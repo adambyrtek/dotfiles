@@ -178,9 +178,6 @@ let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels'
 " Show relative paths in buffer explorer
 let g:bufExplorerShowRelativePath = 1
 
-" Qbuf hotkey
-let g:qb_hotkey = "<Leader>q"
-
 " Prefer symmetric encryption
 let g:GPGPreferSymmetric = 1
 
@@ -286,7 +283,6 @@ nnoremap <Leader>T :TlistToggle<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
-nnoremap <Leader>s :SrcExplToggle<CR>
 nnoremap <leader>v `[V`]
 
 " Edit file based on current file or directory
