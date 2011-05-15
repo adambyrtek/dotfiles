@@ -8,6 +8,7 @@
 	st = status -s
 	ci = commit
 	co = checkout
+	dc = diff --cached
 	meld = !git-meld
 	vimdiff = !git-vimdiff
 [merge]
