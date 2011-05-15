@@ -288,8 +288,8 @@ nnoremap <Leader>s :SrcExplToggle<CR>
 nnoremap <leader>v `[V`]
 
 " Edit file based on current file or directory
-nnoremap <Leader>o :e <C-R>=expand('%:p')<CR>
-nnoremap <Leader>O :e <C-R>=expand('%:p:h')<CR>/
+nnoremap <Leader>o :e <C-R>=expand('%')<CR>
+nnoremap <Leader>O :e <C-R>=expand('%:h')<CR>/
 
 " Diff against the version on disk.
 nnoremap <Leader>u :w !diff -u % -<CR>
