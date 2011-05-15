@@ -9,10 +9,10 @@ call pathogen#helptags()
 " }}}
 " {{{ Appearance
 
-" Color settings
+" Background autodetection often fails
 set background=dark
-let g:solarized_style = 'dark'
-"let g:solarized_termcolors = 16
+
+" Color customization
 "let g:zenburn_high_Contrast = 1
 
 " Default color schemes
@@ -24,8 +24,9 @@ else
     colorscheme wombat256mod
     "colorscheme desert256
   else
+    " Looks decent with default terminal colors
     colorscheme elflord
-    " Only with Solarized terminal colors
+    " Use with Solarized terminal colors only
     "colorscheme solarized
   endif
 endif
