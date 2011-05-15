@@ -117,7 +117,7 @@ set wildmode=list:longest
 set completeopt=longest,menuone,preview
 
 " Status line with flags, filetype, current tag and position
-set statusline=%.50f\ %h%m%r%y%{fugitive#statusline()}\ %=\ %{Tlist_Get_Tagname_By_Line()}\ %15.(%l,%c%V\ \(%P\)%)
+set statusline=%.50f\ %h%m%r%y\ %=\ %.30{Tlist_Get_Tagname_By_Line()}\ %(%l,%c%V\ \(%P\)%)
 
 " Show matching parenthesis
 set showmatch
@@ -274,6 +274,7 @@ inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 nmap <Tab> %
 
 " Leader shortcuts to frequent actions
+nnoremap <Leader><Leader> <Nop>
 nnoremap <Leader>a :b#<CR>
 nnoremap <Leader>A :A<CR>
 nnoremap <Leader>w :w<CR>
@@ -304,9 +305,9 @@ command! Q qall
 " Toggles
 nnoremap <Leader>gh :set hlsearch!<CR>:set hlsearch?<CR>
 nnoremap <Leader>gp :set paste!<CR>:set paste?<CR>
+nnoremap <Leader>gn :set number!<CR>:set number?<CR>
 nnoremap <Leader>gl :setl list!<CR>:setl list?<CR>
 nnoremap <Leader>gs :setl spell!<CR>:setl spell?<CR>
-nnoremap <Leader>gn :setl number!<CR>:setl number?<CR>
 nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
 
 " Bash like keys for the command line
