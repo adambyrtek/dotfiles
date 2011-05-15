@@ -297,6 +297,9 @@ nnoremap <Leader>u :w !diff -u % -<CR>
 " Write buffer using sudo
 command! W w !sudo tee % > /dev/null
 
+" Quit all
+command! Q qall
+
 " Toggles
 nnoremap <Leader>gh :set hlsearch!<CR>:set hlsearch?<CR>
 nnoremap <Leader>gp :set paste!<CR>:set paste?<CR>
@@ -327,5 +330,11 @@ inoremap <Right> <nop>
 
 " Semicolon to enter the command mode
 nnoremap ; :
+
+" Navigating errors
+nmap <silent> [Q :cfirst<CR>
+nmap <silent> ]Q :clast<CR>
+nmap <silent> [q :cprevious<CR>
+nmap <silent> ]q :cnext<CR>
 
 " }}}
