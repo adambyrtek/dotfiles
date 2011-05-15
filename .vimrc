@@ -116,7 +116,7 @@ set wildmode=list:longest
 set completeopt=longest,menuone,preview
 
 " Status line with flags, filetype, current tag and position
-set statusline=%.50f\ %h%m%r%y\ %=\ %([%{Tlist_Get_Tagname_By_Line()}]%)\ %-10.(%l,%c%V%)\ %P
+set statusline=%.50f\ %h%m%r%y%{fugitive#statusline()}\ %=\ %{Tlist_Get_Tagname_By_Line()}\ %15.(%l,%c%V\ \(%P\)%)
 
 " Show matching parenthesis
 set showmatch
