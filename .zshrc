@@ -61,6 +61,7 @@ alias .....='../../../../'
 
 alias l="${PAGER:-less}"
 alias e="${EDITOR:-vim}"
+alias v=view
 alias g=grep
 alias s=screen
 alias o=open
