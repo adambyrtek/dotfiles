@@ -4,9 +4,6 @@ escape ``
 # Don't show startup message
 startup_message off
 
-# Use at least one backtick to refresh the status bar
-backtick 1 1 1 true
-
 # Default colors
 sorendition "= wk"
 
@@ -21,9 +18,6 @@ hardstatus off
 
 # Large scrollback buffer
 defscrollback 10000
-
-# Time after which window is considered silent
-silencewait 10
 
 # Interactive applications don't clutter the buffer
 altscreen on
@@ -41,7 +35,7 @@ vbell off
 term "screen-256color"
 
 # Time to keep messages visible
-msgwait 1
+msgwait 3
 
 # Additional key bindings
 bind = next
