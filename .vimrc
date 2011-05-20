@@ -200,8 +200,8 @@ augroup vimrc
   au!
 
   " Highlight the cursor line in the current buffer
-  autocmd WinEnter * setl cursorline
-  autocmd WinLeave * setl nocursorline
+  autocmd VimEnter,WinEnter * set cursorline
+  autocmd WinLeave * set nocursorline
 
   " Additional filetype mappings
   autocmd BufNewFile,BufRead mail.google.com.* set filetype=mail
@@ -227,6 +227,9 @@ augroup vimrc
 
   " Ruby
   autocmd FileType ruby setl tags+=$HOME/.gems/tags
+
+  " Automatically close Fugitive buffers
+  autocmd BufReadPost fugitive://* set bufhidden=delete
 
   " Go to last known position
   autocmd BufReadPost *
@@ -302,6 +305,7 @@ command! Q qall
 nnoremap <Leader>gh :set hlsearch!<CR>:set hlsearch?<CR>
 nnoremap <Leader>gp :set paste!<CR>:set paste?<CR>
 nnoremap <Leader>gn :set number!<CR>:set number?<CR>
+nnoremap <Leader>gc :set cursorline<CR>:set cursorline?<CR>
 nnoremap <Leader>gl :setl list!<CR>:setl list?<CR>
 nnoremap <Leader>gs :setl spell!<CR>:setl spell?<CR>
 nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
@@ -329,10 +333,14 @@ inoremap <Right> <nop>
 " Semicolon to enter the command mode
 nnoremap ; :
 
-" Navigating errors
+" Navigation
 nmap <silent> [Q :cfirst<CR>
 nmap <silent> ]Q :clast<CR>
 nmap <silent> [q :cprevious<CR>
 nmap <silent> ]q :cnext<CR>
+nmap <silent> [T :tfirst<CR>
+nmap <silent> ]T :tlast<CR>
+nmap <silent> [t :tprevious<CR>
+nmap <silent> ]t :tnext<CR>
 
 " }}}
