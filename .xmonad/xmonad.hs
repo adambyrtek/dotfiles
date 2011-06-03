@@ -19,14 +19,16 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.ToggleLayouts
 import XMonad.ManageHook
 import XMonad.Prompt
+import XMonad.Prompt.AppendFile
 import XMonad.Prompt.Shell
 import XMonad.Prompt.Window
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Run
+import XMonad.Util.Scratchpad
 
-myManageHook = composeOne
+myManageHook = scratchpadManageHookDefault <+> composeOne
     [ appName =? "Do" -?> doIgnore
     , appName =? "xmessage" -?> doCenterFloat
     , appName =? "gcalctool" -?> doCenterFloat
@@ -71,14 +73,17 @@ myKeys conf =
     , ("M-\\", focusUrgent)
     -- Switch to previous workspace
     , ("M-o", toggleWS)
-    -- Shell prompt
+    -- Prompts
     , ("M-p", shellPrompt myXPConfig)
     , ("M-S-p", spawn "gmrun")
+    , ("M-a", appendFilePrompt myXPConfig "INBOX")
     --, ("M-w", windowPromptGoto myXPConfig)
     --, ("M-S-w", windowPromptBring myXPConfig)
-    -- Terminals
+    -- Alternative terminals
     , ("M-x", spawn "xterm")
     , ("M-S-x", spawn "gnome-terminal")
+    -- Scratchpad
+    , ("M-`", scratchpadSpawnAction myConfig)
     ]
     ++
     -- Use view instead of greedyView for all workspaces
