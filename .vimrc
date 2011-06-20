@@ -193,6 +193,9 @@ let g:vimwiki_browsers = ['xdg-open']
 " Ack binary on Debian/Ubuntu
 let g:ackprg = 'ack-grep -H --nocolor --nogroup --column'
 
+" Pyflakes won't clutter the quickfix
+let g:pyflakes_use_quickfix = 0
+
 " }}}
 " {{{ Autocommands
 
