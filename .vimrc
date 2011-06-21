@@ -33,7 +33,7 @@ endif
 
 " Font settings for GUI
 if has("gui_macvim")
-  set guifont=DejaVu\ Sans\ Mono:h13
+  set guifont=Menlo\ Regular:h13
 else
   set guifont=Droid\ Sans\ Mono\ 10
 endif
@@ -165,7 +165,7 @@ let Tlist_Process_File_Always = 1
 " Don't show fold column in tag list
 let Tlist_Enable_Fold_Column = 0
 
-" Show tag list window on right
+" Show tag list window on the right
 let Tlist_Use_Right_Window = 1
 
 " Focus tag list window when opened
@@ -274,13 +274,12 @@ inoremap <Tab> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 
 " Tab in normal mode
-nmap <Tab> %
+nnoremap <Tab> %
 
 " Leader shortcuts to frequent actions
 nnoremap <Leader><Leader> <Nop>
 nnoremap <Leader>a :b#<CR>
 nnoremap <Leader>A :A<CR>
-nnoremap <Leader>w :w<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
 nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
@@ -324,14 +323,14 @@ nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
 " Forget about arrow keys
-nnoremap <Up> <nop>
-nnoremap <Down> <nop>
-nnoremap <Left> <nop>
-nnoremap <Right> <nop>
-inoremap <Up> <nop>
-inoremap <Down> <nop>
-inoremap <Left> <nop>
-inoremap <Right> <nop>
+nnoremap <Up> <Nop>
+nnoremap <Down> <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
 
 " Semicolon to enter the command mode
 nnoremap ; :
