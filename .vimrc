@@ -312,9 +312,12 @@ nnoremap <Leader>gl :setl list!<CR>:setl list?<CR>
 nnoremap <Leader>gs :setl spell!<CR>:setl spell?<CR>
 nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
 
-" Bash like keys for the command line
+" Emacs bindings for the command line
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-d> <Del>
 
 " Fast switching between windows
 nnoremap <C-j> <C-W>j
@@ -322,7 +325,7 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
-" Forget about arrow keys
+" Forget about the arrow keys
 nnoremap <Up> <Nop>
 nnoremap <Down> <Nop>
 nnoremap <Left> <Nop>
