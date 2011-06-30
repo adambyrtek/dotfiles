@@ -12,13 +12,10 @@ call pathogen#helptags()
 " Background autodetection often fails
 set background=dark
 
-" Color customization
-"let g:zenburn_high_Contrast = 1
-
 " Default color schemes
 if has("gui_running")
-  colorscheme zenburn
-  "colorscheme solarized
+  colorscheme solarized
+  "colorscheme zenburn
 else
   if &t_Co >= 256
     colorscheme wombat256mod
