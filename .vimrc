@@ -337,6 +337,7 @@ inoremap <Right> <Nop>
 
 " Semicolon to enter the command mode
 nnoremap ; :
+vnoremap ; :
 
 " Navigation
 nmap <silent> [Q :cfirst<CR>
