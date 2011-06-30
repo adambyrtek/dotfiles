@@ -196,6 +196,9 @@ let g:ackprg = 'ack-grep -H --nocolor --nogroup --column'
 " Pyflakes won't clutter the quickfix
 let g:pyflakes_use_quickfix = 0
 
+" Use signs for quickfix and location
+let g:quickfixsigns_classes = ['qfl', 'loc']
+
 " }}}
 " {{{ Autocommands
 
