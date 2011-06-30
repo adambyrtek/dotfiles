@@ -12,6 +12,4 @@
 	meld = !git-meld
 	vimdiff = !git-vimdiff
 [merge]
-	tool = meld
-[difftool]
-	prompt = false
+	tool = vimdiff
