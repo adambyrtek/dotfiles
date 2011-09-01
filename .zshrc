@@ -255,7 +255,7 @@ autoload -U compinit && compinit
 zstyle ':completion:*:warnings' format "%{${fg_bold[yellow]}%}zsh: no matches for%{$reset_color%} %d"
 
 # Colors in completion
-if [ -n "$LS_COLORS" ]; then
+if [[ -n $LS_COLORS ]]; then
   zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi
 
@@ -352,6 +352,11 @@ preexec_title() { title "$1" }
 
 # }}}
 # {{{ Extra initialization
+
+# Enable syntax highlighting
+if [[ -r ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 # Enable lesspipe if present
 if which lesspipe > /dev/null; then
