@@ -62,9 +62,6 @@ set ignorecase
 " ...except when capital letter is used in a pattern
 set smartcase
 
-" Try to infer correct case during completion
-set infercase
-
 " Tab indents and Backspace deindents
 set smarttab
 
@@ -79,9 +76,6 @@ set softtabstop=2
 
 " Incremental search
 set incsearch
-
-" Use UTF-8 by default
-set encoding=utf-8
 
 " Allow backspace to delete everything
 set backspace=indent,eol,start
@@ -103,9 +97,6 @@ set showbreak=+
 
 " Show ruler with file position
 set ruler
-
-" Show menu with available completions
-set wildmenu
 
 " Completion similar to command line
 set wildmode=list:longest
@@ -280,6 +271,8 @@ nnoremap <Tab> %
 nnoremap <Leader><Leader> <Nop>
 nnoremap <Leader>a :b#<CR>
 nnoremap <Leader>A :A<CR>
+nnoremap <Leader>q :botright copen<CR>
+nnoremap <Leader>Q :cex []<CR>:cw<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
 nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
