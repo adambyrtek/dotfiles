@@ -276,6 +276,7 @@ nnoremap <Leader>Q :cex []<CR>:cw<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
 nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
+nnoremap <Leader>M :!ctags<CR>
 nnoremap <Leader>t :CommandT<CR>
 nnoremap <Leader>T :TlistToggle<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
