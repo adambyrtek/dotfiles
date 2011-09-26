@@ -8,7 +8,7 @@ startup_message off
 sorendition "= wk"
 
 # Status bar with all windows shown as tabs
-caption always "%{mW} @%H %{-}  %-Lw%{kW}%50> %n%f %t %{-}%+Lw%<  %=%{m}%l%{-} "
+caption always "%{mw} @%H %{-}  %-Lw%{kW}%50> %n%f %t %{-}%+Lw%<  %=%{m}%l%{-} "
 
 # Hardstatus for xterm title
 defhstatus "screen ^En: ^Et"
