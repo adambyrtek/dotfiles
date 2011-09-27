@@ -315,9 +315,7 @@ autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
 # Force menu selection
-zle -C complete-menu complete-word _generic
-zstyle ':completion:complete-menu:*' menu yes select
-bindkey "^[m" complete-menu
+bindkey '\em' menu-select
 
 # }}}
 # {{{ Prompt and title
