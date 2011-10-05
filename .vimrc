@@ -53,10 +53,13 @@ set showcmd
 " No wrapping of display
 set nowrap
 
-" Wrap lines on screen at whitespaces
+" Wrap lines on screen at whitespace (requires nolist)
 set linebreak
 
-" Don't distinguish case in patterns...
+" Display incomplete wrapped lines at the end of the screen
+set display=lastline
+
+" Don't distinguish case in search and completion
 set ignorecase
 
 " ...except when capital letter is used in a pattern
@@ -133,6 +136,9 @@ set guioptions+=c
 
 " Default global replace
 set gdefault
+
+" Longer history
+set history=1000
 
 " }}}
 " {{{ Variables
@@ -248,6 +254,10 @@ vnoremap <silent> <Up> gk
 " Paste in visual mode shouldn't replace the default register
 vnoremap p "_xP
 
+" Better use of Q instead of ex mode
+nnoremap Q gqap
+vnoremap Q gq
+
 " Clever tabs
 function! InsertTabWrapper(direction)
   let col = col('.') - 1
@@ -285,8 +295,8 @@ nnoremap <Leader>e :BufExplorer<CR>
 nnoremap <leader>v `[V`]
 
 " Edit file based on current file or directory
-nnoremap <Leader>o :e <C-R>=expand('%')<CR>
-nnoremap <Leader>O :e <C-R>=expand('%:h')<CR>/
+nnoremap <Leader>o :e <C-R>=expand('%:h')<CR>
+nnoremap <Leader>O :e <C-R>=expand('%')<CR>/
 
 " Diff against the version on disk.
 nnoremap <Leader>u :w !diff -u % -<CR>
