@@ -50,7 +50,7 @@ set nocompatible
 " Show partial commands in status
 set showcmd
 
-" No wrapping of display
+" No soft word wrapping
 set nowrap
 
 " Wrap lines on screen at whitespace (requires nolist)
@@ -62,7 +62,7 @@ set display=lastline
 " Don't distinguish case in search and completion
 set ignorecase
 
-" ...except when capital letter is used in a pattern
+" ...except when a capital letter is used
 set smartcase
 
 " Tab indents and Backspace deindents
@@ -242,15 +242,6 @@ augroup END
 " }}}
 " {{{ Keyboard mappings
 
-" Mappings to move through wrapped lines
-" http://www.vim.org/tips/tip.php?tip_id=308
-inoremap <silent> <Down> <C-o>gj
-inoremap <silent> <Up> <C-o>gk
-nnoremap <silent> <Down> gj
-nnoremap <silent> <Up> gk
-vnoremap <silent> <Down> gj
-vnoremap <silent> <Up> gk
-
 " Paste in visual mode shouldn't replace the default register
 vnoremap p "_xP
 
@@ -274,6 +265,9 @@ endfunction
 inoremap <Tab> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
 
+" Enter accepts the current completion
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
 " Tab in normal mode
 nnoremap <Tab> %
 
@@ -287,16 +281,17 @@ nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
 nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
 nnoremap <Leader>M :!ctags<CR>
+nnoremap <Leader>b :CommandTBuffer<CR>
 nnoremap <Leader>t :CommandT<CR>
-nnoremap <Leader>T :TlistToggle<CR>
+nnoremap <Leader>T :TagbarToggle<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
 nnoremap <leader>v `[V`]
 
 " Edit file based on current file or directory
-nnoremap <Leader>o :e <C-R>=expand('%:h')<CR>
-nnoremap <Leader>O :e <C-R>=expand('%')<CR>/
+nnoremap <Leader>o :e <C-R>=expand('%:h')<CR>/
+nnoremap <Leader>O :e <C-R>=expand('%')<CR>
 
 " Diff against the version on disk.
 nnoremap <Leader>u :w !diff -u % -<CR>
@@ -344,13 +339,13 @@ nnoremap ; :
 vnoremap ; :
 
 " Navigation
-nmap <silent> [Q :cfirst<CR>
-nmap <silent> ]Q :clast<CR>
-nmap <silent> [q :cprevious<CR>
-nmap <silent> ]q :cnext<CR>
-nmap <silent> [T :tfirst<CR>
-nmap <silent> ]T :tlast<CR>
-nmap <silent> [t :tprevious<CR>
-nmap <silent> ]t :tnext<CR>
+nnoremap <silent> [Q :cfirst<CR>
+nnoremap <silent> ]Q :clast<CR>
+nnoremap <silent> [q :cprevious<CR>
+nnoremap <silent> ]q :cnext<CR>
+nnoremap <silent> [T :tfirst<CR>
+nnoremap <silent> ]T :tlast<CR>
+nnoremap <silent> [t :tprevious<CR>
+nnoremap <silent> ]t :tnext<CR>
 
 " }}}
