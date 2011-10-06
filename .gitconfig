@@ -4,12 +4,12 @@
 	email = adambyrtek@gmail.com
 	name = Adam Byrtek
 [alias]
-	br = branch
+	br = branch -v
 	st = status -s
 	ci = commit
 	co = checkout
 	dc = diff --cached
-	ll = log --oneline --graph
+	ll = log --oneline
 	meld = !git-meld
 	vimdiff = !git-vimdiff
 [merge]
