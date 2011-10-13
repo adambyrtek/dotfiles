@@ -37,6 +37,7 @@ msgwait 3
 # Additional key bindings
 bind = next
 bind - prev
+bind \' other
 
 # Alt key bindings
 bindkey ^[[1;3D prev
