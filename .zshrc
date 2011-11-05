@@ -85,6 +85,7 @@ alias diff="diff -uN"
 alias cdiff="colordiff -uN"
 alias tree="tree -F"
 alias dtrx="dtrx -v --one=here"
+alias bc="bc -lq"
 
 # Emulate useful Mac OS X commands
 if which xdg-open > /dev/null; then
@@ -97,6 +98,9 @@ fi
 
 # Sync history from disk
 alias h="fc -R"
+
+# Get external IP
+alias myip="curl -s http://whatismyip.org"
 
 # Colorized ls
 if which dircolors > /dev/null; then
