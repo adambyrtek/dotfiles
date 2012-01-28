@@ -140,6 +140,9 @@ set gdefault
 " Longer history
 set history=1000
 
+" Use one space instead of two when joining sentences
+set nojoinspaces
+
 " }}}
 " {{{ Variables
 
