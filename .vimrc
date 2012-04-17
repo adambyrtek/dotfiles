@@ -313,6 +313,7 @@ nnoremap <Leader>gc :set cursorline<CR>:set cursorline?<CR>
 nnoremap <Leader>gl :setl list!<CR>:setl list?<CR>
 nnoremap <Leader>gs :setl spell!<CR>:setl spell?<CR>
 nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
+nnoremap <Leader>go :let &scrolloff=999-&scrolloff<CR>
 
 " Emacs bindings for the command line
 cnoremap <C-a> <Home>
