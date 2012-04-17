@@ -6,8 +6,8 @@
 XTerm*faceName: Droid\ Sans\ Mono
 XTerm*faceSize: 10
 XTerm*borderWidth: 0
-! Disable fake bold
-XTerm*boldMode: false
+! Disable bold for bright colors
+XTerm*allowBoldFonts: false
 ! Make Left Alt behave correctly
 XTerm*metaSendsEscape: true
 ! Enable 256-color mode
