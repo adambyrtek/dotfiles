@@ -12,14 +12,6 @@ autoload colors && colors
 typeset -U path
 path=($path /usr/local/bin $HOME/bin $HOME/.python/bin)
 
-# Detect Mac OS X
-if [[ $(uname) == "Darwin" ]]; then
-  export IS_MACOSX="1"
-fi
-if [[ $(uname) == "FreeBSD" ]]; then
-  export IS_FREEBSD="1"
-fi
-
 # Basic environment
 export PAGER="less"
 export LESS="-R -X -M -i -S"
@@ -39,14 +31,14 @@ path=($path "$GEM_HOME/bin")
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 
 # MacPorts
-if [[ -n $IS_MACOSX && -d /opt/local ]]; then
+if [[ $(uname) == "Darwin" && -d /opt/local ]]; then
   export PATH="/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql83/bin:$PATH"
   export MANPATH="/opt/local/share/man:$MANPATH"
   export DISPLAY=":0.0"
 fi
 
 # Java on Mac OS X
-if [[ -n $IS_MACOSX ]]; then
+if [[ $(uname) == "Darwin" ]]; then
   export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
   export ANT_HOME="/Developer/Java/ant"
 fi
@@ -106,7 +98,7 @@ alias myip="curl -s http://whatismyip.org"
 if which dircolors > /dev/null; then
   eval $(dircolors -b)
 fi
-if [[ -n $IS_MACOSX || -n $IS_FREEBSD ]]; then
+if [[ $(uname) == "Darwin" || $(uname) == "FreeBSD" ]]; then
   # BSD has its own way
   alias ls="ls -hGF"
 else
