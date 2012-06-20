@@ -46,3 +46,6 @@
 [submodule ".vim/bundle/ctrlp"]
 	path = .vim/bundle/ctrlp
 	url = https://github.com/kien/ctrlp.vim.git
+[submodule ".zsh/zsh-history-substring-search"]
+	path = .zsh/zsh-history-substring-search
+	url = git://github.com/zsh-users/zsh-history-substring-search.git

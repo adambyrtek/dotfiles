@@ -351,6 +351,9 @@ preexec_title() { title "$1" }
 if [[ -r ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+if [[ -r ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh ]]; then
+  source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+fi
 
 # Enable lesspipe if present
 if which lesspipe > /dev/null; then
