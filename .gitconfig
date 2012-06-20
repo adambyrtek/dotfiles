@@ -9,7 +9,7 @@
 	ci = commit
 	co = checkout
 	dc = diff --cached
-	ll = log --oneline
+	ll = log --oneline --decorate
 	meld = !git-meld
 	vimdiff = !git-vimdiff
 [merge]
