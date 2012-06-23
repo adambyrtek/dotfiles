@@ -1,12 +1,10 @@
 import Data.Ratio ((%))
-import System.Posix.Unistd
 
 import XMonad hiding ( (|||) )
 import XMonad.Actions.CycleWS
 import XMonad.Actions.UpdatePointer
 import XMonad.Config.Desktop
 import XMonad.Config.Gnome
-import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -21,19 +19,16 @@ import XMonad.ManageHook
 import XMonad.Prompt
 import XMonad.Prompt.AppendFile
 import XMonad.Prompt.Shell
-import XMonad.Prompt.Window
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
 
-myManageHook = scratchpadManageHookDefault <+> composeOne
+myManageHook = scratchpadManageHook (W.RationalRect 0.1 0.2 0.8 0.6) <+> composeOne
     [ appName =? "Do" -?> doIgnore
     , appName =? "xmessage" -?> doCenterFloat
     , appName =? "gcalctool" -?> doCenterFloat
-    , title =? "Chromium Options" -?> doCenterFloat
-    , title =? "Google Chrome Preferences" -?> doCenterFloat
     , appName =? "update-manager" -?> doCenterFloat
     , isFullscreen -?> doFullFloat
     ]
@@ -49,8 +44,8 @@ myXPConfig = defaultXPConfig
     , height = 20
     , fgColor = "#eee8d5" -- Solarized base2
     , bgColor = "#073642" -- Solarized base02
-    , fgHLight = "#073642" -- Solarized base02
-    , bgHLight = "#cb4b16" -- Solarized orange
+    , fgHLight = "#cb4b16" -- Solarized orange
+    , bgHLight = "#073642" -- Solarized base02
     , promptBorderWidth = 0
     , showCompletionOnTab = True
     , position = Top
@@ -64,26 +59,20 @@ myKeys conf =
     , ("M-]", moveTo Next HiddenWS)
     , ("M-S-[", shiftTo Prev HiddenWS)
     , ("M-S-]", shiftTo Next HiddenWS)
-    -- Resize slave windows
-    , ("M-u", sendMessage $ ShrinkSlave)
-    , ("M-i", sendMessage $ ExpandSlave)
     -- Toggle fullscreen
     , ("M-f", sendMessage $ ToggleLayout)
     -- Focus window with urgency flag
-    , ("M-\\", focusUrgent)
+    , ("M-u", focusUrgent)
     -- Switch to previous workspace
     , ("M-o", toggleWS)
     -- Prompts
     , ("M-p", shellPrompt myXPConfig)
-    , ("M-S-p", spawn "gmrun")
     , ("M-a", appendFilePrompt myXPConfig "INBOX")
-    --, ("M-w", windowPromptGoto myXPConfig)
-    --, ("M-S-w", windowPromptBring myXPConfig)
     -- Alternative terminals
     , ("M-x", spawn "xterm")
     , ("M-S-x", spawn "gnome-terminal")
     -- Scratchpad
-    , ("M-`", scratchpadSpawnAction myConfig)
+    , ("M-`", scratchpadSpawnActionCustom "xterm -name scratchpad -e screen")
     ]
     ++
     -- Use view instead of greedyView for all workspaces
