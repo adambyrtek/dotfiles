@@ -66,6 +66,7 @@ calc() { echo $* | bc -l }
 vimgrep() { vim -c "vimgrep /$1/ $*[2,-1]" -c copen }
 beep() { printf "\a" }
 webshare() { python -m SimpleHTTPServer $* }
+trojka() { mplayer http://stream.polskieradio.pl/program3 }
 
 # Default parameters
 alias dirs="dirs -v"
