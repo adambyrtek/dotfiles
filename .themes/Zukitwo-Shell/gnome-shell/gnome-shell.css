@@ -1,5 +1,12 @@
 /* Gnome-shell theme by http://lassekongo83.deviantart.com
  *
+ * Original Theme:
+ * ------------------------------------------------- *
+ * Copyright 2009, Red Hat, Inc.                     *
+ *                                                   *
+ * Portions adapted from Mx's data/style/default.css *
+ *   Copyright 2009 Intel Corporation                *
+ * ------------------------------------------------- *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU Lesser General Public License,
  * version 2.1, as published by the Free Software Foundation.
@@ -2193,6 +2200,7 @@ StScrollBar StButton#vhandle:hover {
 	box-shadow: inset 0px 1px 2px 0px rgba(0,0,0,0.5);
 	caret-size: 1px;
 	caret-color: white;
+	padding: 2px;
 }
 
 .prompt-dialog-password-entry:focus {
