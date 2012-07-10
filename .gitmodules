@@ -49,3 +49,6 @@
 [submodule ".zsh/zsh-history-substring-search"]
 	path = .zsh/zsh-history-substring-search
 	url = git://github.com/zsh-users/zsh-history-substring-search.git
+[submodule ".vim/bundle/vim-powerline"]
+	path = .vim/bundle/vim-powerline
+	url = git://github.com/Lokaltog/vim-powerline.git
