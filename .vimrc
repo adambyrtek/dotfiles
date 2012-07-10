@@ -107,8 +107,8 @@ set wildmode=list:longest
 " Saner insert mode completion
 set completeopt=longest,menuone,preview
 
-" Status line with flags, filetype, current tag and position
-set statusline=%.50f\ %h%#ErrorMsg#%m%*%r%y\ %=\ %.30{Tlist_Get_Tagname_By_Line()}\ %(%l,%c%V\ \(%P\)%)
+" Status line (superseded by Powerline)
+set statusline=%.50f\ %h%#ErrorMsg#%m%*%r%y\ %=\ %(%l,%c%V\ \(%P\)%)
 
 " Show matching parenthesis
 set showmatch
@@ -150,28 +150,6 @@ set nojoinspaces
 let mapleader = '\'
 let maplocalleader = ','
 
-" Tag list shows only tags for current file
-let Tlist_Show_One_File = 1
-
-" Close tag list if it is the only window
-let Tlist_Exit_OnlyWindow = 1
-
-" Preprocess all files
-let Tlist_Process_File_Always = 1
-
-" Don't show fold column in tag list
-let Tlist_Enable_Fold_Column = 0
-
-" Show tag list window on the right
-let Tlist_Use_Right_Window = 1
-
-" Focus tag list window when opened
-let Tlist_GainFocus_On_ToggleOpen = 1
-
-" Tags for LaTeX
-" http://vim-taglist.sourceforge.net/extend.html
-let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels'
-
 " Show relative paths in buffer explorer
 let g:bufExplorerShowRelativePath = 1
 
@@ -195,6 +173,9 @@ let g:pyflakes_use_quickfix = 0
 
 " Use signs for quickfix and location
 let g:quickfixsigns_classes = ['qfl', 'loc']
+
+" Surround comments with spaces
+let NERDSpaceDelims = 1
 
 " }}}
 " {{{ Autocommands
@@ -352,5 +333,9 @@ nnoremap <silent> [T :tfirst<CR>
 nnoremap <silent> ]T :tlast<CR>
 nnoremap <silent> [t :tprevious<CR>
 nnoremap <silent> ]t :tnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
 
 " }}}
