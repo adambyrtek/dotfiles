@@ -79,6 +79,7 @@ alias cdiff="colordiff -uN"
 alias tree="tree -F"
 alias dtrx="dtrx -v --one=here"
 alias bc="bc -lq"
+alias pgrep="pgrep -l"
 
 # Emulate useful Mac OS X commands
 if which xdg-open > /dev/null; then
