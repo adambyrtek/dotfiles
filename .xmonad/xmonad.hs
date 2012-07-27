@@ -27,6 +27,7 @@ import XMonad.Util.Scratchpad
 
 myManageHook = scratchpadManageHook (W.RationalRect 0.1 0.2 0.8 0.6) <+> composeOne
     [ appName =? "Do" -?> doIgnore
+    , appName =? "guake" -?> doFloat
     , appName =? "xmessage" -?> doCenterFloat
     , appName =? "gcalctool" -?> doCenterFloat
     , appName =? "update-manager" -?> doCenterFloat
