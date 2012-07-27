@@ -35,9 +35,10 @@ term "screen-256color"
 msgwait 3
 
 # Additional key bindings
-bind = next
 bind - prev
+bind = next
 bind a other
+bind l screen 9 atop
 
 # Alt arrow key bindings
 bindkey ^[[1;3D prev
