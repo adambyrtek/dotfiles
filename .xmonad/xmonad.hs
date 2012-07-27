@@ -13,7 +13,6 @@ import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.MouseResizableTile
-import XMonad.Layout.NoBorders
 import XMonad.Layout.ToggleLayouts
 import XMonad.ManageHook
 import XMonad.Prompt
@@ -34,7 +33,7 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.1 0.2 0.8 0.6) <+> compose
     , isFullscreen -?> doFullFloat
     ]
 
-myLayoutHook = smartBorders $ toggleLayouts Full $ layouts
+myLayoutHook = toggleLayouts Full $ layouts
     where
         layouts = mouseResizableTile ||| mouseResizableTileMirrored ||| (im $ Grid)
         im = withIM (1%6)
@@ -68,7 +67,7 @@ myKeys conf =
     , ("M-o", toggleWS)
     -- Prompts
     , ("M-p", shellPrompt myXPConfig)
-    , ("M-a", appendFilePrompt myXPConfig "INBOX")
+    , ("M-i", appendFilePrompt myXPConfig "INBOX")
     -- Scratchpad
     , ("M-`", scratchpadSpawnActionCustom "xterm -name scratchpad -e screen")
     ]
