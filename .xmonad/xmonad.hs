@@ -68,9 +68,6 @@ myKeys conf =
     -- Prompts
     , ("M-p", shellPrompt myXPConfig)
     , ("M-a", appendFilePrompt myXPConfig "INBOX")
-    -- Alternative terminals
-    , ("M-x", spawn "xterm")
-    , ("M-S-x", spawn "gnome-terminal")
     -- Scratchpad
     , ("M-`", scratchpadSpawnActionCustom "xterm -name scratchpad -e screen")
     ]
