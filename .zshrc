@@ -67,6 +67,7 @@ vimgrep() { vim -c "vimgrep /$1/ $*[2,-1]" -c copen }
 beep() { printf "\a" }
 webshare() { python -m SimpleHTTPServer $* }
 trojka() { mplayer http://stream.polskieradio.pl/program3 }
+radiofonia() { mplayer http://www.radiofonia.fm/radiofonia.m3u }
 
 # Default parameters
 alias dirs="dirs -v"
@@ -94,7 +95,7 @@ fi
 alias h="fc -R"
 
 # Get external IP
-alias myip="curl -s http://whatismyip.org"
+alias myip="curl ifconfig.me"
 
 # Colorized ls
 if which dircolors > /dev/null; then
