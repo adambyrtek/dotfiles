@@ -256,12 +256,11 @@ nnoremap <Tab> %
 
 " Leader shortcuts to frequent actions
 nnoremap <Leader><Leader> <Nop>
-nnoremap <Leader>a :b#<CR>
+nnoremap <Leader>a :BA<CR>
 nnoremap <Leader>A :A<CR>
 nnoremap <Leader>q :botright copen<CR>
 nnoremap <Leader>Q :cex []<CR>:cw<CR>
-nnoremap <Leader>d :bd<CR>
-nnoremap <Leader>D :BD<CR>
+nnoremap <Leader>d :BD<CR>
 nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
 nnoremap <Leader>M :!ctags<CR>
 nnoremap <Leader>b :CommandTBuffer<CR>
@@ -270,7 +269,8 @@ nnoremap <Leader>T :TagbarToggle<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>e :BufExplorer<CR>
-nnoremap <leader>v `[V`]
+nnoremap <Leader>v `[V`]
+nnoremap <Leader>p :CtrlP<CR>
 
 " Edit file based on current file or directory
 nnoremap <Leader>o :e <C-R>=expand('%:h')<CR>/
