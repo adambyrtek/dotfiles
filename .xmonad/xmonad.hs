@@ -85,7 +85,8 @@ myMouse conf =
     , ((modMask conf, button5), \_ -> moveTo Next HiddenWS)
     ]
 
-myConfig = ewmh $ withUrgencyHook NoUrgencyHook $ gnomeConfig
+myConfig = ewmh $ withUrgencyHookC NoUrgencyHook urgencyConfig { suppressWhen = Focused }
+                $ gnomeConfig
     { modMask = mod4Mask
     , terminal = "xterm"
     , borderWidth = 2
