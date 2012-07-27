@@ -4,8 +4,6 @@
 !/.i3
 !/.macports
 !/.mutt
-!/.python
-/.python/lib
 !/.vim/
 !/.xmonad/
 /.xmonad/history
