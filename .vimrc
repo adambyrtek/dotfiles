@@ -1,13 +1,12 @@
-" vim:fdm=marker
+" vim: foldmethod=marker
 
-" {{{ Pathogen
+" Pathogen {{{1
 
 " Initialize Pathogen, has to be at the top
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-" }}}
-" {{{ Appearance
+" Appearance {{{1
 
 " Background autodetection often fails
 set background=dark
@@ -35,8 +34,7 @@ else
   set guifont=Droid\ Sans\ Mono\ 10
 endif
 
-" }}}
-" {{{ Settings
+" Settings {{{1
 
 " Syntax highlighting
 syntax on
@@ -143,8 +141,7 @@ set history=1000
 " Use one space instead of two when joining sentences
 set nojoinspaces
 
-" }}}
-" {{{ Variables
+" Variables {{{1
 
 " Leader key bindings
 let mapleader = '\'
@@ -177,8 +174,7 @@ let g:quickfixsigns_classes = ['qfl', 'loc']
 " Surround comments with spaces
 let NERDSpaceDelims = 1
 
-" }}}
-" {{{ Autocommands
+" Autocommands {{{1
 
 augroup vimrc
   au!
@@ -222,8 +218,7 @@ augroup vimrc
 
 augroup END
 
-" }}}
-" {{{ Keyboard mappings
+" Keyboard mappings {{{1
 
 " Paste in visual mode shouldn't replace the default register
 vnoremap p "_xP
@@ -336,5 +331,3 @@ nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> ]B :blast<CR>
 nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
-
-" }}}

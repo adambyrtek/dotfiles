@@ -1,9 +1,9 @@
-# vim:fdm=marker
+# vim: foldmethod=marker
 
 # ~/.zshrc
 # Sourced for interactive shells only
 
-# {{{ Environment variables
+# Environment variables {{{1
 
 # Preload color variables
 autoload colors && colors
@@ -43,8 +43,7 @@ if [[ $(uname) == "Darwin" ]]; then
   export ANT_HOME="/Developer/Java/ant"
 fi
 
-# }}}
-# {{{ Aliases and public functions
+# Aliases and public functions {{{1
 
 alias !=history
 alias ...='../..'
@@ -160,8 +159,7 @@ fi
 # Global aliases
 alias -g '***'='**/*'
 
-# }}}
-# {{{ Zsh variables
+# Zsh variables {{{1
 
 # Autoload all local functions
 fpath=(~/.zsh/functions $fpath)
@@ -193,8 +191,7 @@ REPORTTIME=60
 # Spelling correction prompt
 SPROMPT="%{${fg_bold[red]}%}zsh: correct '%R' to '%r' [nyae]?%{${reset_color}%} "
 
-# }}}
-# {{{ Zsh options
+# Zsh options {{{1
 
 # Append to history file instantly
 setopt incappendhistory
@@ -244,8 +241,7 @@ setopt transientrprompt
 # Print the exit value for commands with non-zero exit status
 setopt printexitvalue
 
-# }}}
-# {{{ Completion
+# Completion {{{1
 
 # Enable completion
 autoload -U compinit && compinit
@@ -292,8 +288,7 @@ zstyle ':completion:*' cache-path ~/.cache/zsh
 # Generic completion
 compdef _gnu_generic ack-grep
 
-# }}}
-# {{{ Key bindings
+# Key bindings {{{1
 
 # Set Emacs style editing
 bindkey -e
@@ -316,8 +311,7 @@ zle -N self-insert url-quote-magic
 # Force menu selection
 bindkey '\em' menu-select
 
-# }}}
-# {{{ Prompt and title
+# Prompt and title {{{1
 
 # Prompt defined in a separate function
 vcs_prompt
@@ -347,8 +341,7 @@ precmd_title() { title "zsh %1~" }
 preexec_functions+=preexec_title
 preexec_title() { title "$1" }
 
-# }}}
-# {{{ Extra initialization
+# Extra initialization {{{1
 
 # Enable syntax highlighting
 if [[ -r ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
@@ -362,5 +355,3 @@ fi
 if which lesspipe > /dev/null; then
   eval $(lesspipe)
 fi
-
-# }}}
