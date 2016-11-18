@@ -12,6 +12,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.MouseResizableTile
+import XMonad.Layout.NoBorders
 import XMonad.Layout.ToggleLayouts
 import XMonad.ManageHook
 import XMonad.Prompt
@@ -21,16 +22,15 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Run
-import XMonad.Util.Scratchpad
 
-myManageHook = scratchpadManageHook (W.RationalRect 0.1 0.2 0.8 0.6) <+> composeOne
+myManageHook = composeOne
     [ appName =? "guake" -?> doFloat
     , appName =? "gcalctool" -?> doCenterFloat
     , appName =? "update-manager" -?> doCenterFloat
     , isFullscreen -?> doFullFloat
     ]
 
-myLayoutHook = toggleLayouts Full $ layouts
+myLayoutHook = toggleLayouts (noBorders $ Full) $ layouts
     where
         layouts = mouseResizableTile ||| mouseResizableTileMirrored ||| (im $ Grid)
         im = withIM (1%6)
@@ -64,9 +64,7 @@ myKeys conf =
     , ("M-o", toggleWS)
     -- Prompts
     , ("M-p", shellPrompt myXPConfig)
-    , ("M-i", appendFilePrompt myXPConfig "INBOX")
-    -- Scratchpad
-    , ("M-`", scratchpadSpawnActionCustom "xterm -name scratchpad -e screen")
+    , ("M-S-p", spawn "xfce4-appfinder")
     ]
     ++
     -- Use view instead of greedyView for all workspaces
