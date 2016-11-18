@@ -4,7 +4,6 @@ import XMonad hiding ( (|||) )
 import XMonad.Actions.CycleWS
 import XMonad.Actions.UpdatePointer
 import XMonad.Config.Desktop
-import XMonad.Config.Gnome
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -25,9 +24,7 @@ import XMonad.Util.Run
 import XMonad.Util.Scratchpad
 
 myManageHook = scratchpadManageHook (W.RationalRect 0.1 0.2 0.8 0.6) <+> composeOne
-    [ appName =? "Do" -?> doIgnore
-    , appName =? "guake" -?> doFloat
-    , appName =? "xmessage" -?> doCenterFloat
+    [ appName =? "guake" -?> doFloat
     , appName =? "gcalctool" -?> doCenterFloat
     , appName =? "update-manager" -?> doCenterFloat
     , isFullscreen -?> doFullFloat
@@ -86,16 +83,16 @@ myMouse conf =
     ]
 
 myConfig = ewmh $ withUrgencyHookC NoUrgencyHook urgencyConfig { suppressWhen = Focused }
-                $ gnomeConfig
+                $ desktopConfig
     { modMask = mod4Mask
-    , terminal = "xterm"
+    , terminal = "gnome-terminal"
     , borderWidth = 2
     , normalBorderColor = "#002b36" -- Solarized base03
     , focusedBorderColor = "#859900" -- Solarized green
-    , manageHook = myManageHook <+> manageHook gnomeConfig
+    , manageHook = myManageHook <+> manageHook desktopConfig
     , layoutHook = desktopLayoutModifiers myLayoutHook
-    , logHook = logHook gnomeConfig
-    , startupHook = startupHook gnomeConfig
+    , logHook = logHook desktopConfig
+    , startupHook = startupHook desktopConfig
     }
     `additionalKeysP` myKeys myConfig
     `additionalMouseBindings` myMouse myConfig
