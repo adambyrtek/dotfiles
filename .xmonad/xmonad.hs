@@ -92,6 +92,7 @@ myConfig = ewmh $ withUrgencyHookC NoUrgencyHook urgencyConfig { suppressWhen = 
     , layoutHook = desktopLayoutModifiers myLayoutHook
     , logHook = logHook desktopConfig
     , startupHook = startupHook desktopConfig
+    , focusFollowsMouse = False
     }
     `additionalKeysP` myKeys myConfig
     `additionalMouseBindings` myMouse myConfig
