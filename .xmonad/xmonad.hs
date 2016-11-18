@@ -27,6 +27,7 @@ myManageHook = composeOne
     [ appName =? "guake" -?> doFloat
     , appName =? "gcalctool" -?> doCenterFloat
     , appName =? "update-manager" -?> doCenterFloat
+    , className =? "Xfce4-notifyd" -?> doF W.focusDown
     , isFullscreen -?> doFullFloat
     ]
 
@@ -51,7 +52,7 @@ myXPConfig = defaultXPConfig
 myKeys conf =
     -- GNOME screen lock
     [ ("M-S-l", spawn "gnome-screensaver-command -l")
-    -- Cycling between workspaces
+    -- Cycle between workspaces
     , ("M-[", moveTo Prev HiddenWS)
     , ("M-]", moveTo Next HiddenWS)
     , ("M-S-[", shiftTo Prev HiddenWS)
