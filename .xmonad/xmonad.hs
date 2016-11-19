@@ -5,6 +5,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.UpdatePointer
 import XMonad.Config.Desktop
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
@@ -13,25 +14,26 @@ import XMonad.Layout.IM
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.MouseResizableTile
 import XMonad.Layout.NoBorders
+import XMonad.Layout.Spacing
 import XMonad.Layout.ToggleLayouts
 import XMonad.ManageHook
 import XMonad.Prompt
-import XMonad.Prompt.AppendFile
 import XMonad.Prompt.Shell
+import XMonad.Prompt.RunOrRaise
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Run
 
 myManageHook = composeOne
-    [ appName =? "guake" -?> doFloat
-    , appName =? "gcalctool" -?> doCenterFloat
+    [ appName =? "xmessage" -?> doCenterFloat
     , appName =? "update-manager" -?> doCenterFloat
+    , appName =? "guake" -?> doFloat
     , className =? "Xfce4-notifyd" -?> doF W.focusDown
     , isFullscreen -?> doFullFloat
     ]
 
-myLayoutHook = toggleLayouts (noBorders $ Full) $ layouts
+myLayoutHook = smartSpacing 10 $ smartBorders (toggleLayouts Full $ avoidStruts layouts)
     where
         layouts = mouseResizableTile ||| mouseResizableTileMirrored ||| (im $ Grid)
         im = withIM (1%6)
@@ -50,10 +52,8 @@ myXPConfig = defaultXPConfig
     }
 
 myKeys conf =
-    -- GNOME screen lock
-    [ ("M-S-l", spawn "gnome-screensaver-command -l")
     -- Cycle between workspaces
-    , ("M-[", moveTo Prev HiddenWS)
+    [ ("M-[", moveTo Prev HiddenWS)
     , ("M-]", moveTo Next HiddenWS)
     , ("M-S-[", shiftTo Prev HiddenWS)
     , ("M-S-]", shiftTo Next HiddenWS)
@@ -66,6 +66,8 @@ myKeys conf =
     -- Prompts
     , ("M-p", shellPrompt myXPConfig)
     , ("M-S-p", spawn "xfce4-appfinder")
+    -- GNOME screen lock
+    , ("M-S-l", spawn "gnome-screensaver-command -l")
     ]
     ++
     -- Use view instead of greedyView for all workspaces
@@ -88,8 +90,8 @@ myConfig = ewmh $ withUrgencyHookC NoUrgencyHook urgencyConfig { suppressWhen = 
     , borderWidth = 2
     , normalBorderColor = "#002b36" -- Solarized base03
     , focusedBorderColor = "#859900" -- Solarized green
-    , manageHook = myManageHook <+> manageHook desktopConfig
-    , layoutHook = desktopLayoutModifiers myLayoutHook
+    , manageHook = insertPosition End Newer <+> myManageHook <+> manageHook desktopConfig
+    , layoutHook = myLayoutHook
     , logHook = logHook desktopConfig
     , startupHook = startupHook desktopConfig
     , focusFollowsMouse = False
