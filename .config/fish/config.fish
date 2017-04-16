@@ -1,3 +1,1 @@
-if status --is-interactive
-    set fish_greeting ""
-end
+set -x EDITOR vim
