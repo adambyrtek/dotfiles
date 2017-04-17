@@ -1,4 +1,6 @@
 set -x EDITOR vim
+set PATH "$HOME/Dev/bin" $PATH
+set CDPATH . "$HOME/Dev"
 
 abbr -a ga git add
 abbr -a gb git branch -v
