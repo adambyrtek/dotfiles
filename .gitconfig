@@ -3,14 +3,7 @@
 [user]
 	email = adambyrtek@gmail.com
 	name = Adam Byrtek
-[alias]
-	br = branch -v
-	st = status -s
-	ci = commit
-	co = checkout
-	dc = diff --cached
-	ll = log --oneline --decorate
-	meld = !git-meld
-	vimdiff = !git-vimdiff
 [merge]
 	tool = vimdiff
+[push]
+	default = simple
