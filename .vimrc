@@ -3,35 +3,22 @@
 " Pathogen {{{1
 
 " Initialize Pathogen, has to be at the top
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+" (make sure to run :Helptags after installing new plugins)
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+call pathogen#infect()
 
 " Appearance {{{1
 
-" Background autodetection often fails
-set background=dark
-
 " Default color schemes
-if has("gui_running")
-  colorscheme solarized
-  "colorscheme zenburn
+if has("gui_running") || &t_Co >= 256
+    " Actively maintaned dark scheme
+    colorscheme jellybeans
+
+    " True color support coming up in Vim 8
+    "set termguicolors
 else
-  if &t_Co >= 256
-    colorscheme wombat256mod
-    "colorscheme desert256
-  else
     " Looks decent with default terminal colors
     colorscheme elflord
-    " Use with Solarized terminal colors only
-    "colorscheme solarized
-  endif
-endif
-
-" Font settings for GUI
-if has("gui_macvim")
-  set guifont=Menlo\ Regular:h13
-else
-  set guifont=Droid\ Sans\ Mono\ 10
 endif
 
 " Settings {{{1
@@ -51,38 +38,41 @@ set showcmd
 " No soft word wrapping
 set nowrap
 
-" Wrap lines on screen at whitespace (requires nolist)
+" Soft wrap lines at whitespace (when enabled)
 set linebreak
 
 " Display incomplete wrapped lines at the end of the screen
-set display=lastline
+set display+=lastline
 
-" Don't distinguish case in search and completion
+" Case insensitive search and completion
 set ignorecase
 
 " ...except when a capital letter is used
 set smartcase
 
-" Tab indents and Backspace deindents
-set smarttab
-
 " Use spaces instead of tabs
 set expandtab
 
-" Number of spaces to use for indent
-set shiftwidth=2
+" Tab in insert mode indents with spaces
+set smarttab
 
-" Number of spaces to use for Tab in insert mode
-set softtabstop=2
+" Indent new lines as previous line
+set autoindent
+
+" Number of spaces to use for indent
+set shiftwidth=4
+
+" Number of spaces to use for Tab when editing
+set softtabstop=4
 
 " Incremental search
 set incsearch
 
+" Highlight search results
+set hlsearch
+
 " Allow backspace to delete everything
 set backspace=indent,eol,start
-
-" Indent new lines as previous line
-set autoindent
 
 " Always show status
 set laststatus=2
@@ -105,14 +95,8 @@ set wildmode=list:longest
 " Saner insert mode completion
 set completeopt=longest,menuone,preview
 
-" Status line (superseded by Powerline)
-set statusline=%.50f\ %h%#ErrorMsg#%m%*%r%y\ %=\ %(%l,%c%V\ \(%P\)%)
-
 " Show matching parenthesis
 set showmatch
-
-" No backups
-set nobackup
 
 " No swap files
 set noswapfile
@@ -121,16 +105,7 @@ set noswapfile
 set list
 
 " Special characters to show
-set listchars=tab:>·,trail:·
-
-" Grep options
-set grepprg=grep\ -HERn\ $*\ /dev/null
-
-" No GUI toolbar
-set guioptions-=T
-
-" No GUI popups
-set guioptions+=c
+set listchars=tab:>·,trail:·,extends:>,precedes:<
 
 " Default global replace
 set gdefault
@@ -141,38 +116,32 @@ set history=1000
 " Use one space instead of two when joining sentences
 set nojoinspaces
 
+" Remove comment character when joining comment lines
+set formatoptions+=j
+
+" Reload file when changed (and not edited in Vim)
+set autoread
+
+" Shorter timeout after Esc
+set ttimeoutlen=100
+
+" Color column to mark long lines
+set colorcolumn=100
+
 " Variables {{{1
 
 " Leader key bindings
 let mapleader = '\'
 let maplocalleader = ','
 
-" Show relative paths in buffer explorer
-let g:bufExplorerShowRelativePath = 1
+" Avoid creating leader mappings
+let g:BufKillCreateMappings = 1
 
-" Prefer symmetric encryption
-let g:GPGPreferSymmetric = 1
+" Always start search from cwd
+let g:ctrlp_working_path_mode = 0
 
-" Using Esc causes problems on some platforms
-let g:CommandTCancelMap = '<C-c>'
-
-" Case sensitive matching when pattern contains uppercase characters
-let g:CommandTSmartCaseMatching = 1
-
-" Vimwiki default browser
-let g:vimwiki_browsers = ['xdg-open']
-
-" Ack binary on Debian/Ubuntu
-let g:ackprg = 'ack-grep -H --nocolor --nogroup --column'
-
-" Pyflakes won't clutter the quickfix
-let g:pyflakes_use_quickfix = 0
-
-" Use signs for quickfix and location
-let g:quickfixsigns_classes = ['qfl', 'loc']
-
-" Surround comments with spaces
-let NERDSpaceDelims = 1
+" Lightline color scheme
+let g:lightline = {'colorscheme': 'jellybeans'}
 
 " Autocommands {{{1
 
@@ -183,34 +152,7 @@ augroup vimrc
   autocmd VimEnter,WinEnter * set cursorline
   autocmd WinLeave * set nocursorline
 
-  " Additional filetype mappings
-  autocmd BufNewFile,BufRead mail.google.com.* set filetype=mail
-  autocmd BufNewFile,BufRead *.erb set filetype=eruby
-  autocmd BufNewFile,BufRead *.md set filetype=markdown
-
-  " Mail
-  autocmd FileType mail setl spell
-  autocmd FileType mail setl wrap
-
-  " LaTeX
-  autocmd FileType tex compiler tex
-
-  " PHP
-  autocmd FileType php setl makeprg=php5\ -l\ %
-  autocmd FileType php setl errorformat=%m\ in\ %f\ on\ line\ %l
-
-  " Python
-  " http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
-  autocmd FileType python setl makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
-  autocmd FileType python setl errorformat=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-
-  " Ruby
-  autocmd FileType ruby setl tags+=$HOME/.gems/tags
-
-  " Automatically close Fugitive buffers
-  autocmd BufReadPost fugitive://* set bufhidden=delete
-
-  " Go to last known position
+  " Restore last cursor position
   autocmd BufReadPost *
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \     exe "normal g`\"" |
@@ -227,107 +169,76 @@ vnoremap p "_xP
 nnoremap Q gqap
 vnoremap Q gq
 
-" Clever tabs
-function! InsertTabWrapper(direction)
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<Tab>"
-  elseif "backward" == a:direction
-    return "\<C-P>"
-  else
-    return "\<C-N>"
-  endif
-endfunction
-
-" Mapping for tab completion
-inoremap <Tab> <C-R>=InsertTabWrapper("forward")<CR>
-inoremap <S-Tab> <C-R>=InsertTabWrapper("backward")<CR>
-
-" Enter accepts the current completion
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-
-" Tab in normal mode
-nnoremap <Tab> %
-
 " Leader shortcuts to frequent actions
-nnoremap <Leader><Leader> <Nop>
+nnoremap <Leader><Leader> :nohlsearch<CR>
 nnoremap <Leader>a :BA<CR>
-nnoremap <Leader>A :A<CR>
+nnoremap <Leader>d :bd<CR>
+nnoremap <Leader>D :BD<CR>
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>W :wall<CR>
 nnoremap <Leader>q :botright copen<CR>
 nnoremap <Leader>Q :cex []<CR>:cw<CR>
-nnoremap <Leader>d :BD<CR>
-nnoremap <Leader>m :w<CR>:make<CR>:cw<CR>
-nnoremap <Leader>M :!ctags<CR>
-nnoremap <Leader>b :CommandTBuffer<CR>
-nnoremap <Leader>t :CommandT<CR>
-nnoremap <Leader>T :TagbarToggle<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
-nnoremap <Leader>e :BufExplorer<CR>
-nnoremap <Leader>v `[V`]
-nnoremap <Leader>p :CtrlP<CR>
-
-" Edit file based on current file or directory
-nnoremap <Leader>o :e <C-R>=expand('%:h')<CR>/
-nnoremap <Leader>O :e <C-R>=expand('%')<CR>
-
-" Diff against the version on disk.
-nnoremap <Leader>u :w !diff -u % -<CR>
+nnoremap <Leader>p :CtrlP .<CR>
+nnoremap <Leader>b :CtrlPBuffer<CR>
 
 " Write buffer using sudo
 command! W w !sudo tee % > /dev/null
 
-" Quit all
-command! Q qall
-
 " Toggles
-nnoremap <Leader>gh :set hlsearch!<CR>:set hlsearch?<CR>
 nnoremap <Leader>gp :set paste!<CR>:set paste?<CR>
-nnoremap <Leader>gn :set number!<CR>:set number?<CR>
-nnoremap <Leader>gc :set cursorline<CR>:set cursorline?<CR>
+nnoremap <Leader>gh :set hlsearch!<CR>:set hlsearch?<CR>
+nnoremap <Leader>gn :setl number!<CR>:setl number?<CR>
 nnoremap <Leader>gl :setl list!<CR>:setl list?<CR>
 nnoremap <Leader>gs :setl spell!<CR>:setl spell?<CR>
 nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
-nnoremap <Leader>go :let &scrolloff=999-&scrolloff<CR>:set scrolloff?<CR>
-nnoremap <Leader>gb :let &background = ( &background == "dark"? "light" : "dark" )<CR>:set background?<CR>
 
-" Emacs bindings for the command line
+" Emacs bindings for the command line (:help emacs-keys)
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 cnoremap <C-d> <Del>
+cnoremap <Esc>b <S-Left>
+cnoremap <Esc>f <S-Right>
 
 " Fast switching between windows
-nnoremap <C-j> <C-W>j
-nnoremap <C-k> <C-W>k
-nnoremap <C-h> <C-W>h
-nnoremap <C-l> <C-W>l
-
-" Forget about the arrow keys
-nnoremap <Up> <Nop>
-nnoremap <Down> <Nop>
-nnoremap <Left> <Nop>
-nnoremap <Right> <Nop>
-inoremap <Up> <Nop>
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 " Semicolon to enter the command mode
 nnoremap ; :
 vnoremap ; :
 
-" Navigation
-nnoremap <silent> [Q :cfirst<CR>
-nnoremap <silent> ]Q :clast<CR>
-nnoremap <silent> [q :cprevious<CR>
-nnoremap <silent> ]q :cnext<CR>
-nnoremap <silent> [T :tfirst<CR>
-nnoremap <silent> ]T :tlast<CR>
-nnoremap <silent> [t :tprevious<CR>
-nnoremap <silent> ]t :tnext<CR>
-nnoremap <silent> [B :bfirst<CR>
-nnoremap <silent> ]B :blast<CR>
-nnoremap <silent> [b :bprevious<CR>
-nnoremap <silent> ]b :bnext<CR>
+" Bracket quickfix
+nnoremap [Q :cfirst<CR>
+nnoremap ]Q :clast<CR>
+nnoremap [q :cprevious<CR>
+nnoremap ]q :cnext<CR>
+
+" Bracket location
+nnoremap [L :lfirst<CR>
+nnoremap ]L :llast<CR>
+nnoremap [l :lprevious<CR>
+nnoremap ]l :lnext<CR>
+
+" Bracket tags
+nnoremap [T :tfirst<CR>
+nnoremap ]T :tlast<CR>
+nnoremap [t :tprevious<CR>
+nnoremap ]t :tnext<CR>
+
+" Bracket buffers
+nnoremap [B :bfirst<CR>
+nnoremap ]B :blast<CR>
+nnoremap [b :bprevious<CR>
+nnoremap ]b :bnext<CR>
+
+" Bracket arguments
+nnoremap [A :first<CR>
+nnoremap ]A :last<CR>
+nnoremap [a :previous<CR>
+nnoremap ]a :next<CR>
