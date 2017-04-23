@@ -1,3 +1,5 @@
+# https://www.martinklepsch.org/posts/git-prompt-for-fish-shell.html
+
 set __fish_git_prompt_showdirtystate 'yes'
 set __fish_git_prompt_showstashstate 'yes'
 set __fish_git_prompt_showuntrackedfiles 'yes'
