@@ -128,6 +128,9 @@ set ttimeoutlen=100
 " Color column to mark long lines
 set colorcolumn=100
 
+" Clear screen using background color from the scheme
+set t_ut=
+
 " Variables {{{1
 
 " Leader key bindings
