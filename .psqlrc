@@ -1,7 +1,9 @@
 \set QUIET 1
 \set PROMPT1 '%[%033[33;1m%]%x%[%033[0m%]%[%033[1m%]%/%[%033[0m%]%R%# '
 \set PROMPT2 ''
+\set HISTCONTROL ignoredups
+\set ON_ERROR_ROLLBACK interactive
 \x auto
 \pset null ø
-\timing
-\set QUIET 0
+\pset linestyle unicode
+\unset QUIET
