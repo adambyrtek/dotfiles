@@ -135,13 +135,19 @@ let mapleader = '\'
 let maplocalleader = ','
 
 " Avoid creating leader mappings
-let g:BufKillCreateMappings = 1
+let g:BufKillCreateMappings = 0
 
 " Always start search from cwd
 let g:ctrlp_working_path_mode = 0
 
+" Include current file in search results
+let g:ctrlp_match_current_file = 1
+
 " Lightline color scheme
 let g:lightline = {'colorscheme': 'jellybeans'}
+
+" Make standard statusline consistent with lightline
+highlight! link StatusLine LightlineMiddle_normal
 
 " Autocommands {{{1
 
