@@ -189,11 +189,11 @@ nnoremap <Leader>q :botright copen<CR>
 nnoremap <Leader>Q :cex []<CR>:cw<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
-nnoremap <Leader>p :CtrlP .<CR>
-nnoremap <Leader>b :CtrlPBuffer<CR>
 
-" Write buffer using sudo
-command! W w !sudo tee % > /dev/null
+" Commands
+command! W wall
+command! Q qall
+command! Wsudo w !sudo tee % > /dev/null
 
 " Toggles
 nnoremap <Leader>gp :set paste!<CR>:set paste?<CR>
@@ -217,10 +217,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
-
-" Semicolon to enter the command mode
-nnoremap ; :
-vnoremap ; :
 
 " Bracket quickfix
 nnoremap [Q :cfirst<CR>
