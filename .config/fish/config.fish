@@ -18,6 +18,7 @@ if status --is-interactive
     abbr -a gco git checkout
     abbr -a gcom git checkout master
     abbr -a gd git diff
+    abbr -a gdt git difftool
     abbr -a gf git fetch --all -p
     abbr -a gh git help
     abbr -a gm git merge

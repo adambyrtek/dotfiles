@@ -152,24 +152,37 @@ let g:lightline = {'colorscheme': 'jellybeans'}
 " Make standard statusline consistent with lightline
 highlight! link StatusLine LightlineMiddle_normal
 
+" Use Ag instead of Ack if available
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
+
 " Autocommands {{{1
 
 augroup vimrc
-  au!
+    au!
 
-  " Highlight the cursor line in the current buffer
-  autocmd VimEnter,WinEnter * set cursorline
-  autocmd WinLeave * set nocursorline
+    " Highlight the cursor line in the current buffer
+    autocmd VimEnter,WinEnter * set cursorline
+    autocmd WinLeave * set nocursorline
+    
+    " Ruby
+    autocmd Filetype ruby setl shiftwidth=2
 
-  " Restore last cursor position
-  autocmd BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \     exe "normal g`\"" |
-        \ endif
+    " Restore last cursor position
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \     exe "normal g`\"" |
+                \ endif
 
 augroup END
 
-" Keyboard mappings {{{1
+" Commands and mappings {{{1
+
+" Custom commands
+command! W wall
+command! Q qall
+command! Wsudo w !sudo tee % > /dev/null
 
 " Paste in visual mode shouldn't replace the default register
 vnoremap p "_xP
@@ -190,11 +203,6 @@ nnoremap <Leader>Q :cex []<CR>:cw<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 
-" Commands
-command! W wall
-command! Q qall
-command! Wsudo w !sudo tee % > /dev/null
-
 " Toggles
 nnoremap <Leader>gp :set paste!<CR>:set paste?<CR>
 nnoremap <Leader>gh :set hlsearch!<CR>:set hlsearch?<CR>
@@ -212,11 +220,8 @@ cnoremap <C-d> <Del>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 
-" Fast switching between windows
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
+" Buffer search
+nnoremap <C-l> :CtrlPBuffer<CR>
 
 " Bracket quickfix
 nnoremap [Q :cfirst<CR>
@@ -241,9 +246,3 @@ nnoremap [B :bfirst<CR>
 nnoremap ]B :blast<CR>
 nnoremap [b :bprevious<CR>
 nnoremap ]b :bnext<CR>
-
-" Bracket arguments
-nnoremap [A :first<CR>
-nnoremap ]A :last<CR>
-nnoremap [a :previous<CR>
-nnoremap ]a :next<CR>
