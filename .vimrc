@@ -141,13 +141,24 @@ let maplocalleader = ','
 let g:BufKillCreateMappings = 0
 
 " Always start search from cwd
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'rw'
 
 " Include current file in search results
 let g:ctrlp_match_current_file = 1
 
-" Lightline color scheme
-let g:lightline = {'colorscheme': 'jellybeans'}
+" Lightline settings
+let g:lightline = {
+            \     'colorscheme': 'jellybeans',
+            \     'active': {
+            \         'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'readonly', 'filename', 'modified' ] ],
+            \     },
+            \     'component': {
+            \         'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+            \     },
+            \     'component_visible_condition': {
+            \         'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+            \     }
+            \ }
 
 " Make standard statusline consistent with lightline
 highlight! link StatusLine LightlineMiddle_normal
