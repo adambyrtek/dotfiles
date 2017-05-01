@@ -43,3 +43,6 @@
 [submodule ".vim/bundle/vim-python-pep8-indent"]
 	path = .vim/bundle/vim-python-pep8-indent
 	url = git@github.com:Vimjas/vim-python-pep8-indent.git
+[submodule ".vim/bundle/vim-wordmotion"]
+	path = .vim/bundle/vim-wordmotion
+	url = git@github.com:chaoren/vim-wordmotion.git

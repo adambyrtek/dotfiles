@@ -160,6 +160,9 @@ if executable('ag')
     let g:ctrlp_use_caching = 0
 endif
 
+" Advanced word motions
+let g:wordmotion_prefix = ','
+
 " Lightline settings
 let g:lightline = {
             \     'colorscheme': 'jellybeans',
@@ -219,7 +222,7 @@ nnoremap <Leader>D :BD<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wall<CR>
 nnoremap <Leader>q :botright copen<CR>
-nnoremap <Leader>Q :cex []<CR>:cw<CR>
+nnoremap <Leader>Q :cclose<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 
