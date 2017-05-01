@@ -223,6 +223,8 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wall<CR>
 nnoremap <Leader>q :botright copen<CR>
 nnoremap <Leader>Q :cclose<CR>
+nnoremap <Leader>p "0p
+nnoremap <Leader>P "0P
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 
