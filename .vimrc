@@ -137,6 +137,9 @@ set t_ut=
 let mapleader = '\'
 let maplocalleader = ','
 
+" Higlight search term
+let g:ackhighlight = 1
+
 " Avoid creating leader mappings
 let g:BufKillCreateMappings = 0
 
@@ -145,6 +148,17 @@ let g:ctrlp_working_path_mode = 'rw'
 
 " Include current file in search results
 let g:ctrlp_match_current_file = 1
+
+" Use Ag instead of Ack if available
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
+
+" Use Ag for building CtrlP index if available
+if executable('ag')
+    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+    let g:ctrlp_use_caching = 0
+endif
 
 " Lightline settings
 let g:lightline = {
@@ -162,11 +176,6 @@ let g:lightline = {
 
 " Make standard statusline consistent with lightline
 highlight! link StatusLine LightlineMiddle_normal
-
-" Use Ag instead of Ack if available
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
-endif
 
 " Autocommands {{{1
 
