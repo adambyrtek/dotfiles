@@ -205,10 +205,6 @@ augroup END
 " Custom commands
 command! W wall
 command! Q qall
-command! Wsudo w !sudo tee % > /dev/null
-
-" Paste in visual mode shouldn't replace the default register
-vnoremap p "_xP
 
 " Better use of Q instead of ex mode
 nnoremap Q gqap
@@ -225,8 +221,6 @@ nnoremap <Leader>q :botright copen<CR>
 nnoremap <Leader>Q :cclose<CR>
 nnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
-nnoremap <Leader>n :NERDTreeToggle<CR>
-nnoremap <Leader>N :NERDTreeFind<CR>
 
 " Toggles
 nnoremap <Leader>gp :set paste!<CR>:set paste?<CR>
@@ -245,7 +239,7 @@ cnoremap <C-d> <Del>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 
-" Buffer search
+" Buffer finder
 nnoremap <C-l> :CtrlPBuffer<CR>
 
 " Bracket quickfix
