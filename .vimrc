@@ -185,13 +185,16 @@ highlight! link StatusLine LightlineMiddle_normal
 " Autocommands {{{1
 
 augroup vimrc
-    au!
+    autocmd!
 
     " Highlight the cursor line in the current buffer
     autocmd VimEnter,WinEnter * set cursorline
     autocmd WinLeave * set nocursorline
-    
-    " Ruby
+
+    " Regularly check for external modifications
+    autocmd CursorHold,CursorHoldI * silent! checktime
+
+    " Ruby indentation
     autocmd Filetype ruby setl shiftwidth=2
 
     " Restore last cursor position
