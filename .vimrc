@@ -210,15 +210,25 @@ command! Q qall
 nnoremap Q gqap
 vnoremap Q gq
 
-" Leader shortcuts to frequent actions
+" Clear highlight search
 nnoremap <Leader><Leader> :nohlsearch<CR>
+
+" Frequent buffer actions
 nnoremap <Leader>a :BA<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>D :BD<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wall<CR>
+
+" Edit file based on current file or directory
+nnoremap <Leader>e :e <C-R>=expand('%:h')<CR>/
+nnoremap <Leader>E :e <C-R>=expand('%')<CR>
+
+" Open/close quickfix
 nnoremap <Leader>q :botright copen<CR>
 nnoremap <Leader>Q :cclose<CR>
+
+" Paste last yank
 nnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
 
@@ -230,6 +240,9 @@ nnoremap <Leader>gl :setl list!<CR>:setl list?<CR>
 nnoremap <Leader>gs :setl spell!<CR>:setl spell?<CR>
 nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
 
+" Buffer finder
+nnoremap <C-l> :CtrlPBuffer<CR>
+
 " Emacs bindings for the command line (:help emacs-keys)
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
@@ -238,9 +251,6 @@ cnoremap <C-f> <Right>
 cnoremap <C-d> <Del>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
-
-" Buffer finder
-nnoremap <C-l> :CtrlPBuffer<CR>
 
 " Bracket quickfix
 nnoremap [Q :cfirst<CR>
