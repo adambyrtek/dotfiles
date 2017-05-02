@@ -10,12 +10,14 @@ call pathogen#infect()
 " Appearance {{{1
 
 " Default color schemes
-if has("gui_running") || &t_Co >= 256
+if has('gui_running') || &t_Co >= 256
+    " Enable true color if supported
+    if has('termguicolors')
+        set termguicolors
+    endif
+
     " Actively maintaned dark scheme
     colorscheme jellybeans
-
-    " True color support coming up in Vim 8
-    "set termguicolors
 else
     " Looks decent with default terminal colors
     colorscheme elflord
