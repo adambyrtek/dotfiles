@@ -280,3 +280,9 @@ nnoremap [B :bfirst<CR>
 nnoremap ]B :blast<CR>
 nnoremap [b :bprevious<CR>
 nnoremap ]b :bnext<CR>
+
+" Signify text object
+omap ic <plug>(signify-motion-inner-pending)
+xmap ic <plug>(signify-motion-inner-visual)
+omap ac <plug>(signify-motion-outer-pending)
+xmap ac <plug>(signify-motion-outer-visual)
