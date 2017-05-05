@@ -179,7 +179,7 @@ let g:lightline = {
             \     }
             \ }
 
-" Make standard statusline consistent with lightline
+" Standard statusline consistent with lightline
 highlight! link StatusLine LightlineMiddle_normal
 
 " Autocommands {{{1
@@ -218,12 +218,10 @@ vnoremap Q gq
 " Clear highlight search
 nnoremap <Leader><Leader> :nohlsearch<CR>
 
-" Frequent buffer actions
+" Buffer actions
 nnoremap <Leader>a :BA<CR>
-nnoremap <Leader>d :bd<CR>
-nnoremap <Leader>D :BD<CR>
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>W :wall<CR>
+nnoremap <Leader>d :BD<CR>
+nnoremap <Leader>D :BD!<CR>
 
 " Edit file based on current file or directory
 nnoremap <Leader>e :e <C-R>=expand('%:h')<CR>/
