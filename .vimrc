@@ -147,9 +147,6 @@ if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
 
-" Avoid creating leader mappings
-let g:BufKillCreateMappings = 0
-
 " Always start search from cwd
 let g:ctrlp_working_path_mode = 'rw'
 
@@ -165,11 +162,12 @@ endif
 " Advanced word motions
 let g:wordmotion_prefix = ','
 
-" Lightline settings
+" Lightline configuration
 let g:lightline = {
             \     'colorscheme': 'jellybeans',
             \     'active': {
-            \         'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'readonly', 'filename', 'modified' ] ],
+            \         'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ], [ 'fugitive' ] ],
+            \         'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'fileformat', 'fileencoding', 'filetype', 'spell' ] ]
             \     },
             \     'component': {
             \         'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
@@ -179,7 +177,7 @@ let g:lightline = {
             \     }
             \ }
 
-" Standard statusline consistent with lightline
+" Standard statusline colors consistent with lightline
 highlight! link StatusLine LightlineMiddle_normal
 
 " Autocommands {{{1
@@ -214,13 +212,8 @@ augroup END
 nnoremap Q gqap
 vnoremap Q gq
 
-" Clear highlight search
+" Clear highlights
 nnoremap <Leader><Leader> :nohlsearch<CR>
-
-" Buffer actions
-nnoremap <Leader>a :BA<CR>
-nnoremap <Leader>d :BD<CR>
-nnoremap <Leader>D :BD!<CR>
 
 " Edit file based on current file or directory
 nnoremap <Leader>e :e <C-R>=expand('%:h')<CR>/
@@ -242,11 +235,8 @@ nnoremap <Leader>gl :setl list!<CR>:setl list?<CR>
 nnoremap <Leader>gs :setl spell!<CR>:setl spell?<CR>
 nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
 
-" Switch windows quickly
-nnoremap <Tab> <C-w><C-w>
-
-" Buffer finder
-nnoremap <C-l> :CtrlPBuffer<CR>
+" Buffer search
+nnoremap <C-b> :CtrlPBuffer<CR>
 
 " Emacs bindings for the command line (:help emacs-keys)
 cnoremap <C-a> <Home>
