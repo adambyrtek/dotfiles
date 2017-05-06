@@ -142,6 +142,11 @@ let maplocalleader = ','
 " Higlight search term
 let g:ackhighlight = 1
 
+" Use Ag instead of Ack if available
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
+
 " Avoid creating leader mappings
 let g:BufKillCreateMappings = 0
 
@@ -150,11 +155,6 @@ let g:ctrlp_working_path_mode = 'rw'
 
 " Include current file in search results
 let g:ctrlp_match_current_file = 1
-
-" Use Ag instead of Ack if available
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
-endif
 
 " Use Ag for building CtrlP index if available
 if executable('ag')
@@ -187,12 +187,15 @@ highlight! link StatusLine LightlineMiddle_normal
 augroup vimrc
     autocmd!
 
-    " Highlight the cursor line in the current buffer
+    " Highlight the cursor line in the current window only
     autocmd VimEnter,WinEnter * set cursorline
     autocmd WinLeave * set nocursorline
 
     " Regularly check for external modifications
-    autocmd CursorHold,CursorHoldI * silent! checktime
+    autocmd BufEnter,WinEnter,FocusGained,CursorHold * silent! checktime
+    "
+    " Regularly check for repository changes
+    autocmd BufEnter,WinEnter,FocusGained,CursorHold * SignifyRefresh
 
     " Ruby indentation
     autocmd Filetype ruby setl shiftwidth=2
@@ -206,10 +209,6 @@ augroup vimrc
 augroup END
 
 " Commands and mappings {{{1
-
-" Custom commands
-command! W wall
-command! Q qall
 
 " Better use of Q instead of ex mode
 nnoremap Q gqap
@@ -242,6 +241,9 @@ nnoremap <Leader>gn :setl number!<CR>:setl number?<CR>
 nnoremap <Leader>gl :setl list!<CR>:setl list?<CR>
 nnoremap <Leader>gs :setl spell!<CR>:setl spell?<CR>
 nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
+
+" Switch windows quickly
+nnoremap <Tab> <C-w><C-w>
 
 " Buffer finder
 nnoremap <C-l> :CtrlPBuffer<CR>
