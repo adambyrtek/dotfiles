@@ -165,6 +165,12 @@ let g:dirvish_relative_paths = 1
 " Advanced word motions
 let g:wordmotion_prefix = ','
 
+" Update signs when entering a window
+let g:signify_realtime = 1
+
+" Update signs when getting focus
+let g:signify_update_on_focusgained = 1
+
 " Lightline configuration
 let g:lightline = {
             \     'colorscheme': 'jellybeans',
@@ -194,9 +200,6 @@ augroup vimrc
 
     " Regularly check for external modifications
     autocmd BufEnter,WinEnter,FocusGained,CursorHold * silent! checktime
-
-    " Regularly check for repository changes
-    autocmd BufEnter,WinEnter,FocusGained,CursorHold * SignifyRefresh
 
     " Quickfix mappings
     autocmd Filetype qf nnoremap <buffer> q :cclose<CR>
