@@ -203,10 +203,15 @@ augroup vimrc
     " Regularly check for external modifications
     autocmd BufEnter,WinEnter,FocusGained,CursorHold * silent! checktime
 
-    " Quickfix mappings
+    " Quickfix
     autocmd Filetype qf nnoremap <buffer> q :cclose<CR>
 
-    " Ruby indentation
+    " Python
+    if executable('isort')
+        autocmd Filetype python setl formatprg=isort\ -
+    end
+
+    " Ruby
     autocmd Filetype ruby setl shiftwidth=2
 
     " Restore last cursor position
@@ -219,8 +224,8 @@ augroup END
 
 " Commands and mappings {{{1
 
-" Better use of Q instead of ex mode
-nnoremap Q gqap
+" Formatting instead of ex mode
+nnoremap Q gq
 vnoremap Q gq
 
 " Clear highlights
