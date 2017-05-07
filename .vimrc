@@ -168,11 +168,10 @@ let g:dirvish_relative_paths = 1
 " Advanced word motions
 let g:wordmotion_prefix = ','
 
-" Update signs when entering a window
+" Refresh signs in real-time without writing files
 let g:signify_realtime = 1
-
-" Update signs when getting focus
-let g:signify_update_on_focusgained = 1
+let g:signify_cursorhold_normal = 0
+let g:signify_cursorhold_insert = 0
 
 " Lightline configuration
 let g:lightline = {
@@ -227,10 +226,6 @@ vnoremap Q gq
 " Clear highlights
 nnoremap <Leader><Leader> :nohlsearch<CR>
 
-" Edit file based on current file or directory
-nnoremap <Leader>e :e <C-R>=expand('%:h')<CR>/
-nnoremap <Leader>E :e <C-R>=expand('%')<CR>
-
 " Open/close quickfix
 nnoremap <Leader>q :botright copen<CR>
 nnoremap <Leader>Q :cclose<CR>
@@ -241,6 +236,9 @@ nnoremap <Leader>P "0P
 
 " Buffer search
 nnoremap <C-b> :CtrlPBuffer<CR>
+
+" Cycle between windows with Backspace
+nnoremap <BS> <C-w>w
 
 " Custom command and mapping for Ag (if available)
 if executable('ag')
@@ -253,6 +251,8 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 cnoremap <C-d> <Del>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
