@@ -239,17 +239,21 @@ nnoremap <Leader>Q :cclose<CR>
 nnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
 
-" Buffer search
-nnoremap <C-b> :CtrlPBuffer<CR>
-
-" Cycle between windows with Backspace
-nnoremap <BS> <C-w>w
+" Select last put
+nnoremap <expr> <Leader>v '`[' . getregtype()[0] . '`]'
 
 " Custom command and mapping for Ag (if available)
 if executable('ag')
     command! -nargs=+ -complete=file -bar Ag silent! grep! <args> | botright copen | redraw!
     nnoremap <Leader>a :Ag<Space>
+    nnoremap <Leader>A :Ag<Space><C-r><C-w>
 endif
+
+" Buffer search
+nnoremap <C-b> :CtrlPBuffer<CR>
+
+" Cycle between windows with Backspace
+nnoremap <BS> <C-w>w
 
 " Emacs bindings for the command line (see :h emacs-keys)
 cnoremap <C-a> <Home>
