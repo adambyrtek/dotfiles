@@ -92,7 +92,10 @@ set showbreak=+
 set ruler
 
 " Completion similar to command line
-set wildmode=list:longest
+set wildmode=longest:full,full
+
+" Show completion menu
+set wildmenu
 
 " Saner insert mode completion
 set completeopt=longest,menuone,preview
@@ -133,7 +136,7 @@ set colorcolumn=100
 " Clear screen using background color from the scheme
 set t_ut=
 
-" Use Ag for grep if available
+" Use Ag instead of grep (if available)
 if executable('ag')
     set grepprg=ag\ --vimgrep
     set grepformat^=%f:%l:%c:%m
@@ -150,7 +153,7 @@ let g:ctrlp_working_path_mode = 'rw'
 " Include current file in search results
 let g:ctrlp_match_current_file = 1
 
-" Use Ag for building CtrlP index if available
+" Use Ag for building CtrlP index (if available)
 if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
     let g:ctrlp_use_caching = 0
@@ -236,24 +239,16 @@ nnoremap <Leader>Q :cclose<CR>
 nnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
 
-" Toggles
-nnoremap <Leader>gp :set paste!<CR>:set paste?<CR>
-nnoremap <Leader>gh :set hlsearch!<CR>:set hlsearch?<CR>
-nnoremap <Leader>gn :setl number!<CR>:setl number?<CR>
-nnoremap <Leader>gl :setl list!<CR>:setl list?<CR>
-nnoremap <Leader>gs :setl spell!<CR>:setl spell?<CR>
-nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
-
 " Buffer search
 nnoremap <C-b> :CtrlPBuffer<CR>
 
-" Custom command and mapping for Ag if available
+" Custom command and mapping for Ag (if available)
 if executable('ag')
     command! -nargs=+ -complete=file -bar Ag silent! grep! <args> | botright copen | redraw!
     nnoremap <Leader>a :Ag<Space>
 endif
 
-" Emacs bindings for the command line (:help emacs-keys)
+" Emacs bindings for the command line (see :h emacs-keys)
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-b> <Left>
@@ -261,30 +256,6 @@ cnoremap <C-f> <Right>
 cnoremap <C-d> <Del>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
-
-" Bracket quickfix
-nnoremap [Q :cfirst<CR>
-nnoremap ]Q :clast<CR>
-nnoremap [q :cprevious<CR>
-nnoremap ]q :cnext<CR>
-
-" Bracket location
-nnoremap [L :lfirst<CR>
-nnoremap ]L :llast<CR>
-nnoremap [l :lprevious<CR>
-nnoremap ]l :lnext<CR>
-
-" Bracket tags
-nnoremap [T :tfirst<CR>
-nnoremap ]T :tlast<CR>
-nnoremap [t :tprevious<CR>
-nnoremap ]t :tnext<CR>
-
-" Bracket buffers
-nnoremap [B :bfirst<CR>
-nnoremap ]B :blast<CR>
-nnoremap [b :bprevious<CR>
-nnoremap ]b :bnext<CR>
 
 " Signify text object
 omap ic <plug>(signify-motion-inner-pending)

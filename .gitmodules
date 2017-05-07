@@ -43,3 +43,6 @@
 [submodule ".vim/bundle/vim-dirvish"]
 	path = .vim/bundle/vim-dirvish
 	url = git@github.com:justinmk/vim-dirvish.git
+[submodule ".vim/bundle/vim-unimpaired"]
+	path = .vim/bundle/vim-unimpaired
+	url = git@github.com:tpope/vim-unimpaired.git
