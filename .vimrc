@@ -133,19 +133,16 @@ set colorcolumn=100
 " Clear screen using background color from the scheme
 set t_ut=
 
+" Use Ag for grep if available
+if executable('ag')
+    set grepprg=ag\ --vimgrep
+    set grepformat^=%f:%l:%c:%m
+endif
+
 " Variables {{{1
 
-" Leader key bindings
+" Leader key prefix
 let mapleader = '\'
-let maplocalleader = ','
-
-" Higlight search term
-let g:ackhighlight = 1
-
-" Use Ag instead of Ack if available
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
-endif
 
 " Always start search from cwd
 let g:ctrlp_working_path_mode = 'rw'
@@ -158,6 +155,12 @@ if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
     let g:ctrlp_use_caching = 0
 endif
+
+" Prevent netrw from loading
+let loaded_netrwPlugin = 1
+
+" Use relative paths for consistency
+let g:dirvish_relative_paths = 1
 
 " Advanced word motions
 let g:wordmotion_prefix = ','
@@ -191,9 +194,12 @@ augroup vimrc
 
     " Regularly check for external modifications
     autocmd BufEnter,WinEnter,FocusGained,CursorHold * silent! checktime
-    "
+
     " Regularly check for repository changes
     autocmd BufEnter,WinEnter,FocusGained,CursorHold * SignifyRefresh
+
+    " Quickfix mappings
+    autocmd Filetype qf nnoremap <buffer> q :cclose<CR>
 
     " Ruby indentation
     autocmd Filetype ruby setl shiftwidth=2
@@ -237,6 +243,12 @@ nnoremap <Leader>gw :setl wrap!<CR>:setl wrap?<CR>
 
 " Buffer search
 nnoremap <C-b> :CtrlPBuffer<CR>
+
+" Custom command and mapping for Ag if available
+if executable('ag')
+    command! -nargs=+ -complete=file -bar Ag silent! grep! <args> | botright copen | redraw!
+    nnoremap <Leader>a :Ag<Space>
+endif
 
 " Emacs bindings for the command line (:help emacs-keys)
 cnoremap <C-a> <Home>
