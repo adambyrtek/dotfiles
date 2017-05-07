@@ -46,3 +46,12 @@
 [submodule ".vim/bundle/vim-unimpaired"]
 	path = .vim/bundle/vim-unimpaired
 	url = git@github.com:tpope/vim-unimpaired.git
+[submodule ".vim/bundle/vim-textobj-user"]
+	path = .vim/bundle/vim-textobj-user
+	url = git@github.com:kana/vim-textobj-user.git
+[submodule ".vim/bundle/vim-textobj-entire"]
+	path = .vim/bundle/vim-textobj-entire
+	url = git@github.com:kana/vim-textobj-entire.git
+[submodule ".vim/bundle/vim-textobj-indent"]
+	path = .vim/bundle/vim-textobj-indent
+	url = git@github.com:kana/vim-textobj-indent.git
