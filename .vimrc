@@ -196,13 +196,6 @@ highlight! link StatusLine LightlineMiddle_normal
 augroup vimrc
     autocmd!
 
-    " Highlight the cursor line in the current window only
-    autocmd VimEnter,WinEnter * set cursorline
-    autocmd WinLeave * set nocursorline
-
-    " Regularly check for external modifications
-    autocmd BufEnter,WinEnter,FocusGained,CursorHold * silent! checktime
-
     " Quickfix
     autocmd Filetype qf nnoremap <buffer> q :cclose<CR>
 
@@ -213,6 +206,16 @@ augroup vimrc
 
     " Ruby
     autocmd Filetype ruby setl shiftwidth=2
+
+    " Git
+    autocmd Filetype gitcommit setl spell spl=en
+
+    " Highlight the cursor line in the current window only
+    autocmd VimEnter,WinEnter * set cursorline
+    autocmd WinLeave * set nocursorline
+
+    " Regularly check for external modifications
+    autocmd BufEnter,WinEnter,FocusGained,CursorHold * silent! checktime
 
     " Restore last cursor position
     autocmd BufReadPost *
@@ -241,6 +244,10 @@ nnoremap <Leader>P "0P
 
 " Select last put
 nnoremap <expr> <Leader>v '`[' . getregtype()[0] . '`]'
+
+" Syntastic features
+nnoremap <Leader>s :SyntasticToggleMode<CR>
+nnoremap <Leader>S :SyntasticSetLoclist<CR>
 
 " Custom command and mapping for Ag (if available)
 if executable('ag')
