@@ -64,7 +64,7 @@ set autoindent
 " Number of spaces to use for indent
 set shiftwidth=4
 
-" Number of spaces to use for Tab when editing
+" Number of spaces to use for Tab in insert mode
 set softtabstop=4
 
 " Incremental search
@@ -197,7 +197,7 @@ augroup vimrc
     autocmd!
 
     " Quickfix
-    autocmd Filetype qf nnoremap <buffer> q :cclose<CR>
+    autocmd Filetype qf nnoremap <buffer> q :close<CR>
 
     " Python
     if executable('isort')
@@ -211,8 +211,8 @@ augroup vimrc
     autocmd Filetype gitcommit setl spell spl=en
 
     " Highlight the cursor line in the current window only
-    autocmd VimEnter,WinEnter * set cursorline
-    autocmd WinLeave * set nocursorline
+    autocmd VimEnter,WinEnter * setl cursorline
+    autocmd WinLeave * setl nocursorline
 
     " Regularly check for external modifications
     autocmd BufEnter,WinEnter,FocusGained,CursorHold * silent! checktime
@@ -234,26 +234,31 @@ vnoremap Q gq
 " Clear highlights
 nnoremap <Leader><Leader> :nohlsearch<CR>
 
-" Open/close quickfix
+" Open/close quickfix windows
 nnoremap <Leader>q :botright copen<CR>
 nnoremap <Leader>Q :cclose<CR>
+nnoremap <Leader>l :lopen<CR>
+nnoremap <Leader>L :lclose<CR>
 
 " Paste last yank
 nnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
+
+" Very magic search
+nnoremap <Leader>/ /\v
 
 " Select last put
 nnoremap <expr> <Leader>v '`[' . getregtype()[0] . '`]'
 
 " Syntastic features
 nnoremap <Leader>s :SyntasticToggleMode<CR>
-nnoremap <Leader>S :SyntasticSetLoclist<CR>
+nnoremap <Leader>S :SyntasticSetLoclist<CR>:lw<CR>
 
 " Custom command and mapping for Ag (if available)
 if executable('ag')
     command! -nargs=+ -complete=file -bar Ag silent! grep! <args> | botright copen | redraw!
     nnoremap <Leader>a :Ag<Space>
-    nnoremap <Leader>A :Ag<Space><C-r><C-w>
+    nnoremap <Leader>A :Ag<Space>'\b<C-r><C-w>\b'
 endif
 
 " Buffer search
