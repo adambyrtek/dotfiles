@@ -168,6 +168,12 @@ let g:dirvish_relative_paths = 1
 " Advanced word motions
 let g:wordmotion_prefix = ','
 
+" Linter settings
+let g:syntastic_python_checkers = ['python', 'flake8']
+
+" Auto-populate location list with linter results
+let g:syntastic_always_populate_loc_list = 1
+
 " Refresh signs in real-time without writing files
 let g:signify_realtime = 1
 let g:signify_cursorhold_normal = 0
@@ -179,6 +185,10 @@ let g:lightline = {
             \     'active': {
             \         'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ], [ 'fugitive' ] ],
             \         'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'fileformat', 'fileencoding', 'filetype', 'spell' ] ]
+            \     },
+            \     'inactive': {
+            \         'left': [ [ 'filename', 'modified' ] ],
+            \         'right': [ [ 'lineinfo' ], [ 'percent' ] ]
             \     },
             \     'component': {
             \         'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
@@ -243,6 +253,8 @@ nnoremap <Leader>L :lclose<CR>
 " Paste last yank
 nnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
+vnoremap <Leader>p "0p
+vnoremap <Leader>P "0P
 
 " Very magic search
 nnoremap <Leader>/ /\v
@@ -250,9 +262,8 @@ nnoremap <Leader>/ /\v
 " Select last put
 nnoremap <expr> <Leader>v '`[' . getregtype()[0] . '`]'
 
-" Syntastic features
+" Syntastic toggle
 nnoremap <Leader>s :SyntasticToggleMode<CR>
-nnoremap <Leader>S :SyntasticSetLoclist<CR>:lw<CR>
 
 " Custom command and mapping for Ag (if available)
 if executable('ag')
