@@ -55,3 +55,6 @@
 [submodule ".vim/bundle/vim-textobj-indent"]
 	path = .vim/bundle/vim-textobj-indent
 	url = git@github.com:kana/vim-textobj-indent.git
+[submodule ".vim/bundle/tmuxline.vim"]
+	path = .vim/bundle/tmuxline.vim
+	url = git@github.com:edkolev/tmuxline.vim.git
