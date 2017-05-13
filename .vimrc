@@ -55,17 +55,17 @@ set smartcase
 " Use spaces instead of tabs
 set expandtab
 
-" Tab in insert mode indents with spaces
-set smarttab
-
-" Indent new lines as previous line
-set autoindent
-
 " Number of spaces to use for indent
 set shiftwidth=4
 
 " Number of spaces to use for Tab in insert mode
 set softtabstop=4
+
+" Tab in insert mode indents with spaces
+set smarttab
+
+" Indent new lines as previous line
+set autoindent
 
 " Incremental search
 set incsearch
@@ -136,6 +136,10 @@ set colorcolumn=100
 " Clear screen using background color from the scheme
 set t_ut=
 
+" Recursive find
+set path+=**
+set path-=/usr/include
+
 " Use Ag instead of grep (if available)
 if executable('ag')
     set grepprg=ag\ --vimgrep
@@ -143,9 +147,6 @@ if executable('ag')
 endif
 
 " Variables {{{1
-
-" Leader key prefix
-let mapleader = '\'
 
 " Always start search from cwd
 let g:ctrlp_working_path_mode = 'rw'
@@ -214,8 +215,11 @@ augroup vimrc
         autocmd Filetype python setl formatprg=isort\ -
     end
 
+    " NeoVim doesn't complete from imported files by default
+    autocmd Filetype python setl complete+=i
+
     " Ruby
-    autocmd Filetype ruby setl shiftwidth=2
+    autocmd Filetype ruby setl shiftwidth=2 softtabstop=2
 
     " Git
     autocmd Filetype gitcommit setl spell spl=en
@@ -240,6 +244,10 @@ augroup END
 " Formatting instead of ex mode
 nnoremap Q gq
 vnoremap Q gq
+
+" Marks include column
+nnoremap ' `
+vnoremap ' `
 
 " Clear highlights
 nnoremap <Leader><Leader> :nohlsearch<CR>
@@ -267,7 +275,7 @@ nnoremap <Leader>s :SyntasticToggleMode<CR>
 
 " Custom command and mapping for Ag (if available)
 if executable('ag')
-    command! -nargs=+ -complete=file -bar Ag silent! grep! <args> | botright copen | redraw!
+    command! -nargs=+ -complete=file -bar Ag silent! grep! <args> | botright cwindow | redraw!
     nnoremap <Leader>a :Ag<Space>
     nnoremap <Leader>A :Ag<Space>'\b<C-r><C-w>\b'
 endif
@@ -294,3 +302,9 @@ omap ic <plug>(signify-motion-inner-pending)
 xmap ic <plug>(signify-motion-inner-visual)
 omap ac <plug>(signify-motion-outer-pending)
 xmap ac <plug>(signify-motion-outer-visual)
+
+" Close instead of quit
+cabbrev q <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'close' : 'q')<CR>
+
+" Abbreviate current directory
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
