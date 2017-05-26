@@ -133,12 +133,16 @@ set ttimeoutlen=100
 " Color column to mark long lines
 set colorcolumn=100
 
-" Clear screen using background color from the scheme
-set t_ut=
-
 " Recursive find
 set path+=**
 set path-=/usr/include
+
+" Clear screen using background color from the scheme
+set t_ut=
+
+" Magic to make true color work in tmux
+set t_8f=[38;2;%lu;%lu;%lum
+set t_8b=[48;2;%lu;%lu;%lum
 
 " Use Ag instead of grep (if available)
 if executable('ag')
