@@ -215,9 +215,6 @@ augroup vimrc
         autocmd Filetype python setl formatprg=isort\ -
     end
 
-    " NeoVim doesn't complete from imported files by default
-    autocmd Filetype python setl complete+=i
-
     " Ruby
     autocmd Filetype ruby setl shiftwidth=2 softtabstop=2
 
