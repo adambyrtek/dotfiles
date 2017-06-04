@@ -12,6 +12,3 @@ c.TerminalInteractiveShell.space_for_menu = 10
 
 # Require magic functions to be called explicitly with %
 c.InteractiveShell.automagic = False
-
-# Invoke external editor using Ctrl-X Ctrl-E
-c.TerminalInteractiveShell.extra_open_editor_shortcuts = True 
