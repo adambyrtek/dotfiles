@@ -5,6 +5,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.UpdatePointer
 import XMonad.Config.Desktop
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -22,22 +23,28 @@ import XMonad.Prompt.Shell
 import XMonad.Prompt.RunOrRaise
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
-import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Run
 
-myManageHook = composeOne
-    [ appName =? "xmessage" -?> doCenterFloat
-    , appName =? "update-manager" -?> doCenterFloat
-    , appName =? "guake" -?> doFloat
-    , className =? "Xfce4-notifyd" -?> doF W.focusDown
-    , isFullscreen -?> doFullFloat
+myManageHook = composeAll
+    [ appName =? "xmessage" --> doCenterFloat
+    , appName =? "update-manager" --> doCenterFloat
+    , className =? "Xfce4-appfinder" --> doCenterFloat
+    , className =? "Xfce4-notifyd" --> doF W.focusDown
     ]
 
-myLayoutHook = smartSpacing 10 $ smartBorders (toggleLayouts Full $ avoidStruts layouts)
+myLayoutHook = smartBorders (toggleLayouts (noBorders Full) $ avoidStruts layouts)
     where
-        layouts = mouseResizableTile ||| mouseResizableTileMirrored ||| (im $ Grid)
+        layouts =
+	    mouseResizableTile { masterFrac = 0.55 } |||
+	    mouseResizableTileMirrored { masterFrac = 0.55 } |||
+	    (im $ Grid)
         im = withIM (1%6)
             (Or (Title "Buddy List") (Title "Contact List"))
+
+myLogHook = fadeInactiveCurrentWSLogHook 0.8
+
+myStartupHook = do
+    spawn "foocompton --opengl"
 
 myXPConfig = defaultXPConfig
     { font = "xft:Droid Sans Mono-10"
@@ -89,11 +96,12 @@ myConfig = ewmh $ withUrgencyHookC NoUrgencyHook urgencyConfig { suppressWhen = 
     , terminal = "gnome-terminal"
     , borderWidth = 2
     , normalBorderColor = "#002b36" -- Solarized base03
-    , focusedBorderColor = "#859900" -- Solarized green
-    , manageHook = insertPosition End Newer <+> myManageHook <+> manageHook desktopConfig
+    , focusedBorderColor = "#cb4b16" -- Solarized orange
+    , manageHook = myManageHook <+> manageHook desktopConfig
+    , handleEventHook = fullscreenEventHook <+> handleEventHook defaultConfig
     , layoutHook = myLayoutHook
-    , logHook = logHook desktopConfig
-    , startupHook = startupHook desktopConfig
+    , logHook = myLogHook <+> logHook desktopConfig
+    , startupHook = myStartupHook <+> startupHook desktopConfig
     , focusFollowsMouse = False
     }
     `additionalKeysP` myKeys myConfig
