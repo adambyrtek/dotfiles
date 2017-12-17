@@ -188,6 +188,12 @@ let g:signify_realtime = 1
 let g:signify_cursorhold_normal = 0
 let g:signify_cursorhold_insert = 0
 
+" NeoVim will use system Python (not one from virtualenv)
+if has('nvim')
+    let g:python_host_prog = '/usr/bin/python'
+    let g:python3_host_prog = '/usr/bin/python3'
+end
+
 " Lightline configuration
 let g:lightline = {
             \     'colorscheme': 'jellybeans',
