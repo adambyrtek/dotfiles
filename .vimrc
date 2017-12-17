@@ -130,6 +130,9 @@ set autoread
 " Shorter timeout after Esc
 set ttimeoutlen=100
 
+" Shorter delay before swap write and cursor hold event
+set updatetime=1000
+
 " Color column to mark long lines
 set colorcolumn=100
 
@@ -137,8 +140,8 @@ set colorcolumn=100
 set path+=**
 set path-=/usr/include
 
-" Clear screen using background color from the scheme
-set t_ut=
+" Avoid parsing all include files
+set complete-=i
 
 " Magic to make true color work in tmux
 set t_8f=[38;2;%lu;%lu;%lum
@@ -175,6 +178,7 @@ let g:wordmotion_prefix = ','
 
 " Linter settings
 let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 " Auto-populate location list with linter results
 let g:syntastic_always_populate_loc_list = 1
@@ -211,9 +215,6 @@ highlight! link StatusLine LightlineMiddle_normal
 augroup vimrc
     autocmd!
 
-    " Quickfix
-    autocmd Filetype qf nnoremap <buffer> q :close<CR>
-
     " Python
     if executable('isort')
         autocmd Filetype python setl formatprg=isort\ -
@@ -222,12 +223,18 @@ augroup vimrc
     " Ruby
     autocmd Filetype ruby setl shiftwidth=2 softtabstop=2
 
-    " Git
+    " JavaScript
+    autocmd Filetype javascript setl shiftwidth=2 softtabstop=2
+
+    " Shortcut to close quickfix and help
+    autocmd Filetype qf,help nnoremap <buffer> q :close<CR>
+
+    " Spell check Git commit message
     autocmd Filetype gitcommit setl spell spl=en
 
     " Highlight the cursor line in the current window only
-    autocmd VimEnter,WinEnter * setl cursorline
-    autocmd WinLeave * setl nocursorline
+    autocmd WinEnter,BufWinEnter * setl cursorline
+    autocmd WinLeave,BufWinLeave * setl nocursorline
 
     " Regularly check for external modifications
     autocmd BufEnter,WinEnter,FocusGained,CursorHold * silent! checktime
@@ -276,9 +283,9 @@ nnoremap <Leader>s :SyntasticToggleMode<CR>
 
 " Custom command and mapping for Ag (if available)
 if executable('ag')
-    command! -nargs=+ -complete=file -bar Ag silent! grep! <args> | botright cwindow | redraw!
+    command! -nargs=+ -complete=file -bar Ag silent grep! <args> | botright cwindow | redraw!
     nnoremap <Leader>a :Ag<Space>
-    nnoremap <Leader>A :Ag<Space>'\b<C-r><C-w>\b'
+    nnoremap <Leader>A :Ag<Space>-w<Space>'<C-r><C-w>'
 endif
 
 " Buffer search
@@ -295,8 +302,8 @@ cnoremap <C-f> <Right>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-d> <Del>
-cnoremap <Esc>b <S-Left>
-cnoremap <Esc>f <S-Right>
+cnoremap <M-b> <S-Left>
+cnoremap <M-f> <S-Right>
 
 " Signify text object
 omap ic <plug>(signify-motion-inner-pending)
@@ -309,3 +316,8 @@ cabbrev q <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'close' : 'q')<CR>
 
 " Abbreviate current directory
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
+" Easy exit from terminal mode
+if has('nvim')
+    tnoremap <Esc> <C-\><C-n>
+endif
