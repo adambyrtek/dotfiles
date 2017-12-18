@@ -58,3 +58,6 @@
 [submodule ".vim/bundle/tmuxline.vim"]
 	path = .vim/bundle/tmuxline.vim
 	url = git@github.com:edkolev/tmuxline.vim.git
+[submodule ".vim/bundle/pytest-vim-compiler"]
+	path = .vim/bundle/pytest-vim-compiler
+	url = git@github.com:5long/pytest-vim-compiler.git

@@ -225,6 +225,9 @@ augroup vimrc
     if executable('isort')
         autocmd Filetype python setl formatprg=isort\ -
     end
+    if executable('py.test')
+        autocmd Filetype python compiler pytest
+    end
 
     " Ruby
     autocmd Filetype ruby setl shiftwidth=2 softtabstop=2
