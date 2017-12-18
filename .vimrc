@@ -128,7 +128,7 @@ set formatoptions+=j
 set autoread
 
 " Shorter timeout after Esc
-set ttimeoutlen=100
+set ttimeoutlen=50
 
 " Shorter delay before swap write and cursor hold event
 set updatetime=1000
@@ -198,11 +198,11 @@ end
 let g:lightline = {
             \     'colorscheme': 'jellybeans',
             \     'active': {
-            \         'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ], [ 'fugitive' ] ],
-            \         'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'fileformat', 'fileencoding', 'filetype', 'spell' ] ]
+            \         'left': [ [ 'mode', 'paste' ], [ 'relativepath', 'modified' ], [ 'fugitive' ] ],
+            \         'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'filetype', 'spell', 'readonly' ] ]
             \     },
             \     'inactive': {
-            \         'left': [ [ 'filename', 'modified' ] ],
+            \         'left': [ [ 'relativepath', 'modified' ] ],
             \         'right': [ [ 'lineinfo' ], [ 'percent' ] ]
             \     },
             \     'component': {
@@ -313,6 +313,7 @@ cnoremap <C-n> <Down>
 cnoremap <C-d> <Del>
 cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
+cnoremap <C-g> <C-c>
 
 " Signify text object
 omap ic <plug>(signify-motion-inner-pending)
