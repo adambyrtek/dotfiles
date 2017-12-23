@@ -61,3 +61,6 @@
 [submodule ".vim/bundle/pytest-vim-compiler"]
 	path = .vim/bundle/pytest-vim-compiler
 	url = git@github.com:5long/pytest-vim-compiler.git
+[submodule ".vim/bundle/vim-sayonara"]
+	path = .vim/bundle/vim-sayonara
+	url = git@github.com:mhinz/vim-sayonara.git

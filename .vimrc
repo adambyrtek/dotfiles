@@ -331,3 +331,6 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 if has('nvim')
     tnoremap <Esc> <C-\><C-n>
 endif
+
+" Delete the buffer and preserve the window
+nnoremap <Leader>d :Sayonara!<CR>
