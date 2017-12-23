@@ -16,8 +16,9 @@ if has('gui_running') || &t_Co >= 256
         set termguicolors
     endif
 
-    " Actively maintaned dark scheme
-    colorscheme jellybeans
+    " Select color scheme
+    colorscheme gruvbox
+    set background=dark
 else
     " Looks decent with default terminal colors
     colorscheme elflord
@@ -196,7 +197,7 @@ end
 
 " Lightline configuration
 let g:lightline = {
-            \     'colorscheme': 'jellybeans',
+            \     'colorscheme': 'gruvbox',
             \     'active': {
             \         'left': [ [ 'mode', 'paste' ], [ 'relativepath', 'modified' ], [ 'fugitive' ] ],
             \         'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'filetype', 'spell', 'readonly' ] ]
