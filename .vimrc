@@ -18,6 +18,8 @@ if has('gui_running') || &t_Co >= 256
 
     " Select color scheme
     colorscheme gruvbox
+
+    " Background has to be set after color scheme
     set background=dark
 else
     " Looks decent with default terminal colors
@@ -135,7 +137,7 @@ set ttimeoutlen=50
 set updatetime=1000
 
 " Color column to mark long lines
-set colorcolumn=100
+" set colorcolumn=100
 
 " Recursive find
 set path+=**
@@ -215,7 +217,9 @@ let g:lightline = {
             \ }
 
 " Standard statusline colors consistent with lightline
-highlight! link StatusLine LightlineMiddle_normal
+if g:colors_name == "jellybeans"
+    highlight! link StatusLine LightlineMiddle_normal
+end
 
 " Autocommands {{{1
 
