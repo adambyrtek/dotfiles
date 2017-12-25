@@ -313,12 +313,9 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
 cnoremap <C-d> <Del>
 cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
-cnoremap <C-g> <C-c>
 
 " Signify text object
 omap ic <plug>(signify-motion-inner-pending)
