@@ -67,3 +67,9 @@
 [submodule ".vim/bundle/gruvbox"]
 	path = .vim/bundle/gruvbox
 	url = git@github.com:morhetz/gruvbox.git
+[submodule ".vim/bundle/vim-dispatch"]
+	path = .vim/bundle/vim-dispatch
+	url = git@github.com:tpope/vim-dispatch.git
+[submodule ".vim/bundle/vim-dispatch-neovim"]
+	path = .vim/bundle/vim-dispatch-neovim
+	url = git@github.com:radenling/vim-dispatch-neovim.git

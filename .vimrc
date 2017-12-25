@@ -95,7 +95,7 @@ set showbreak=+
 set ruler
 
 " Completion similar to command line
-set wildmode=longest:full,full
+set wildmode=longest:full
 
 " Show completion menu
 set wildmenu
@@ -195,7 +195,7 @@ let g:signify_cursorhold_insert = 0
 if has('nvim')
     let g:python_host_prog = '/usr/bin/python'
     let g:python3_host_prog = '/usr/bin/python3'
-end
+endif
 
 " Lightline configuration
 let g:lightline = {
@@ -219,20 +219,22 @@ let g:lightline = {
 " Standard statusline colors consistent with lightline
 if g:colors_name == "jellybeans"
     highlight! link StatusLine LightlineMiddle_normal
-end
+endif
 
 " Autocommands {{{1
 
 augroup vimrc
     autocmd!
 
-    " Python
+    " Python formatting
     if executable('isort')
         autocmd Filetype python setl formatprg=isort\ -
-    end
+    endif
+
+    " Python test dispatch
     if executable('py.test')
-        autocmd Filetype python compiler pytest
-    end
+        autocmd Filetype python let b:dispatch = 'py.test -q %'
+    endif
 
     " Ruby
     autocmd Filetype ruby setl shiftwidth=2 softtabstop=2
@@ -335,4 +337,8 @@ if has('nvim')
 endif
 
 " Delete the buffer and preserve the window
-nnoremap <Leader>d :Sayonara!<CR>
+nnoremap <Leader>bd :Sayonara!<CR>
+
+" Dispatch mappings
+nnoremap <Leader>d :Dispatch<CR>
+nnoremap <Leader>D :Dispatch<Space>
