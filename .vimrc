@@ -101,7 +101,7 @@ set wildmode=longest:full
 set wildmenu
 
 " Saner insert mode completion
-set completeopt=longest,menuone,preview
+set completeopt=longest,menuone
 
 " Show matching parenthesis
 set showmatch
@@ -170,6 +170,9 @@ if executable('ag')
     let g:ctrlp_use_caching = 0
 endif
 
+" Mapping to delete buffers
+let g:ctrlp_prompt_mappings = { 'PrtDeleteEnt()': ['<c-k>'] }
+
 " Prevent netrw from loading
 let loaded_netrwPlugin = 1
 
@@ -221,6 +224,9 @@ if g:colors_name == "jellybeans"
     highlight! link StatusLine LightlineMiddle_normal
 endif
 
+" Jedi configuration
+let g:jedi#auto_vim_configuration = 0
+
 " Autocommands {{{1
 
 augroup vimrc
@@ -260,9 +266,6 @@ augroup vimrc
                 \ if line("'\"") > 0 && line("'\"") <= line("$") |
                 \     exe "normal g`\"" |
                 \ endif
-
-    " Close preview after completion
-    autocmd CompleteDone * silent pclose!
 augroup END
 
 " Commands and mappings {{{1
@@ -343,8 +346,8 @@ endif
 nnoremap <Leader>bd :Sayonara!<CR>
 
 " Dispatch mappings
-nnoremap <Leader>d :Dispatch<CR>
-nnoremap <Leader>D :Dispatch<Space>
+nnoremap <Leader>x :Dispatch<CR>
+nnoremap <Leader>X :Dispatch<Space>
 
-" Make C-c trigger all autocmd
+" Make C-c trigger autocmds
 inoremap <C-c> <Esc>
