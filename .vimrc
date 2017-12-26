@@ -261,6 +261,8 @@ augroup vimrc
                 \     exe "normal g`\"" |
                 \ endif
 
+    " Close preview after completion
+    autocmd CompleteDone * silent pclose!
 augroup END
 
 " Commands and mappings {{{1
@@ -307,8 +309,9 @@ endif
 " Buffer search
 nnoremap <C-b> :CtrlPBuffer<CR>
 
-" Cycle between windows with Backspace
-nnoremap <BS> <C-w>w
+" Cycle between windows
+nnoremap <C-j> <C-w>w
+nnoremap <C-k> <C-w>W
 
 " Emacs bindings for the command line (see :h emacs-keys)
 cnoremap <C-a> <Home>
@@ -342,3 +345,6 @@ nnoremap <Leader>bd :Sayonara!<CR>
 " Dispatch mappings
 nnoremap <Leader>d :Dispatch<CR>
 nnoremap <Leader>D :Dispatch<Space>
+
+" Make C-c trigger all autocmd
+inoremap <C-c> <Esc>
