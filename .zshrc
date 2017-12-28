@@ -24,15 +24,18 @@ else
     echo "Antigen not found!"
 fi
 
+# Zsh settings
+setopt no_share_history
+
 # Custom paths
 path+=("$HOME/Dev/bin" "$HOME/.rvm/bin" "$HOME/.local/bin")
 cdpath+=("$HOME/Dev" "$HOME/Dev/airsorted")
 export PATH CDPATH
 
-# Environment
+# Environment variables
 export EDITOR='vim'
 export BROWSER='xdg-open'
-export LESS='-R -X -M -i -S'
+export LESS='-R -X -M -i'
 export PYTHONDONTWRITEBYTECODE=1
 
 # Aliases
@@ -45,16 +48,18 @@ alias l='less'
 alias g='grep'
 alias vim='nvim'
 
+# Tmux aliases
 alias ta='tmux attach -t'
 alias ts='tmux new-session -s'
 alias tl='tmux list-sessions'
 
-# Do not share history between sessions
-setopt no_share_history
+# OMZ universal clipboard aliases
+type clipcopy > /dev/null && alias pbcopy='clipcopy'
+type clippaste > /dev/null && alias pbpaste='clippaste'
 
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 
 # Load RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
