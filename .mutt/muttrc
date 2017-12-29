@@ -1,8 +1,0 @@
-# .mutt/muttrc
-
-source ~/.mutt/options
-source ~/.mutt/bindings
-source ~/.mutt/colors
-
-set alias_file=~/.mutt/aliases
-source ~/.mutt/aliases

@@ -1,9 +1,0 @@
-# Basic options
-banner=no
-color_patches=no
-plain=off
-# Colors compatible with 'git diff'
-newtext=darkgreen
-oldtext=darkred
-diffstuff=darkcyan
-cvsstuff=white
