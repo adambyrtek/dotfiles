@@ -17,6 +17,7 @@ if has('gui_running') || &t_Co >= 256
     endif
 
     " Select color scheme
+    let g:gruvbox_italic = 1
     colorscheme gruvbox
 
     " Background has to be set after color scheme
@@ -98,7 +99,7 @@ set showbreak=+
 set ruler
 
 " Completion similar to command line
-set wildmode=longest:full
+set wildmode=longest:full,full
 
 " Show completion menu
 set wildmenu
@@ -133,14 +134,11 @@ set formatoptions+=j
 " Reload file when changed (and not edited in Vim)
 set autoread
 
-" Shorter timeout after Esc
-set ttimeoutlen=50
-
-" Shorter delay before swap write and cursor hold event
-set updatetime=1000
-
-" Color column to mark long lines
-" set colorcolumn=100
+" Shorter timeout after Esc in classic Vim
+if !has('nvim')
+    set ttimeout
+    set ttimeoutlen=50
+endif
 
 " Recursive find
 set path+=**
@@ -246,10 +244,10 @@ augroup vimrc
     endif
 
     " Ruby
-    autocmd Filetype ruby setl shiftwidth=2 softtabstop=2
+    autocmd Filetype ruby setl sw=2 sts=2
 
     " JavaScript
-    autocmd Filetype javascript setl shiftwidth=2 softtabstop=2
+    autocmd Filetype javascript setl sw=2 sts=2
 
     " Shortcut to close quickfix and help
     autocmd Filetype qf,help nnoremap <buffer> q :close<CR>
@@ -328,6 +326,9 @@ cnoremap <C-d> <Del>
 cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
 
+" Make C-c trigger autocmds
+inoremap <C-c> <Esc>
+
 " Signify text object
 omap ic <plug>(signify-motion-inner-pending)
 xmap ic <plug>(signify-motion-inner-visual)
@@ -349,5 +350,8 @@ nnoremap <Leader>bd :Sayonara!<CR>
 nnoremap <Leader>x :Dispatch<CR>
 nnoremap <Leader>X :Dispatch<Space>
 
-" Make C-c trigger autocmds
-inoremap <C-c> <Esc>
+" Fugitive mappings
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gC :Gcommit -v<CR>
