@@ -35,7 +35,7 @@ export PATH CDPATH
 # Environment variables
 export EDITOR='vim'
 export BROWSER='xdg-open'
-export LESS='-R -X -M -i'
+export LESS='-FSRXMi'
 export PYTHONDONTWRITEBYTECODE=1
 
 # Aliases
