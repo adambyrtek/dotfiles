@@ -37,6 +37,9 @@ filetype plugin indent on
 " Turn off Vi compatibility
 set nocompatible
 
+" Internal encoding
+set encoding=utf-8
+
 " Show partial commands in status
 set showcmd
 
