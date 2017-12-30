@@ -46,7 +46,7 @@ alias p='python3'
 alias o='xdg-open'
 alias l='less'
 alias g='grep'
-alias vim='nvim'
+type nvim > /dev/null && alias vim='nvim'
 
 # Tmux aliases
 alias ta='tmux attach -t'

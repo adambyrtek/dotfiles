@@ -19,6 +19,7 @@ if has('gui_running') || &t_Co >= 256
     " Select color scheme
     let g:gruvbox_italic = 1
     colorscheme gruvbox
+    " colorscheme jellybeans
 
     " Background has to be set after color scheme
     set background=dark
@@ -203,7 +204,7 @@ endif
 
 " Lightline configuration
 let g:lightline = {
-            \     'colorscheme': 'gruvbox',
+            \     'colorscheme': g:colors_name,
             \     'active': {
             \         'left': [ [ 'mode', 'paste' ], [ 'relativepath', 'modified' ], [ 'fugitive' ] ],
             \         'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'filetype', 'spell', 'readonly' ] ]
