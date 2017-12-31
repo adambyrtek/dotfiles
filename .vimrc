@@ -299,12 +299,10 @@ augroup END
 " Commands and mappings {{{1
 
 " Formatting instead of ex mode
-nnoremap Q gq
-vnoremap Q gq
+noremap Q gq
 
 " Marks include column
-nnoremap ' `
-vnoremap ' `
+noremap ' `
 
 " Clear highlights
 nnoremap <Leader><Leader> :nohlsearch<CR>
@@ -316,10 +314,8 @@ nnoremap <Leader>l :lopen<CR>
 nnoremap <Leader>L :lclose<CR>
 
 " Paste last yank
-nnoremap <Leader>p "0p
-nnoremap <Leader>P "0P
-vnoremap <Leader>p "0p
-vnoremap <Leader>P "0P
+noremap <Leader>p "0p
+noremap <Leader>P "0P
 
 " Very magic search
 nnoremap <Leader>/ /\v
@@ -352,6 +348,9 @@ inoremap <C-c> <Esc>
 
 " Abbreviate current directory
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
+" Toggle folds with space
+nnoremap <Space> za
 
 " Easy exit from terminal mode
 if has('nvim')
