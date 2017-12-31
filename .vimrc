@@ -1,11 +1,36 @@
 " vim: foldmethod=marker
 
-" Pathogen {{{1
+" Packages {{{1
 
-" Initialize Pathogen, has to be at the top
-" (make sure to run :Helptags after installing new plugins)
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
+" Use minipac for managing packages
+packadd minpac
+call minpac#init()
+
+call minpac#add('5long/pytest-vim-compiler')
+call minpac#add('Vimjas/vim-python-pep8-indent')
+call minpac#add('chaoren/vim-wordmotion')
+call minpac#add('ctrlpvim/ctrlp.vim')
+call minpac#add('davidhalter/jedi-vim')
+call minpac#add('itchyny/lightline.vim')
+call minpac#add('justinmk/vim-dirvish')
+call minpac#add('kana/vim-textobj-entire')
+call minpac#add('kana/vim-textobj-indent')
+call minpac#add('kana/vim-textobj-user')
+call minpac#add('mhinz/vim-sayonara')
+call minpac#add('mhinz/vim-signify')
+call minpac#add('morhetz/gruvbox')
+call minpac#add('nanotech/jellybeans.vim')
+call minpac#add('radenling/vim-dispatch-neovim')
+call minpac#add('tpope/vim-commentary')
+call minpac#add('tpope/vim-dispatch')
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-repeat')
+call minpac#add('tpope/vim-surround')
+call minpac#add('tpope/vim-unimpaired')
+call minpac#add('vim-syntastic/syntastic')
+
+call minpac#add('edkolev/tmuxline.vim', {'type': 'opt'})
+call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " Appearance {{{1
 
