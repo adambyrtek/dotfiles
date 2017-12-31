@@ -27,7 +27,7 @@ call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-surround')
 call minpac#add('tpope/vim-unimpaired')
-call minpac#add('vim-syntastic/syntastic')
+call minpac#add('w0rp/ale')
 
 call minpac#add('edkolev/tmuxline.vim', {'type': 'opt'})
 call minpac#add('k-takata/minpac', {'type': 'opt'})
@@ -210,11 +210,9 @@ let g:dirvish_relative_paths = 1
 let g:wordmotion_prefix = ','
 
 " Linter settings
-let g:syntastic_python_checkers = ['python', 'flake8']
-let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-
-" Auto-populate location list with linter results
-let g:syntastic_always_populate_loc_list = 1
+let g:ale_linters = {
+            \     'python': ['flake8', 'mypy'],
+            \ }
 
 " Refresh signs in real-time without writing files
 let g:signify_realtime = 1
@@ -322,12 +320,6 @@ vnoremap <Leader>P "0P
 
 " Very magic search
 nnoremap <Leader>/ /\v
-
-" Select last put
-nnoremap <expr> <Leader>v '`[' . getregtype()[0] . '`]'
-
-" Syntastic toggle
-nnoremap <Leader>s :SyntasticToggleMode<CR>
 
 " Custom command and mapping for Ag (if available)
 if executable('ag')
