@@ -30,7 +30,6 @@ call minpac#add('tpope/vim-unimpaired')
 call minpac#add('w0rp/ale')
 
 call minpac#add('edkolev/tmuxline.vim', {'type': 'opt'})
-call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " Appearance {{{1
 
