@@ -4,10 +4,11 @@
 
 " Use minipac for managing packages
 packadd minpac
-call minpac#init()
+call minpac#init({'verbose': 3})
 
 call minpac#add('5long/pytest-vim-compiler')
 call minpac#add('Vimjas/vim-python-pep8-indent')
+call minpac#add('airblade/vim-gitgutter')
 call minpac#add('chaoren/vim-wordmotion')
 call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('davidhalter/jedi-vim')
@@ -17,7 +18,6 @@ call minpac#add('kana/vim-textobj-entire')
 call minpac#add('kana/vim-textobj-indent')
 call minpac#add('kana/vim-textobj-user')
 call minpac#add('mhinz/vim-sayonara')
-call minpac#add('mhinz/vim-signify')
 call minpac#add('morhetz/gruvbox')
 call minpac#add('nanotech/jellybeans.vim')
 call minpac#add('radenling/vim-dispatch-neovim')
@@ -166,6 +166,9 @@ if !has('nvim')
     set ttimeoutlen=50
 endif
 
+" Shorter cursor hold timeout (e.g. for gitgutter)
+set updatetime=250
+
 " Recursive find
 set path+=**
 set path-=/usr/include
@@ -213,11 +216,6 @@ let g:wordmotion_prefix = ','
 let g:ale_linters = {
             \     'python': ['flake8', 'mypy'],
             \ }
-
-" Refresh signs in real-time without writing files
-let g:signify_realtime = 1
-let g:signify_cursorhold_normal = 0
-let g:signify_cursorhold_insert = 0
 
 " NeoVim will use system Python (not one from virtualenv)
 if has('nvim')
@@ -346,12 +344,6 @@ cnoremap <M-f> <S-Right>
 
 " Make C-c trigger autocmds
 inoremap <C-c> <Esc>
-
-" Signify text object
-omap ic <plug>(signify-motion-inner-pending)
-xmap ic <plug>(signify-motion-inner-visual)
-omap ac <plug>(signify-motion-outer-pending)
-xmap ac <plug>(signify-motion-outer-visual)
 
 " Abbreviate current directory
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
