@@ -185,7 +185,13 @@ if executable('ag')
     set grepformat^=%f:%l:%c:%m
 endif
 
+" More intuitive splits
+set splitright splitbelow
+
 " Variables {{{1
+
+" Change leader to work better with different layouts
+let mapleader = ','
 
 " Always start search from cwd
 let g:ctrlp_working_path_mode = 'rw'
