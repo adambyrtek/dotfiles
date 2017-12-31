@@ -57,6 +57,10 @@ alias tl='tmux list-sessions'
 type clipcopy > /dev/null && alias pbcopy='clipcopy'
 type clippaste > /dev/null && alias pbpaste='clippaste'
 
+# Find process and port
+function psgrep() { pgrep -f $* | xargs ps }
+function port() { lsof -s TCP:LISTEN -i TCP:$1 }
+
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
