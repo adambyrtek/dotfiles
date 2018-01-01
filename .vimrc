@@ -102,6 +102,11 @@ set autoindent
 " Incremental search
 set incsearch
 
+" Incremental substitution
+if has('nvim')
+    set inccommand=nosplit
+endif
+
 " Highlight search results
 set hlsearch
 
@@ -369,3 +374,8 @@ nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>gc :Gcommit<CR>
 nnoremap <Leader>gC :Gcommit -v<CR>
+
+" Tab completion
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
