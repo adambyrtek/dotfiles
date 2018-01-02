@@ -46,7 +46,13 @@ alias p='python3'
 alias o='xdg-open'
 alias l='less'
 alias g='grep'
-type nvim > /dev/null && alias vim='nvim'
+alias gg='gitg -c &> /dev/null &!'
+
+# Use NeoVim instead of Vim if present
+if type nvim > /dev/null; then
+    export EDITOR='nvim'
+    alias vim='nvim'
+fi
 
 # Tmux aliases
 alias ta='tmux attach -t'
