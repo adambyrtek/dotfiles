@@ -191,8 +191,8 @@ if executable('ag')
     set grepformat^=%f:%l:%c:%m
 endif
 
-" More intuitive splits
-set splitright splitbelow
+" More intuitive vertical split
+set splitright
 
 " Variables {{{1
 
@@ -273,14 +273,11 @@ augroup vimrc
 
     " Python test dispatch
     if executable('py.test')
-        autocmd Filetype python let b:dispatch = 'py.test -q %'
+        autocmd Filetype python let b:dispatch = 'py.test %'
     endif
 
-    " Ruby
-    autocmd Filetype ruby setl sw=2 sts=2
-
-    " JavaScript
-    autocmd Filetype javascript setl sw=2 sts=2
+    " Use two spaces for some languages
+    autocmd Filetype ruby,eruby,javascript,html setl sw=2 sts=2
 
     " Shortcut to close quickfix and help
     autocmd Filetype qf,help nnoremap <buffer> q :close<CR>
