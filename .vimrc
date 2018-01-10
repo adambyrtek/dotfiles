@@ -6,7 +6,8 @@
 packadd minpac
 call minpac#init({'verbose': 3})
 
-call minpac#add('5long/pytest-vim-compiler')
+call minpac#add('Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' })
+call minpac#add('Shougo/echodoc.vim')
 call minpac#add('Vimjas/vim-python-pep8-indent')
 call minpac#add('airblade/vim-gitgutter')
 call minpac#add('chaoren/vim-wordmotion')
@@ -29,6 +30,7 @@ call minpac#add('tpope/vim-rhubarb')
 call minpac#add('tpope/vim-surround')
 call minpac#add('tpope/vim-unimpaired')
 call minpac#add('w0rp/ale')
+call minpac#add('zchee/deoplete-jedi')
 
 call minpac#add('edkolev/tmuxline.vim', {'type': 'opt'})
 
@@ -69,6 +71,9 @@ set encoding=utf-8
 
 " Show partial commands in status
 set showcmd
+
+" Do not show current mode in the command line
+set noshowmode
 
 " No soft word wrapping
 set nowrap
@@ -136,7 +141,10 @@ set wildmode=longest:full,full
 set wildmenu
 
 " Saner insert mode completion
-set completeopt=longest,menuone
+set completeopt=menuone,noselect
+
+" Do not show completion messages on the command line
+set shortmess+=c
 
 " Show matching parenthesis
 set showmatch
@@ -258,13 +266,31 @@ if g:colors_name == "jellybeans"
     highlight! link StatusLine LightlineMiddle_normal
 endif
 
-" Jedi configuration
+" Disable jedi completion and other fancy features
 let g:jedi#auto_vim_configuration = 0
+let g:jedi#show_call_signatures = 0
+let g:jedi#completions_enabled = 0
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#goto_command = '<Leader>jj'
+let g:jedi#goto_assignments_command = '<Leader>jg'
+let g:jedi#rename_command = '<Leader>jr'
+let g:jedi#usages_command = '<Leader>jn'
+
+" Enable deoplete completions
+if has('nvim')
+    let g:deoplete#enable_at_startup = 1
+endif
+
+" Enable echodoc hints
+let g:echodoc_enable_at_startup = 1
 
 " Autocommands {{{1
 
 augroup vimrc
     autocmd!
+
+    " Prioritise Jedi completions
+    autocmd VimEnter * call deoplete#custom#source('jedi', 'rank', 1000)
 
     " Python formatting
     if executable('isort')
@@ -364,8 +390,8 @@ endif
 nnoremap <Leader>bd :Sayonara!<CR>
 
 " Dispatch mappings
-nnoremap <Leader>x :Dispatch<CR>
-nnoremap <Leader>X :Dispatch<Space>
+nnoremap <Leader>d :Dispatch<CR>
+nnoremap <Leader>D :Dispatch<Space>
 
 " Fugitive mappings
 nnoremap <Leader>gs :Gstatus<CR>
@@ -376,4 +402,3 @@ nnoremap <Leader>gC :Gcommit -v<CR>
 " Tab completion
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
