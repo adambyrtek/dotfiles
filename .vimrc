@@ -303,7 +303,7 @@ augroup vimrc
     endif
 
     " Use two spaces for some languages
-    autocmd Filetype ruby,eruby,javascript,html setl sw=2 sts=2
+    autocmd Filetype ruby,eruby,javascript,html,dockerfile setl sw=2 sts=2
 
     " Shortcut to close quickfix and help
     autocmd Filetype qf,help nnoremap <buffer> q :close<CR>
@@ -371,6 +371,8 @@ cnoremap <C-f> <Right>
 cnoremap <C-d> <Del>
 cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
+cnoremap <M-p> <Up>
+cnoremap <M-n> <Down>
 
 " Make C-c trigger autocmds
 inoremap <C-c> <Esc>
