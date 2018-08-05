@@ -203,6 +203,9 @@ endif
 " More intuitive vertical split
 set splitright
 
+" Disable modelines for security reasons
+set nomodeline
+
 " Variables {{{1
 
 " Change leader to work better with different layouts
@@ -304,7 +307,7 @@ augroup vimrc
     endif
 
     " Use two spaces for some languages
-    autocmd Filetype ruby,eruby,javascript,html,dockerfile setl sw=2 sts=2
+    autocmd Filetype ruby,eruby,javascript,html,dockerfile,yaml setl sw=2 sts=2
 
     " Shortcut to close quickfix and help
     autocmd Filetype qf,help nnoremap <buffer> q :close<CR>
@@ -375,11 +378,14 @@ cnoremap <M-f> <S-Right>
 cnoremap <M-p> <Up>
 cnoremap <M-n> <Down>
 
+" Quickfix navigation
+nnoremap <C-Left> :cfirst<CR>
+nnoremap <C-Up> :cprev<CR>
+nnoremap <C-Down> :cnext<CR>
+nnoremap <C-Right> :clast<CR>
+
 " Make C-c trigger autocmds
 inoremap <C-c> <Esc>
-
-" Abbreviate current directory
-cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 " Toggle folds with space
 nnoremap <Space> za
