@@ -379,10 +379,10 @@ cnoremap <M-p> <Up>
 cnoremap <M-n> <Down>
 
 " Quickfix navigation
-nnoremap <C-Left> :cfirst<CR>
-nnoremap <C-Up> :cprev<CR>
-nnoremap <C-Down> :cnext<CR>
-nnoremap <C-Right> :clast<CR>
+nnoremap <C-Left> :cprev<CR>
+nnoremap <C-Up> :lprev<CR>
+nnoremap <C-Down> :lnext<CR>
+nnoremap <C-Right> :cnext<CR>
 
 " Make C-c trigger autocmds
 inoremap <C-c> <Esc>
