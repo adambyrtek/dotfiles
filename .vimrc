@@ -4,36 +4,39 @@
 
 " Use minipac for managing packages
 packadd minpac
-call minpac#init({'verbose': 3})
 
-call minpac#add('Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' })
-call minpac#add('Shougo/echodoc.vim')
-call minpac#add('Vimjas/vim-python-pep8-indent')
-call minpac#add('airblade/vim-gitgutter')
-call minpac#add('chaoren/vim-wordmotion')
-call minpac#add('ctrlpvim/ctrlp.vim')
-call minpac#add('davidhalter/jedi-vim')
-call minpac#add('hashivim/vim-terraform')
-call minpac#add('itchyny/lightline.vim')
-call minpac#add('justinmk/vim-dirvish')
-call minpac#add('kana/vim-textobj-entire')
-call minpac#add('kana/vim-textobj-indent')
-call minpac#add('kana/vim-textobj-user')
-call minpac#add('mhinz/vim-sayonara')
-call minpac#add('morhetz/gruvbox')
-call minpac#add('nanotech/jellybeans.vim')
-call minpac#add('radenling/vim-dispatch-neovim')
-call minpac#add('tpope/vim-commentary')
-call minpac#add('tpope/vim-dispatch')
-call minpac#add('tpope/vim-fugitive')
-call minpac#add('tpope/vim-repeat')
-call minpac#add('tpope/vim-rhubarb')
-call minpac#add('tpope/vim-surround')
-call minpac#add('tpope/vim-unimpaired')
-call minpac#add('w0rp/ale')
-call minpac#add('zchee/deoplete-jedi')
+if exists('*minpac#init')
+    call minpac#init()
 
-call minpac#add('edkolev/tmuxline.vim', {'type': 'opt'})
+    call minpac#add('Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' })
+    call minpac#add('Shougo/echodoc.vim')
+    call minpac#add('Vimjas/vim-python-pep8-indent')
+    call minpac#add('airblade/vim-gitgutter')
+    call minpac#add('chaoren/vim-wordmotion')
+    call minpac#add('ctrlpvim/ctrlp.vim')
+    call minpac#add('davidhalter/jedi-vim')
+    call minpac#add('hashivim/vim-terraform')
+    call minpac#add('itchyny/lightline.vim')
+    call minpac#add('justinmk/vim-dirvish')
+    call minpac#add('kana/vim-textobj-entire')
+    call minpac#add('kana/vim-textobj-indent')
+    call minpac#add('kana/vim-textobj-user')
+    call minpac#add('mhinz/vim-sayonara')
+    call minpac#add('morhetz/gruvbox')
+    call minpac#add('nanotech/jellybeans.vim')
+    call minpac#add('radenling/vim-dispatch-neovim')
+    call minpac#add('tpope/vim-commentary')
+    call minpac#add('tpope/vim-dispatch')
+    call minpac#add('tpope/vim-fugitive')
+    call minpac#add('tpope/vim-repeat')
+    call minpac#add('tpope/vim-rhubarb')
+    call minpac#add('tpope/vim-surround')
+    call minpac#add('tpope/vim-unimpaired')
+    call minpac#add('w0rp/ale')
+    call minpac#add('zchee/deoplete-jedi')
+
+    call minpac#add('edkolev/tmuxline.vim', {'type': 'opt'})
+endif
 
 " Appearance {{{1
 
@@ -240,9 +243,9 @@ let g:ale_linters = {
             \     'python': ['flake8', 'mypy'],
             \ }
 
-" NeoVim will use system Python (not one from virtualenv)
+" Neovim should use system Python (not one from virtualenv)
 if has('nvim')
-    let g:python_host_prog = '/usr/bin/python'
+    let g:python_host_prog = '/usr/bin/python2'
     let g:python3_host_prog = '/usr/bin/python3'
 endif
 
