@@ -6,8 +6,10 @@ if [ -f ~/.zsh/antigen.zsh ]; then
     # OMZ bundles
     # TODO: Consider removing OMZ completely
     antigen use oh-my-zsh
-    antigen bundle git
     antigen bundle command-not-found
+    antigen bundle git
+    antigen bundle asdf
+    # antigen bundle aws
 
     # OMZ completions
     antigen bundle pip
@@ -45,6 +47,9 @@ bindkey "^[[1;3D" backward-word
 bindkey "^[[1;2C" forward-char
 bindkey "^[[1;2D" backward-char
 
+# Completion settings
+compdef pip3=pip
+
 # Custom paths
 path+=("$HOME/Dev/bin" "$HOME/.rvm/bin" "$HOME/.local/bin")
 cdpath+=("$HOME/Dev" "$HOME/Dev/airsorted")
@@ -59,12 +64,10 @@ export PYTHONDONTWRITEBYTECODE=1
 # Aliases
 alias a='apt'
 alias sa='sudo apt'
-alias s='sudo'
 alias p='python3'
 alias o='xdg-open'
 alias l='less'
 alias g='grep'
-alias gg='gitg -c &> /dev/null &!'
 
 # Use NeoVim instead of Vim if present
 if type nvim > /dev/null; then
@@ -74,8 +77,8 @@ fi
 
 # Tmux aliases
 alias ta='tmux attach -t'
-alias ts='tmux new-session -s'
-alias tl='tmux list-sessions'
+alias tns='tmux new-session -s'
+alias tls='tmux list-sessions'
 
 # Mac-like clipboard aliases
 type clipcopy > /dev/null && alias pbcopy='clipcopy'

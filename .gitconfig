@@ -1,7 +1,9 @@
 [user]
 	email = adambyrtek@gmail.com
 	name = Adam Byrtek
+
 [merge]
 	tool = vimdiff
+
 [push]
 	default = simple
