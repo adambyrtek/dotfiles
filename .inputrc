@@ -1,9 +1,15 @@
-# Single Tab shows list of completions
-set show-all-if-ambiguous on
 # Disable beep
 set bell-style none
+
+# Single Tab shows list of completions
+set show-all-if-ambiguous on
+
 # Ignore case during completion
 set completion-ignore-case on
-# Ctrl-Left/Right move between words
-"\e[1;5D": backward-word
-"\e[1;5C": forward-word
+
+# Color the common prefix
+set colored-completion-prefix on
+
+# Prefix history search
+"\ep": history-search-backward
+"\en": history-search-forward

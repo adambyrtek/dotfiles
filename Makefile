@@ -14,6 +14,7 @@ zsh: git
 	$(ln) ${PWD}/.zlogin ${HOME}/.zlogin
 	$(ln) ${PWD}/.zsh ${HOME}/.zsh
 	$(ln) ${PWD}/.zshrc ${HOME}/.zshrc
+	$(ln) ${PWD}/.inputrc ${HOME}/.inputrc
 	echo "PLEASE RESTART THE TERMINAL"
 
 python3:
