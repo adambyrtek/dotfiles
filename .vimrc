@@ -8,10 +8,17 @@ packadd minpac
 if exists('*minpac#init')
     call minpac#init()
 
-    call minpac#add('Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' })
+    " Async completions
+    call minpac#add('Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'})
+    " call minpac#add('Shougo/context_filetype.vim')
     call minpac#add('Shougo/echodoc.vim')
+    call minpac#add('Shougo/neco-vim')
+    call minpac#add('deoplete-plugins/deoplete-jedi')
+    " call minpac#add('deoplete-plugins/deoplete-go', {'do': 'make'})
+
     call minpac#add('Vimjas/vim-python-pep8-indent')
     call minpac#add('airblade/vim-gitgutter')
+    call minpac#add('cespare/vim-toml')
     call minpac#add('chaoren/vim-wordmotion')
     call minpac#add('ctrlpvim/ctrlp.vim')
     call minpac#add('davidhalter/jedi-vim')
@@ -23,41 +30,32 @@ if exists('*minpac#init')
     call minpac#add('kana/vim-textobj-user')
     call minpac#add('mhinz/vim-sayonara')
     call minpac#add('morhetz/gruvbox')
-    call minpac#add('nanotech/jellybeans.vim')
     call minpac#add('radenling/vim-dispatch-neovim')
+    call minpac#add('tartansandal/vim-compiler-pytest')
     call minpac#add('tpope/vim-commentary')
     call minpac#add('tpope/vim-dispatch')
+    call minpac#add('tpope/vim-eunuch')
     call minpac#add('tpope/vim-fugitive')
     call minpac#add('tpope/vim-repeat')
     call minpac#add('tpope/vim-rhubarb')
     call minpac#add('tpope/vim-surround')
     call minpac#add('tpope/vim-unimpaired')
     call minpac#add('w0rp/ale')
-    call minpac#add('zchee/deoplete-jedi')
 
     call minpac#add('edkolev/tmuxline.vim', {'type': 'opt'})
 endif
 
 " Appearance {{{1
 
-" Default color schemes
-if has('gui_running') || &t_Co >= 256
-    " Enable true color if supported
-    if has('termguicolors')
-        set termguicolors
-    endif
+" Enable true color support
+set termguicolors
 
-    " Select color scheme
-    let g:gruvbox_italic = 1
-    colorscheme gruvbox
-    " colorscheme jellybeans
+" Gruvbox can support 256 colors and true color
+let g:gruvbox_italic = 1
+colorscheme gruvbox
 
-    " Background has to be set after color scheme
-    set background=dark
-else
-    " Looks decent with default terminal colors
-    colorscheme elflord
-endif
+" Has to be set after loading Gruvbox
+set background=dark
 
 " Settings {{{1
 
@@ -127,7 +125,7 @@ set backspace=indent,eol,start
 set laststatus=2
 
 " Number of lines before the end of the screen to scroll
-set scrolloff=6
+set scrolloff=8
 
 " Buffers can be hidden
 set hidden
@@ -138,13 +136,13 @@ set showbreak=+
 " Show ruler with file position
 set ruler
 
-" Completion similar to command line
+" Command mode completion
 set wildmode=longest:full,full
 
 " Show completion menu
 set wildmenu
 
-" Saner insert mode completion
+" Better insert mode completion ('longest' is hard to undo)
 set completeopt=menuone,noselect
 
 " Do not show completion messages on the command line
@@ -183,8 +181,8 @@ if !has('nvim')
     set ttimeoutlen=50
 endif
 
-" Shorter cursor hold timeout (e.g. for gitgutter)
-set updatetime=250
+" Shorter cursor hold timeout (e.g. for Git gutter)
+set updatetime=100
 
 " Recursive find
 set path+=**
@@ -194,8 +192,10 @@ set path-=/usr/include
 set complete-=i
 
 " Magic to make true color work in tmux
-set t_8f=[38;2;%lu;%lu;%lum
-set t_8b=[48;2;%lu;%lu;%lum
+if !has('nvim')
+    set t_8f=[38;2;%lu;%lu;%lum
+    set t_8b=[48;2;%lu;%lu;%lum
+endif
 
 " Use Ag instead of grep (if available)
 if executable('ag')
@@ -208,6 +208,9 @@ set splitright
 
 " Disable modelines for security reasons
 set nomodeline
+
+" Always show the gutter
+set signcolumn=yes
 
 " Variables {{{1
 
@@ -227,7 +230,7 @@ if executable('ag')
 endif
 
 " Mapping to delete buffers
-let g:ctrlp_prompt_mappings = { 'PrtDeleteEnt()': ['<c-k>'] }
+let g:ctrlp_prompt_mappings = {'PrtDeleteEnt()': ['<c-k>']}
 
 " Prevent netrw from loading
 let loaded_netrwPlugin = 1
@@ -238,10 +241,20 @@ let g:dirvish_relative_paths = 1
 " Advanced word motions
 let g:wordmotion_prefix = ','
 
-" Linter settings
-let g:ale_linters = {
-            \     'python': ['flake8', 'mypy'],
-            \ }
+" ALE linters
+let g:ale_linters = {}
+
+" ALE fixers
+let g:ale_fixers = {
+            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \   'python': ['isort', 'black'],
+            \   'javascript': ['eslint'],
+            \   'json': ['jq'],
+            \   'terraform': ['terraform'],
+            \}
+
+" Linter name in the error message
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 
 " Neovim should use system Python (not one from virtualenv)
 if has('nvim')
@@ -249,71 +262,81 @@ if has('nvim')
     let g:python3_host_prog = '/usr/bin/python3'
 endif
 
+" Git status
+function! LightlineGitGutter()
+    if &buftype ==# '' && exists('*GitGutterGetHunkSummary')
+        let [a, m, r] = GitGutterGetHunkSummary()
+        if a + m + r > 0
+            return printf('+%d ~%d -%d', a, m, r)
+        end
+    end
+    return ''
+endfunction
+
+" Shorten file name
+function! LightlineShortName()
+    if &filetype ==# 'fugitive' || expand('%') =~? '^fugitive:'
+        return FugitiveStatusline()
+    elseif &filetype ==# 'qf'
+        return exists('w:quickfix_title') ? w:quickfix_title : 'quickfix'
+    else
+        let shortname = expand('%:~:.')
+        return shortname != '' ? shortname : expand('%:~')
+    end
+endfunction
+
 " Lightline configuration
 let g:lightline = {
-            \     'colorscheme': g:colors_name,
-            \     'active': {
-            \         'left': [ [ 'mode', 'paste' ], [ 'relativepath', 'modified' ], [ 'fugitive' ] ],
-            \         'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'filetype', 'spell', 'readonly' ] ]
-            \     },
-            \     'inactive': {
-            \         'left': [ [ 'relativepath', 'modified' ] ],
-            \         'right': [ [ 'lineinfo' ], [ 'percent' ] ]
-            \     },
-            \     'component': {
-            \         'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-            \     },
-            \     'component_visible_condition': {
-            \         'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-            \     }
+            \   'colorscheme': 'gruvbox',
+            \   'active': {
+            \       'left': [['mode', 'paste'], ['shortname', 'modified'], ['fugitive', 'gitgutter' ]],
+            \       'right': [['lineinfo'], ['percent'], ['filetype', 'spell', 'readonly']],
+            \   },
+            \   'inactive': {
+            \       'left': [['shortname', 'modified']],
+            \       'right': [['lineinfo' ], [ 'percent']],
+            \   },
+            \   'component_function': {
+            \       'shortname': 'LightlineShortName',
+            \       'fugitive': 'FugitiveHead',
+            \       'gitgutter': 'LightlineGitGutter',
+            \   }
             \ }
 
-" Standard statusline colors consistent with lightline
-if g:colors_name == "jellybeans"
-    highlight! link StatusLine LightlineMiddle_normal
-endif
+" Tmux status line
+let g:tmuxline_powerline_separators = 0
+let g:tmuxline_theme = 'vim_statusline_1'
+let g:tmuxline_preset = 'minimal'
 
 " Disable jedi completion and other fancy features
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#show_call_signatures = 0
 let g:jedi#completions_enabled = 0
-let g:jedi#smart_auto_mappings = 0
 let g:jedi#goto_command = '<Leader>jj'
-let g:jedi#goto_assignments_command = '<Leader>jg'
+let g:jedi#goto_assignments_command = '<Leader>ja'
+let g:jedi#goto_stubs_command = '<Leader>js'
+let g:jedi#goto_definitions_command = '<Leader>jd'
 let g:jedi#rename_command = '<Leader>jr'
-let g:jedi#usages_command = '<Leader>jn'
+let g:jedi#usages_command = '<Leader>ju'
 
-" Enable deoplete completions
+" Enable deoplete completions and hints
 if has('nvim')
     let g:deoplete#enable_at_startup = 1
+    let g:echodoc_enable_at_startup = 1
 endif
-
-" Enable echodoc hints
-let g:echodoc_enable_at_startup = 1
 
 " Autocommands {{{1
 
 augroup vimrc
     autocmd!
 
-    " Prioritise Jedi completions
-    autocmd VimEnter * call deoplete#custom#source('jedi', 'rank', 1000)
-
-    " Python formatting
-    if executable('isort')
-        autocmd Filetype python setl formatprg=isort\ -
-    endif
-
-    " Python test dispatch
-    if executable('py.test')
-        autocmd Filetype python let b:dispatch = 'py.test %'
+    " Run pytest in the directory of the current file
+    if executable('pytest')
+        autocmd Filetype python let b:dispatch = 'pytest -q %:h'
     endif
 
     " Use two spaces for some languages
     autocmd Filetype ruby,eruby,javascript,html,dockerfile,yaml setl sw=2 sts=2
-
-    " Shortcut to close quickfix and help
-    autocmd Filetype qf,help nnoremap <buffer> q :close<CR>
 
     " Spell check Git commit message
     autocmd Filetype gitcommit setl spell spl=en
@@ -328,26 +351,30 @@ augroup vimrc
     " Restore last cursor position
     autocmd BufReadPost *
                 \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                \     exe "normal g`\"" |
+                \   exe "normal g`\"" |
                 \ endif
+
+    " Auto-open quickfix
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l* lwindow
 augroup END
 
 " Commands and mappings {{{1
 
-" Formatting instead of ex mode
-noremap Q gq
-
 " Marks include column
 noremap ' `
 
-" Clear highlights
-nnoremap <Leader><Leader> :nohlsearch<CR>
+" Quick shortcuts
+nnoremap <silent> <Leader><Leader> :nohlsearch<CR>
+nnoremap <silent> <Leader>s :write<CR>:nohlsearch<CR>
+nnoremap <silent> <Leader>S :wall<CR>:nohlsearch<CR>
+nnoremap <silent> <Leader>q :close<CR>
 
 " Open/close quickfix windows
-nnoremap <Leader>q :botright copen<CR>
-nnoremap <Leader>Q :cclose<CR>
-nnoremap <Leader>l :lopen<CR>
-nnoremap <Leader>L :lclose<CR>
+nnoremap <silent> <Leader>c :copen<CR>
+nnoremap <silent> <Leader>C :cclose<CR>
+nnoremap <silent> <Leader>l :lopen<CR>
+nnoremap <silent> <Leader>L :lclose<CR>
 
 " Paste last yank
 noremap <Leader>p "0p
@@ -356,15 +383,16 @@ noremap <Leader>P "0P
 " Very magic search
 nnoremap <Leader>/ /\v
 
-" Custom command and mapping for Ag (if available)
-if executable('ag')
-    command! -nargs=+ -complete=file -bar Ag silent grep! <args> | botright cwindow | redraw!
-    nnoremap <Leader>a :Ag<Space>
-    nnoremap <Leader>A :Ag<Space>-w<Space>'<C-r><C-w>'
-endif
+" Custom grep command and mapping
+command! -nargs=+ -complete=file -bar Grep silent grep! <args>
+nnoremap <Leader>a :Grep<Space>
+nnoremap <Leader>A :Grep -w '<C-r><C-w>'
 
 " Buffer search
 nnoremap <C-b> :CtrlPBuffer<CR>
+
+" Formatting instead of ex mode
+nmap Q <Plug>(ale_fix)
 
 " Cycle between windows
 nnoremap <C-j> <C-w>w
@@ -373,30 +401,25 @@ nnoremap <C-k> <C-w>W
 " Emacs bindings for the command line (see :h emacs-keys)
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-cnoremap <C-b> <Left>
-cnoremap <C-f> <Right>
+" cnoremap <C-b> <Left>
+" cnoremap <C-f> <Right>
 cnoremap <C-d> <Del>
-cnoremap <M-b> <S-Left>
-cnoremap <M-f> <S-Right>
-cnoremap <M-p> <Up>
-cnoremap <M-n> <Down>
+" cnoremap <M-b> <S-Left>
+" cnoremap <M-f> <S-Right>
+" cnoremap <M-p> <Up>
+" cnoremap <M-n> <Down>
 
 " Quickfix navigation
-nnoremap <C-Left> :cprev<CR>
-nnoremap <C-Up> :lprev<CR>
-nnoremap <C-Down> :lnext<CR>
-nnoremap <C-Right> :cnext<CR>
+nnoremap <silent> <C-Left> :cfirst<CR>
+nnoremap <silent> <C-Up> :cprev<CR>
+nnoremap <silent> <C-Down> :cnext<CR>
+nnoremap <silent> <C-Right> :clast<CR>
 
-" Make C-c trigger autocmds
+" Fix C-c not triggering autocmds
 inoremap <C-c> <Esc>
 
-" Toggle folds with space
-nnoremap <Space> za
-
 " Easy exit from terminal mode
-if has('nvim')
-    tnoremap <Esc> <C-\><C-n>
-endif
+tnoremap <Esc> <C-\><C-n>
 
 " Delete the buffer and preserve the window
 nnoremap <Leader>bd :Sayonara!<CR>
@@ -405,12 +428,9 @@ nnoremap <Leader>bd :Sayonara!<CR>
 nnoremap <Leader>d :Dispatch<CR>
 nnoremap <Leader>D :Dispatch<Space>
 
-" Fugitive mappings
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gC :Gcommit -v<CR>
-
-" Tab completion
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" ALE LSP mappings
+nmap <Leader>gd <Plug>(ale_go_to_definition)
+nmap <Leader>gt <Plug>(ale_go_to_type_definition)
+nmap <Leader>gh <Plug>(ale_hover)
+nmap <Leader>gk <Plug>(ale_documentation)
+nmap <Leader>gf <Plug>(ale_find_references)
