@@ -10,7 +10,7 @@ if exists('*minpac#init')
 
     " Async completions
     call minpac#add('Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'})
-    " call minpac#add('Shougo/context_filetype.vim')
+    call minpac#add('Shougo/context_filetype.vim')
     call minpac#add('Shougo/echodoc.vim')
     call minpac#add('Shougo/neco-vim')
     call minpac#add('deoplete-plugins/deoplete-jedi')
@@ -45,19 +45,21 @@ if exists('*minpac#init')
     call minpac#add('edkolev/tmuxline.vim', {'type': 'opt'})
 endif
 
+
 " Appearance {{{1
 
-" Enable true color support
+" Assume the terminal supports true color
 set termguicolors
 
-" Gruvbox can support 256 colors and true color
+" Gruvbox with optional italics
 let g:gruvbox_italic = 1
 colorscheme gruvbox
 
-" Has to be set after loading Gruvbox
+" Switch to the dark version (has to be done after loading the scheme)
 set background=dark
 
-" Settings {{{1
+
+" Options {{{1
 
 " Syntax highlighting
 syntax on
@@ -212,7 +214,8 @@ set nomodeline
 " Always show the gutter
 set signcolumn=yes
 
-" Variables {{{1
+
+" Plugins settings {{{1
 
 " Change leader to work better with different layouts
 let mapleader = ','
@@ -262,52 +265,6 @@ if has('nvim')
     let g:python3_host_prog = '/usr/bin/python3'
 endif
 
-" Git status
-function! LightlineGitGutter()
-    if &buftype ==# '' && exists('*GitGutterGetHunkSummary')
-        let [a, m, r] = GitGutterGetHunkSummary()
-        if a + m + r > 0
-            return printf('+%d ~%d -%d', a, m, r)
-        end
-    end
-    return ''
-endfunction
-
-" Shorten file name
-function! LightlineShortName()
-    if &filetype ==# 'fugitive' || expand('%') =~? '^fugitive:'
-        return FugitiveStatusline()
-    elseif &filetype ==# 'qf'
-        return exists('w:quickfix_title') ? w:quickfix_title : 'quickfix'
-    else
-        let shortname = expand('%:~:.')
-        return shortname != '' ? shortname : expand('%:~')
-    end
-endfunction
-
-" Lightline configuration
-let g:lightline = {
-            \   'colorscheme': 'gruvbox',
-            \   'active': {
-            \       'left': [['mode', 'paste'], ['shortname', 'modified'], ['fugitive', 'gitgutter' ]],
-            \       'right': [['lineinfo'], ['percent'], ['filetype', 'spell', 'readonly']],
-            \   },
-            \   'inactive': {
-            \       'left': [['shortname', 'modified']],
-            \       'right': [['lineinfo' ], [ 'percent']],
-            \   },
-            \   'component_function': {
-            \       'shortname': 'LightlineShortName',
-            \       'fugitive': 'FugitiveHead',
-            \       'gitgutter': 'LightlineGitGutter',
-            \   }
-            \ }
-
-" Tmux status line
-let g:tmuxline_powerline_separators = 0
-let g:tmuxline_theme = 'vim_statusline_1'
-let g:tmuxline_preset = 'minimal'
-
 " Disable jedi completion and other fancy features
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#show_call_signatures = 0
@@ -325,7 +282,84 @@ if has('nvim')
     let g:echodoc_enable_at_startup = 1
 endif
 
-" Autocommands {{{1
+" Support code embedded in Markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+
+
+" Status line {{{1
+
+" Git status
+function! LightlineGitGutter()
+    if &buftype ==# '' && exists('*GitGutterGetHunkSummary')
+        let [l:a, l:m, l:r] = GitGutterGetHunkSummary()
+        if l:a + l:m + l:r > 0
+            return printf('+%d ~%d -%d', l:a, l:m, l:r)
+        end
+    end
+    return ''
+endfunction
+
+" Shorten file name
+function! LightlineShortName()
+    if &filetype ==# 'fugitive' || expand('%') =~? '^fugitive:'
+        return FugitiveStatusline()
+    elseif &filetype ==# 'qf'
+        return exists('w:quickfix_title') ? w:quickfix_title : 'quickfix'
+    else
+        let l:shortname = expand('%:~:.')
+        return l:shortname != '' ? l:shortname : expand('%:~')
+    end
+endfunction
+
+" Number of quickfix items
+function! LightlineQuickfix()
+    let l:count = len(getqflist())
+    if l:count == 0
+        return ''
+    endif
+
+    let l:current_idx = get(getqflist({'idx': 0}), 'idx', 0)
+    let l:count_valid = len(filter(getqflist(), 'v:val.valid'))
+    if l:count == l:count_valid
+        return printf('qf %d/%d', l:current_idx, l:count)
+    else
+        return printf('qf %d/%d(%d)', l:current_idx, l:count, l:count_valid)
+    endif
+endfunction
+
+" Lightline configuration
+let g:lightline = {
+            \   'colorscheme': 'gruvbox',
+            \   'active': {
+            \       'left': [['mode', 'paste'], ['shortname', 'modified'], ['fugitive', 'gitgutter' ]],
+            \       'right': [['lineinfo'], ['quickfix', 'percent'], ['filetype', 'spell', 'readonly']],
+            \   },
+            \   'inactive': {
+            \       'left': [['shortname', 'modified']],
+            \       'right': [['lineinfo' ], [ 'percent']],
+            \   },
+            \   'component_function': {
+            \       'shortname': 'LightlineShortName',
+            \       'fugitive': 'FugitiveHead',
+            \       'gitgutter': 'LightlineGitGutter',
+            \       'quickfix': 'LightlineQuickfix',
+            \   }
+            \ }
+
+" Tmux status line
+let g:tmuxline_powerline_separators = 0
+let g:tmuxline_theme = 'vim_statusline_1'
+let g:tmuxline_preset = 'minimal'
+
+
+" Commands and autocommands {{{1
+
+" Package management helpers
+command! PackUpdate call minpac#update()
+command! PackClean call minpac#clean()
+"
+" Silent grep that doesn't open the first match
+command! -nargs=+ -complete=file -bar Grep silent grep! <args>
 
 augroup vimrc
     autocmd!
@@ -359,7 +393,8 @@ augroup vimrc
     autocmd QuickFixCmdPost l* lwindow
 augroup END
 
-" Commands and mappings {{{1
+
+" Key mappings {{{1
 
 " Marks include column
 noremap ' `
@@ -380,11 +415,10 @@ nnoremap <silent> <Leader>L :lclose<CR>
 noremap <Leader>p "0p
 noremap <Leader>P "0P
 
-" Very magic search
+" Search using more standard regexp syntax
 nnoremap <Leader>/ /\v
+nnoremap <Leader>? ?\v
 
-" Custom grep command and mapping
-command! -nargs=+ -complete=file -bar Grep silent grep! <args>
 nnoremap <Leader>a :Grep<Space>
 nnoremap <Leader>A :Grep -w '<C-r><C-w>'
 
@@ -427,14 +461,12 @@ nnoremap <Leader>bd :Sayonara!<CR>
 " Dispatch mappings
 nnoremap <Leader>d :Dispatch<CR>
 nnoremap <Leader>D :Dispatch<Space>
+nnoremap <Leader>m :Make<CR>
+nnoremap <Leader>M :Make<Space>
 
-" ALE LSP mappings
+" ALE LSP mappings (experimental)
 nmap <Leader>gd <Plug>(ale_go_to_definition)
 nmap <Leader>gt <Plug>(ale_go_to_type_definition)
 nmap <Leader>gh <Plug>(ale_hover)
 nmap <Leader>gk <Plug>(ale_documentation)
 nmap <Leader>gf <Plug>(ale_find_references)
-
-" Package management helpers
-command! PackUpdate call minpac#update()
-command! PackClean call minpac#clean()
