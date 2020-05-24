@@ -434,3 +434,7 @@ nmap <Leader>gt <Plug>(ale_go_to_type_definition)
 nmap <Leader>gh <Plug>(ale_hover)
 nmap <Leader>gk <Plug>(ale_documentation)
 nmap <Leader>gf <Plug>(ale_find_references)
+
+" Package management helpers
+command! PackUpdate call minpac#update()
+command! PackClean call minpac#clean()
