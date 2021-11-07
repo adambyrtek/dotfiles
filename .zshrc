@@ -1,37 +1,33 @@
+# .zshrc is sourced for interactive shells only
+
 # Antigen plugin manager
-if [ -f ~/.zsh/antigen.zsh ]; then
-    # TODO: Consider Antibody
+if [ -r ~/.zsh/antigen.zsh ]; then
     source ~/.zsh/antigen.zsh
 
-    # OMZ bundles
-    # TODO: Consider removing OMZ completely
+    # OMZ plugins
     antigen use oh-my-zsh
     antigen bundle command-not-found
     antigen bundle git
-    antigen bundle asdf
-    # antigen bundle aws
 
-    # OMZ completions
+    # OMZ completion plugins
     antigen bundle pip
     antigen bundle terraform
 
-    # External bundles
+    # Other plugins
     antigen bundle zsh-users/zsh-completions
     antigen bundle zsh-users/zsh-syntax-highlighting
 
     # Prompt
-    # antigen theme robbyrussell
     # PURE_PROMPT_SYMBOL='λ'
     antigen bundle mafredri/zsh-async
     antigen bundle sindresorhus/pure
 
-    # Apply config
     antigen apply
 else
     echo "Antigen not found!"
 fi
 
-# Separate shell history
+# Separate history for each shell
 setopt no_share_history
 
 # Highlight isearch match
@@ -51,8 +47,8 @@ bindkey "^[[1;2D" backward-char
 compdef pip3=pip
 
 # Custom paths
-path+=("$HOME/Dev/bin" "$HOME/.rvm/bin" "$HOME/.local/bin")
-cdpath+=("$HOME/Dev" "$HOME/Dev/airsorted")
+path=("$HOME/Dev/bin" "$HOME/.rvm/bin" "$HOME/.local/bin" $path)
+cdpath=("$HOME/Dev" $cdpath)
 export PATH CDPATH
 
 # Environment variables
@@ -61,15 +57,19 @@ export BROWSER='xdg-open'
 export LESS='-FSRXMi'
 export PYTHONDONTWRITEBYTECODE=1
 
-# Aliases
+# Common aliases
 alias a='apt'
 alias sa='sudo apt'
 alias p='python3'
 alias o='xdg-open'
 alias l='less'
-alias g='grep'
+alias g='grep -E'
 
-# Use NeoVim instead of Vim if present
+# Safer file operations
+alias mv='mv -i'
+alias rm='rm -I'
+
+# Use Neovim instead of Vim if present
 if type nvim > /dev/null; then
     export EDITOR='nvim'
     alias vim='nvim'
@@ -80,7 +80,7 @@ alias ta='tmux attach -t'
 alias tns='tmux new-session -s'
 alias tls='tmux list-sessions'
 
-# Mac-like clipboard aliases
+# Mac OS clipboard aliases
 type clipcopy > /dev/null && alias pbcopy='clipcopy'
 type clippaste > /dev/null && alias pbpaste='clippaste'
 
@@ -88,12 +88,15 @@ type clippaste > /dev/null && alias pbpaste='clippaste'
 function psgrep() { pgrep -f "$*" | xargs ps -p }
 function port() { lsof -s TCP:LISTEN -i TCP:${1:-0} }
 
-# Server current directory over HTTP
-alias serve='python3 -m http.server 8000'
+# Get local IP
+alias myip='curl https://ifconfig.me'
 
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+[ -r "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 
 # Load RVM
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+[ -r "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+
+# Load asdf
+[ -r "$HOME/.asdf/asdf.sh" ] && source $HOME/.asdf/asdf.sh && fpath+=("$HOME/.asdf/completions")
