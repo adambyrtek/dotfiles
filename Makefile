@@ -1,4 +1,4 @@
-default: stow
+.PHONY: stow unstow restow
 
 stow:
 	@# Avoid bundling certain directories

@@ -4,25 +4,25 @@ RUN apt-get update && apt-get upgrade -y
 
 # Install system dependencies
 RUN apt-get install -y \
-  make \
-  python3 \
-  python3-pip
+    make \
+    python3 \
+    python3-pip
 
 # Install essential tools
 RUN apt-get install -y \
-  zsh \
-  tmux \
-  neovim \
-  stow \
-  git \
-  hub \
-  ripgrep \
-  autossh \
-  tree \
-  jq
+    zsh \
+    tmux \
+    neovim \
+    stow \
+    git \
+    hub \
+    ripgrep \
+    autossh \
+    tree \
+    jq
 
 # Neovim Python integration
-RUN pip3 install pynvim
+RUN pip3 install --no-cache-dir pynvim
 
 WORKDIR /root
 COPY . dotfiles/

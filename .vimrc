@@ -267,6 +267,7 @@ let g:ale_fixers = {
             \   'javascript': ['eslint'],
             \   'json': ['jq'],
             \   'terraform': ['terraform'],
+            \   'yaml': ['yamlfix'],
             \ }
 
 " Linter name in the error message

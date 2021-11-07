@@ -35,9 +35,9 @@ myManageHook = composeAll
 myLayoutHook = smartBorders (toggleLayouts (noBorders Full) $ avoidStruts layouts)
     where
         layouts =
-	    mouseResizableTile { masterFrac = 0.55 } |||
-	    mouseResizableTileMirrored { masterFrac = 0.55 } |||
-	    (im $ Grid)
+            mouseResizableTile { masterFrac = 0.55 } |||
+            mouseResizableTileMirrored { masterFrac = 0.55 } |||
+            (im $ Grid)
         im = withIM (1%6)
             (Or (Title "Buddy List") (Title "Contact List"))
 
