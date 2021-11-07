@@ -5,7 +5,7 @@
 " Use minipac for managing packages
 packadd minpac
 
-if exists('*minpac#init')
+if exists('g:loaded_minpac')
     call minpac#init()
 
     " Async completions
@@ -18,7 +18,7 @@ if exists('*minpac#init')
 
     call minpac#add('Vimjas/vim-python-pep8-indent')
     call minpac#add('airblade/vim-gitgutter')
-    call minpac#add('cespare/vim-toml')
+    call minpac#add('ap/vim-css-color')
     call minpac#add('chaoren/vim-wordmotion')
     call minpac#add('ctrlpvim/ctrlp.vim')
     call minpac#add('davidhalter/jedi-vim')
@@ -27,6 +27,7 @@ if exists('*minpac#init')
     call minpac#add('justinmk/vim-dirvish')
     call minpac#add('kana/vim-textobj-entire')
     call minpac#add('kana/vim-textobj-indent')
+    call minpac#add('kana/vim-textobj-line')
     call minpac#add('kana/vim-textobj-user')
     call minpac#add('mhinz/vim-sayonara')
     call minpac#add('morhetz/gruvbox')
@@ -41,7 +42,9 @@ if exists('*minpac#init')
     call minpac#add('tpope/vim-surround')
     call minpac#add('tpope/vim-unimpaired')
     call minpac#add('w0rp/ale')
+    call minpac#add('wellle/targets.vim')
 
+    " Optional plugins (enable with :packadd)
     call minpac#add('edkolev/tmuxline.vim', {'type': 'opt'})
 endif
 
@@ -100,9 +103,6 @@ set expandtab
 " Number of spaces to use for indent
 set shiftwidth=4
 
-" Number of spaces to use for Tab in insert mode
-set softtabstop=4
-
 " Tab in insert mode indents with spaces
 set smarttab
 
@@ -114,7 +114,7 @@ set incsearch
 
 " Incremental substitution
 if has('nvim')
-    set inccommand=nosplit
+    set inccommand=split
 endif
 
 " Highlight search results
@@ -126,8 +126,8 @@ set backspace=indent,eol,start
 " Always show status
 set laststatus=2
 
-" Number of lines before the end of the screen to scroll
-set scrolloff=8
+" Keep some space around the edges when scrolling
+set scrolloff=10 sidescrolloff=10
 
 " Buffers can be hidden
 set hidden
@@ -162,7 +162,7 @@ set list
 " Special characters to show
 set listchars=tab:>·,trail:·,extends:>,precedes:<
 
-" Default global replace
+" Default global replace (deprecated)
 set gdefault
 
 " Longer history
@@ -174,7 +174,7 @@ set nojoinspaces
 " Remove comment character when joining comment lines
 set formatoptions+=j
 
-" Reload file when changed (and not edited in Vim)
+" Reload file when changed (and not modified in Vim)
 set autoread
 
 " Shorter timeout after Esc in classic Vim
@@ -186,11 +186,10 @@ endif
 " Shorter cursor hold timeout (e.g. for Git gutter)
 set updatetime=100
 
-" Recursive find
-set path+=**
+" Remove include files from path
 set path-=/usr/include
 
-" Avoid parsing all include files
+" Avoid completing include files
 set complete-=i
 
 " Magic to make true color work in tmux
@@ -199,14 +198,18 @@ if !has('nvim')
     set t_8b=[48;2;%lu;%lu;%lum
 endif
 
-" Use Ag instead of grep (if available)
-if executable('ag')
+" Use ag or rg instead of grep (if available)
+if executable('rg')
+    set grepprg=rg\ --vimgrep\ --sort=path
+elseif executable('ag')
     set grepprg=ag\ --vimgrep
-    set grepformat^=%f:%l:%c:%m
 endif
 
-" More intuitive vertical split
-set splitright
+" Support column numbers in grep output
+set grepformat^=%f:%l:%c:%m
+
+" More intuitive splits
+set splitright splitbelow
 
 " Disable modelines for security reasons
 set nomodeline
@@ -226,8 +229,11 @@ let g:ctrlp_working_path_mode = 'rw'
 " Include current file in search results
 let g:ctrlp_match_current_file = 1
 
-" Use Ag for building CtrlP index (if available)
-if executable('ag')
+" Use external commands for building CtrlP index (if available)
+if executable('rg')
+    let g:ctrlp_user_command = 'rg %s --files --color=never'
+    let g:ctrlp_use_caching = 0
+elseif executable('ag')
     let g:ctrlp_user_command = 'ag %s --nocolor -g ""'
     let g:ctrlp_use_caching = 0
 endif
@@ -235,11 +241,17 @@ endif
 " Mapping to delete buffers
 let g:ctrlp_prompt_mappings = {'PrtDeleteEnt()': ['<c-k>']}
 
+" Quick way to close the prompt
+let g:ctrlp_brief_prompt = 1
+
+" Reuse windows from selected plugins
+let g:ctrlp_reuse_window = 'dirvish'
+
+" Avoid jumping to open windows
+let g:ctrlp_switch_buffer = ''
+
 " Prevent netrw from loading
 let loaded_netrwPlugin = 1
-
-" Use relative paths for consistency
-let g:dirvish_relative_paths = 1
 
 " Advanced word motions
 let g:wordmotion_prefix = ','
@@ -254,7 +266,7 @@ let g:ale_fixers = {
             \   'javascript': ['eslint'],
             \   'json': ['jq'],
             \   'terraform': ['terraform'],
-            \}
+            \ }
 
 " Linter name in the error message
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
@@ -265,18 +277,18 @@ if has('nvim')
     let g:python3_host_prog = '/usr/bin/python3'
 endif
 
-" Disable jedi completion and other fancy features
+" Custom Jedi configuration
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#show_call_signatures = 0
 let g:jedi#completions_enabled = 0
-let g:jedi#goto_command = '<Leader>jj'
+let g:jedi#goto_command = '<C-]>'
 let g:jedi#goto_assignments_command = '<Leader>ja'
 let g:jedi#goto_stubs_command = '<Leader>js'
 let g:jedi#goto_definitions_command = '<Leader>jd'
 let g:jedi#rename_command = '<Leader>jr'
 let g:jedi#usages_command = '<Leader>ju'
 
-" Enable deoplete completions and hints
+" Enable Deoplete completions and hints
 if has('nvim')
     let g:deoplete#enable_at_startup = 1
     let g:echodoc_enable_at_startup = 1
@@ -289,7 +301,7 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 " Status line {{{1
 
 " Git status
-function! LightlineGitGutter()
+function! LightlineGitGutter() abort
     if &buftype ==# '' && exists('*GitGutterGetHunkSummary')
         let [l:a, l:m, l:r] = GitGutterGetHunkSummary()
         if l:a + l:m + l:r > 0
@@ -300,10 +312,8 @@ function! LightlineGitGutter()
 endfunction
 
 " Shorten file name
-function! LightlineShortName()
-    if &filetype ==# 'fugitive' || expand('%') =~? '^fugitive:'
-        return FugitiveStatusline()
-    elseif &filetype ==# 'qf'
+function! LightlineShortName() abort
+    if &filetype ==# 'qf'
         return exists('w:quickfix_title') ? w:quickfix_title : 'quickfix'
     else
         let l:shortname = expand('%:~:.')
@@ -312,7 +322,7 @@ function! LightlineShortName()
 endfunction
 
 " Number of quickfix items
-function! LightlineQuickfix()
+function! LightlineQuickfix() abort
     let l:count = len(getqflist())
     if l:count == 0
         return ''
@@ -357,7 +367,7 @@ let g:tmuxline_preset = 'minimal'
 " Package management helpers
 command! PackUpdate call minpac#update()
 command! PackClean call minpac#clean()
-"
+
 " Silent grep that doesn't open the first match
 command! -nargs=+ -complete=file -bar Grep silent grep! <args>
 
@@ -374,6 +384,9 @@ augroup vimrc
 
     " Spell check Git commit message
     autocmd Filetype gitcommit setl spell spl=en
+
+    " Prevent overriding of the global mapping
+    autocmd FileType dirvish silent! unmap <buffer> <C-p>
 
     " Highlight the cursor line in the current window only
     autocmd WinEnter,BufWinEnter * setl cursorline
@@ -419,6 +432,7 @@ noremap <Leader>P "0P
 nnoremap <Leader>/ /\v
 nnoremap <Leader>? ?\v
 
+" Grep shortcuts
 nnoremap <Leader>a :Grep<Space>
 nnoremap <Leader>A :Grep -w '<C-r><C-w>'
 
@@ -428,26 +442,18 @@ nnoremap <C-b> :CtrlPBuffer<CR>
 " Formatting instead of ex mode
 nmap Q <Plug>(ale_fix)
 
-" Cycle between windows
+" Dwm inspired window cycling
 nnoremap <C-j> <C-w>w
 nnoremap <C-k> <C-w>W
 
 " Emacs bindings for the command line (see :h emacs-keys)
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-" cnoremap <C-b> <Left>
-" cnoremap <C-f> <Right>
 cnoremap <C-d> <Del>
-" cnoremap <M-b> <S-Left>
-" cnoremap <M-f> <S-Right>
-" cnoremap <M-p> <Up>
-" cnoremap <M-n> <Down>
 
 " Quickfix navigation
-nnoremap <silent> <C-Left> :cfirst<CR>
 nnoremap <silent> <C-Up> :cprev<CR>
 nnoremap <silent> <C-Down> :cnext<CR>
-nnoremap <silent> <C-Right> :clast<CR>
 
 " Fix C-c not triggering autocmds
 inoremap <C-c> <Esc>
@@ -465,8 +471,12 @@ nnoremap <Leader>m :Make<CR>
 nnoremap <Leader>M :Make<Space>
 
 " ALE LSP mappings (experimental)
+" let g:ale_disable_lsp = 1
 nmap <Leader>gd <Plug>(ale_go_to_definition)
 nmap <Leader>gt <Plug>(ale_go_to_type_definition)
 nmap <Leader>gh <Plug>(ale_hover)
 nmap <Leader>gk <Plug>(ale_documentation)
 nmap <Leader>gf <Plug>(ale_find_references)
+
+" Repeat last edit over visual selection
+xmap <silent> . :normal .<CR>
