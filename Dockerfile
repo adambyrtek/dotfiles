@@ -1,9 +1,33 @@
 FROM ubuntu:20.04
 
-RUN apt-get update && apt-get upgrade -y && apt-get install make sudo
+RUN apt-get update && apt-get upgrade -y
+
+# Install system dependencies
+RUN apt-get install -y \
+  make \
+  python3 \
+  python3-pip
+
+# Install essential tools
+RUN apt-get install -y \
+  zsh \
+  tmux \
+  neovim \
+  stow \
+  git \
+  hub \
+  ripgrep \
+  autossh \
+  tree \
+  jq
+
+# Neovim Python integration
+RUN pip3 install pynvim
 
 WORKDIR /root
 COPY . dotfiles/
-RUN cd dotfiles && make zsh vim tmux
+
+# Symlink dotfiles
+RUN cd dotfiles && make stow
 
 CMD ["zsh", "--login"]
