@@ -1,7 +1,8 @@
 default: stow
 
 stow:
-	@mkdir -p ${HOME}/.config
+	@# Avoid bundling certain directories
+	@mkdir -p ${HOME}/.config ${HOME}/.vim/pack/minpac/opt
 	stow -v -S .
 
 unstow:
