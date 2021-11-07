@@ -39,6 +39,7 @@ if exists('g:loaded_minpac')
     call minpac#add('tpope/vim-fugitive')
     call minpac#add('tpope/vim-repeat')
     call minpac#add('tpope/vim-rhubarb')
+    call minpac#add('tpope/vim-sleuth')
     call minpac#add('tpope/vim-surround')
     call minpac#add('tpope/vim-unimpaired')
     call minpac#add('w0rp/ale')
@@ -379,10 +380,7 @@ augroup vimrc
         autocmd Filetype python let b:dispatch = 'pytest -q %:h'
     endif
 
-    " Use two spaces for some languages
-    autocmd Filetype ruby,eruby,javascript,html,dockerfile,yaml setl sw=2 sts=2
-
-    " Spell check Git commit message
+    " Spell check Git commit messages
     autocmd Filetype gitcommit setl spell spl=en
 
     " Prevent overriding of the global mapping
