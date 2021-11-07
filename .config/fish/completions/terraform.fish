@@ -1,1 +1,0 @@
-/home/adam/Dev/fish-shell/share/completions/terraform.fish
