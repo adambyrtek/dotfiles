@@ -5,22 +5,22 @@ if [ -r ~/.zsh/antigen.zsh ]; then
     source ~/.zsh/antigen.zsh
 
     # OMZ plugins
-    antigen use oh-my-zsh
-    antigen bundle command-not-found
-    antigen bundle git
+    antigen bundle ohmyzsh/ohmyzsh
+    antigen bundle ohmyzsh/ohmyzsh plugins/command-not-found
+    antigen bundle ohmyzsh/ohmyzsh plugins/git
 
     # OMZ completion plugins
-    antigen bundle pip
-    antigen bundle terraform
+    antigen bundle ohmyzsh/ohmyzsh plugins/pip
+    antigen bundle ohmyzsh/ohmyzsh plugins/terraform
 
     # Other plugins
     antigen bundle zsh-users/zsh-completions
     antigen bundle zsh-users/zsh-syntax-highlighting
+    antigen bundle zsh-users/zsh-autosuggestions
 
     # Prompt
-    # PURE_PROMPT_SYMBOL='λ'
     antigen bundle mafredri/zsh-async
-    antigen bundle sindresorhus/pure
+    antigen bundle sindresorhus/pure@main
 
     antigen apply
 else
