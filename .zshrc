@@ -16,7 +16,7 @@ if [[ -r ~/.zsh/antigen.zsh ]]; then
     # Other plugins
     antigen bundle zsh-users/zsh-completions
     antigen bundle zsh-users/zsh-syntax-highlighting
-    antigen bundle zsh-users/zsh-autosuggestions
+    # antigen bundle zsh-users/zsh-autosuggestions
     antigen bundle ptavares/zsh-direnv@main
 
     # Prompt
@@ -34,18 +34,11 @@ setopt no_share_history
 # Highlight isearch match
 zle_highlight=("isearch:bg=yellow,fg=black")
 
-# Revert OMZ custom Up/Down bindings
-bindkey "${terminfo[kcuu1]}" up-line-or-history
-bindkey "${terminfo[kcud1]}" down-line-or-history
-
 # Fix Shift/Alt with arrow keys
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 bindkey "^[[1;2C" forward-char
 bindkey "^[[1;2D" backward-char
-
-# Completion settings
-compdef pip3=pip
 
 # Custom paths
 path=("$HOME/Dev/bin" "$HOME/.rvm/bin" "$HOME/.local/bin" $path)
@@ -85,18 +78,17 @@ alias tls="tmux list-sessions"
 type clipcopy > /dev/null && alias pbcopy="clipcopy"
 type clippaste > /dev/null && alias pbpaste="clippaste"
 
-# OMZ history alias
+# OMZ history with date and time
 alias h="omz_history -i"
 
-# Find process by name or port
-function psgrep() { pgrep -f "$*" | xargs ps -p }
-function port() { lsof -s TCP:LISTEN -i TCP:${1:-0} }
+# Grep running processes
+alias psg="pgrep -fa"
 
-# Get local IP
+# Show open ports
+alias ports="lsof -s TCP:LISTEN -i TCP"
+
+# External IP address
 alias myip="curl https://ifconfig.me"
-
-# Tree with colors
-alias tree="tree -C"
 
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
