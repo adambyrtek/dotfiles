@@ -2,8 +2,8 @@
 	email = adambyrtek@gmail.com
 	name = Adam Byrtek
 
-[merge]
-	tool = vimdiff
+[pull]
+	rebase = true
 
 [push]
-	default = simple
+	default = current

@@ -21,6 +21,7 @@ if [[ -r ~/.zsh/antigen.zsh ]]; then
     antigen bundle redxtech/zsh-asdf-direnv
 
     # Prompt
+    zstyle :prompt:pure:git:stash show yes
     antigen bundle mafredri/zsh-async
     antigen bundle sindresorhus/pure@main
 
