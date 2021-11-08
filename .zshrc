@@ -17,6 +17,7 @@ if [ -r ~/.zsh/antigen.zsh ]; then
     antigen bundle zsh-users/zsh-completions
     antigen bundle zsh-users/zsh-syntax-highlighting
     antigen bundle zsh-users/zsh-autosuggestions
+    antigen bundle ptavares/zsh-direnv@main
 
     # Prompt
     antigen bundle mafredri/zsh-async
@@ -80,9 +81,12 @@ alias ta='tmux attach -t'
 alias tns='tmux new-session -s'
 alias tls='tmux list-sessions'
 
-# Mac OS clipboard aliases
+# OMZ clipboard aliases
 type clipcopy > /dev/null && alias pbcopy='clipcopy'
 type clippaste > /dev/null && alias pbpaste='clippaste'
+
+# OMZ history alias
+alias h='omz_history -i'
 
 # Find process by name or port
 function psgrep() { pgrep -f "$*" | xargs ps -p }
@@ -90,6 +94,9 @@ function port() { lsof -s TCP:LISTEN -i TCP:${1:-0} }
 
 # Get local IP
 alias myip='curl https://ifconfig.me'
+
+# Tree with colors
+type tree > /dev/null && alias tree='tree -C'
 
 # Load NVM
 export NVM_DIR="$HOME/.nvm"

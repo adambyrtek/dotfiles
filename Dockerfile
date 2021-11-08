@@ -17,8 +17,9 @@ RUN apt-get install -y \
     git \
     hub \
     ripgrep \
-    autossh \
     tree \
+    autossh \
+    httpie \
     jq
 
 # Neovim Python integration

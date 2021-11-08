@@ -1,4 +1,4 @@
-# .zprofile is sourced for all login shells (not necessarily interactive)
+# .zprofile is sourced first for login shells only (even if not interactive)
 
 # System profile and env variables (needed for Snap and Flatpak)
 # See https://askubuntu.com/a/989485
