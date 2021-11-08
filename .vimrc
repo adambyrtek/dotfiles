@@ -44,9 +44,6 @@ if exists('g:loaded_minpac')
     call minpac#add('tpope/vim-unimpaired')
     call minpac#add('w0rp/ale')
     call minpac#add('wellle/targets.vim')
-
-    " Optional plugins (enable with :packadd)
-    call minpac#add('edkolev/tmuxline.vim', {'type': 'opt'})
 endif
 
 
@@ -358,11 +355,6 @@ let g:lightline = {
             \   }
             \ }
 
-" Tmux status line
-let g:tmuxline_powerline_separators = 0
-let g:tmuxline_theme = 'vim_statusline_1'
-let g:tmuxline_preset = 'minimal'
-
 
 " Commands and autocommands {{{1
 
@@ -441,7 +433,7 @@ nnoremap <C-b> :CtrlPBuffer<CR>
 " Formatting instead of ex mode
 nmap Q <Plug>(ale_fix)
 
-" Dwm inspired window cycling
+" Dwm style window navigation
 nnoremap <C-j> <C-w>w
 nnoremap <C-k> <C-w>W
 
