@@ -9,3 +9,6 @@ unstow:
 	stow -v -D .
 
 restow: unstow stow
+
+docker:
+	docker build -t dotfiles .

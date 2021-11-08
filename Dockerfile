@@ -2,22 +2,20 @@ FROM ubuntu:20.04
 
 RUN apt-get update && apt-get upgrade -y
 
-# Install system dependencies
 RUN apt-get install -y \
+    curl \
     make \
     python3 \
-    python3-pip
-
-# Install essential tools
-RUN apt-get install -y \
+    python3-pip \
+    stow \
     zsh \
     tmux \
     neovim \
-    stow \
     git \
     hub \
     ripgrep \
     tree \
+    lsof \
     autossh \
     httpie \
     jq
