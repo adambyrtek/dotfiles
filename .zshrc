@@ -54,14 +54,14 @@ export PYTHONDONTWRITEBYTECODE=1
 # Common aliases
 alias a="apt"
 alias sa="sudo apt"
-alias p="python3"
+alias py="python3"
 alias o="xdg-open"
 alias l="less"
 alias g="grep -E"
 
 # Safer file operations
 alias mv="mv -i"
-alias rm="rm -I"
+alias rm="rm -i"
 
 # Use Neovim instead of Vim if present
 if type nvim > /dev/null; then

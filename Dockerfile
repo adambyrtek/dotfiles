@@ -1,16 +1,16 @@
-FROM ubuntu:20.04
+FROM ubuntu:21.10
 
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y
 
 RUN apt-get install -y \
     curl \
     make \
-    python3 \
-    python3-pip \
     stow \
     zsh \
     tmux \
     neovim \
+    python3-pynvim \
     git \
     hub \
     ripgrep \
@@ -19,9 +19,6 @@ RUN apt-get install -y \
     autossh \
     httpie \
     jq
-
-# Neovim Python 3 provider
-RUN pip3 install --no-cache-dir pynvim
 
 WORKDIR /root
 COPY . dotfiles/

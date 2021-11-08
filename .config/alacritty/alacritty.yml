@@ -30,7 +30,3 @@ colors:
     magenta: '0xd3869b'
     cyan: '0x8ec07c'
     white: '0xebdbb2'
-
-# Needed for macOS
-shell:
-  program: /usr/bin/zsh
