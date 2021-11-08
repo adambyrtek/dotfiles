@@ -1,7 +1,7 @@
 # .zshrc is sourced for interactive shells only
 
 # Antigen plugin manager
-if [ -r ~/.zsh/antigen.zsh ]; then
+if [[ -r ~/.zsh/antigen.zsh ]]; then
     source ~/.zsh/antigen.zsh
 
     # OMZ plugins
@@ -53,57 +53,60 @@ cdpath=("$HOME/Dev" $cdpath)
 export PATH CDPATH
 
 # Environment variables
-export EDITOR='vim'
-export BROWSER='xdg-open'
-export LESS='-FSRXMi'
+export EDITOR="vim"
+export BROWSER="xdg-open"
+export LESS="-FSRXMi"
 export PYTHONDONTWRITEBYTECODE=1
 
 # Common aliases
-alias a='apt'
-alias sa='sudo apt'
-alias p='python3'
-alias o='xdg-open'
-alias l='less'
-alias g='grep -E'
+alias a="apt"
+alias sa="sudo apt"
+alias p="python3"
+alias o="xdg-open"
+alias l="less"
+alias g="grep -E"
 
 # Safer file operations
-alias mv='mv -i'
-alias rm='rm -I'
+alias mv="mv -i"
+alias rm="rm -I"
 
 # Use Neovim instead of Vim if present
 if type nvim > /dev/null; then
-    export EDITOR='nvim'
-    alias vim='nvim'
+    export EDITOR="nvim"
+    alias vim="nvim"
 fi
 
 # Tmux aliases
-alias ta='tmux attach -t'
-alias tns='tmux new-session -s'
-alias tls='tmux list-sessions'
+alias ta="tmux attach -t"
+alias tns="tmux new-session -s"
+alias tls="tmux list-sessions"
 
 # OMZ clipboard aliases
-type clipcopy > /dev/null && alias pbcopy='clipcopy'
-type clippaste > /dev/null && alias pbpaste='clippaste'
+type clipcopy > /dev/null && alias pbcopy="clipcopy"
+type clippaste > /dev/null && alias pbpaste="clippaste"
 
 # OMZ history alias
-alias h='omz_history -i'
+alias h="omz_history -i"
 
 # Find process by name or port
 function psgrep() { pgrep -f "$*" | xargs ps -p }
 function port() { lsof -s TCP:LISTEN -i TCP:${1:-0} }
 
 # Get local IP
-alias myip='curl https://ifconfig.me'
+alias myip="curl https://ifconfig.me"
 
 # Tree with colors
-type tree > /dev/null && alias tree='tree -C'
+alias tree="tree -C"
 
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
-[ -r "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+[[ -r "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
 
 # Load RVM
-[ -r "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+[[ -r "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # Load asdf
-[ -r "$HOME/.asdf/asdf.sh" ] && source $HOME/.asdf/asdf.sh && fpath+=("$HOME/.asdf/completions")
+[[ -r "$HOME/.asdf/asdf.sh" ]] && source $HOME/.asdf/asdf.sh && fpath+=("$HOME/.asdf/completions")
+
+# Login message
+[[ -o login ]] && echo "Hello world!"
