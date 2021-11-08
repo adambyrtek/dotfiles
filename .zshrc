@@ -17,7 +17,8 @@ if [[ -r ~/.zsh/antigen.zsh ]]; then
     antigen bundle zsh-users/zsh-completions
     antigen bundle zsh-users/zsh-syntax-highlighting
     # antigen bundle zsh-users/zsh-autosuggestions
-    antigen bundle ptavares/zsh-direnv@main
+
+    antigen bundle redxtech/zsh-asdf-direnv
 
     # Prompt
     antigen bundle mafredri/zsh-async
@@ -89,16 +90,6 @@ alias ports="lsof -s TCP:LISTEN -i TCP"
 
 # External IP address
 alias myip="curl https://ifconfig.me"
-
-# Load NVM
-export NVM_DIR="$HOME/.nvm"
-[[ -r "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
-
-# Load RVM
-[[ -r "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-# Load asdf
-[[ -r "$HOME/.asdf/asdf.sh" ]] && source $HOME/.asdf/asdf.sh && fpath+=("$HOME/.asdf/completions")
 
 # Login message
 [[ -o login ]] && echo "Hello world!"
