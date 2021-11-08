@@ -270,7 +270,7 @@ let g:ale_fixers = {
 " Linter name in the error message
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 
-" Neovim should use system Python (not one from virtualenv)
+" Neovim should use system Python (not one from venv)
 if has('nvim')
     let g:python_host_prog = '/usr/bin/python2'
     let g:python3_host_prog = '/usr/bin/python3'

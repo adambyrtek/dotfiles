@@ -20,7 +20,7 @@ RUN apt-get install -y \
     httpie \
     jq
 
-# Neovim Python integration
+# Neovim Python 3 provider
 RUN pip3 install --no-cache-dir pynvim
 
 WORKDIR /root
