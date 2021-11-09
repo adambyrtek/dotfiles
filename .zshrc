@@ -43,7 +43,7 @@ bindkey "^[[1;2C" forward-char
 bindkey "^[[1;2D" backward-char
 
 # Custom paths
-path=("$HOME/Dev/bin" "$HOME/.rvm/bin" "$HOME/.local/bin" $path)
+path=("$HOME/Dev/bin" "$HOME/.local/bin" $path)
 cdpath=("$HOME/Dev" $cdpath)
 export PATH CDPATH
 
@@ -80,8 +80,11 @@ alias tls="tmux list-sessions"
 type clipcopy > /dev/null && alias pbcopy="clipcopy"
 type clippaste > /dev/null && alias pbpaste="clippaste"
 
-# OMZ history with date and time
-alias h="omz_history -i"
+# Full history with date and time
+alias hl="fc -il 1"
+
+# Reload history from file
+alias hr="fc -R"
 
 # Grep running processes
 alias psg="pgrep -fa"

@@ -1,15 +1,12 @@
-# Disable beep
-set bell-style none
-
-# Single Tab shows list of completions
-set show-all-if-ambiguous on
+# On first Tab complete a partial match or show list (if no match)
+set show-all-if-unmodified on
 
 # Ignore case during completion
 set completion-ignore-case on
 
-# Color the common prefix
+# Highlight the common prefix
 set colored-completion-prefix on
 
-# Prefix history search
-"\ep": history-search-backward
-"\en": history-search-forward
+# Prefix history search with arrows
+"\e[A": history-search-backward
+"\e[B": history-search-forward
