@@ -14,13 +14,12 @@ if [[ -r ~/.zsh/antigen.zsh ]]; then
     antigen bundle ohmyzsh/ohmyzsh plugins/terraform
 
     # Other plugins
+    antigen bundle redxtech/zsh-asdf-direnv
+    # antigen bundle zsh-users/zsh-autosuggestions
     antigen bundle zsh-users/zsh-completions
     antigen bundle zsh-users/zsh-syntax-highlighting
-    # antigen bundle zsh-users/zsh-autosuggestions
 
-    antigen bundle redxtech/zsh-asdf-direnv
-
-    # Prompt
+    # Pure prompt with Git stash enabled
     zstyle :prompt:pure:git:stash show yes
     antigen bundle mafredri/zsh-async
     antigen bundle sindresorhus/pure@main
@@ -32,6 +31,9 @@ fi
 
 # Separate history for each shell
 setopt no_share_history
+
+# Incrementaly append to the history file
+setopt inc_append_history
 
 # Highlight isearch match
 zle_highlight=("isearch:bg=yellow,fg=black")
@@ -54,12 +56,12 @@ export LESS="-FSRXMi"
 export PYTHONDONTWRITEBYTECODE=1
 
 # Common aliases
+alias l="less"
+alias g="grep -E"
+alias o="xdg-open"
 alias a="apt"
 alias sa="sudo apt"
 alias py="python3"
-alias o="xdg-open"
-alias l="less"
-alias g="grep -E"
 
 # Safer file operations
 alias mv="mv -i"
