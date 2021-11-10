@@ -1,11 +1,17 @@
-# On first Tab complete a partial match or show list (if no match)
+# Tab expands the partial match or shows completion list if no match
 set show-all-if-unmodified on
 
 # Ignore case during completion
 set completion-ignore-case on
 
-# Highlight the common prefix
+# Highlight the completion prefix
 set colored-completion-prefix on
+
+# Show file type symbols
+set visible-stats on
+
+# Show file type colors (based on LS_COLORS)
+set colored-stats on
 
 # Prefix history search with arrows
 "\e[A": history-search-backward

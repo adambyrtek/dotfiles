@@ -2,8 +2,8 @@
 
 \set PROMPT1 '%[%033[33;1m%]%x%[%033[0m%]%[%033[1m%]%/%[%033[0m%]%R%# '
 \set PROMPT2 ''
-\set HISTSIZE 1000
-\set HISTCONTROL ignoredups
+\set HISTSIZE 10000
+\set HISTCONTROL ignoreboth
 \set HISTFILE ~/.psql_history-:DBNAME
 \set ON_ERROR_ROLLBACK interactive
 
