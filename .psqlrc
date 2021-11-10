@@ -1,7 +1,7 @@
 \set QUIET 1
 
-\set PROMPT1 '%[%033[33;1m%]%x%[%033[0m%]%[%033[1m%]%/%[%033[0m%]%R%# '
-\set PROMPT2 ''
+\set PROMPT1 '\n%[%033[37;2m%]postgresql://%n@%M:%>%[%033[0m%]\n%[%033[33;1m%]%x%[%033[0m%]%[%033[1m%]%/%[%033[0m%]%R%# '
+\set PROMPT2 '%w'
 \set HISTSIZE 10000
 \set HISTCONTROL ignoreboth
 \set HISTFILE ~/.psql_history-:DBNAME
@@ -11,6 +11,6 @@
 \pset linestyle unicode
 
 \x auto
-\timing
+\timing on
 
 \unset QUIET
