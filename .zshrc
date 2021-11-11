@@ -38,13 +38,8 @@ setopt inc_append_history
 # Highlight isearch match
 zle_highlight=("isearch:bg=yellow,fg=black")
 
-# Fix Shift/Alt with arrow keys
-bindkey "^[[1;3C" forward-word
-bindkey "^[[1;3D" backward-word
-bindkey "^[[1;2C" forward-char
-bindkey "^[[1;2D" backward-char
-
-# Custom paths
+# List of unique paths
+typeset -U path cdpath
 path=("$HOME/Dev/bin" "$HOME/.local/bin" $path)
 cdpath=("$HOME/Dev" $cdpath)
 export PATH CDPATH
@@ -62,6 +57,7 @@ alias o="xdg-open"
 alias a="apt"
 alias sa="sudo apt"
 alias py="python3"
+alias gs="git status -s"
 
 # Safer file operations
 alias mv="mv -i"
