@@ -9,12 +9,12 @@ if exists('g:loaded_minpac')
     call minpac#init()
 
     " Async completions
-    call minpac#add('Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'})
     call minpac#add('Shougo/context_filetype.vim')
-    call minpac#add('Shougo/echodoc.vim')
+    call minpac#add('Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'})
     call minpac#add('Shougo/neco-vim')
-    call minpac#add('deoplete-plugins/deoplete-jedi')
     " call minpac#add('deoplete-plugins/deoplete-go', {'do': 'make'})
+    call minpac#add('deoplete-plugins/deoplete-jedi')
+    call minpac#add('deoplete-plugins/deoplete-lsp')
 
     call minpac#add('Vimjas/vim-python-pep8-indent')
     call minpac#add('airblade/vim-gitgutter')
@@ -89,7 +89,7 @@ set linebreak
 " Display incomplete wrapped lines at the end of the screen
 set display+=lastline
 
-" Case insensitive search and completion
+" Case insensitive search...
 set ignorecase
 
 " ...except when a capital letter is used
@@ -125,25 +125,28 @@ set backspace=indent,eol,start
 set laststatus=2
 
 " Keep some space around the edges when scrolling
-set scrolloff=10 sidescrolloff=10
+set scrolloff=8 sidescrolloff=8
 
-" Buffers can be hidden
+" Modified buffers can be hidden
 set hidden
 
 " Show indicator on wrapped lines
-set showbreak=+
+set showbreak=↪
 
-" Show ruler with file position
+" Show cursor position on the bottom right
 set ruler
 
-" Command mode completion
-set wildmode=longest:full,full
-
-" Show completion menu
+" Command mode completion menu
 set wildmenu
 
-" Better insert mode completion ('longest' is hard to undo)
-set completeopt=menuone,noselect
+" Complete longest prefix first
+set wildmode=longest:full,full
+
+" Case insensitive completion
+set wildignorecase
+
+" Better insert mode completion
+set completeopt=longest,menuone,noselect
 
 " Do not show completion messages on the command line
 set shortmess+=c
@@ -158,13 +161,13 @@ set noswapfile
 set list
 
 " Special characters to show
-set listchars=tab:>·,trail:·,extends:>,precedes:<
+set listchars=tab:»·,extends:›,precedes:‹,nbsp:·,trail:·
 
 " Default global replace (deprecated)
 set gdefault
 
 " Longer history
-set history=1000
+set history=10000
 
 " Use one space instead of two when joining sentences
 set nojoinspaces
@@ -182,7 +185,7 @@ if !has('nvim')
 endif
 
 " Shorter cursor hold timeout (e.g. for Git gutter)
-set updatetime=100
+set updatetime=250
 
 " Remove include files from path
 set path-=/usr/include
@@ -259,16 +262,19 @@ let g:ale_linters = {}
 
 " ALE fixers
 let g:ale_fixers = {
-            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \   'python': ['isort', 'black'],
-            \   'javascript': ['eslint'],
-            \   'json': ['jq'],
-            \   'terraform': ['terraform'],
-            \   'yaml': ['yamlfix'],
+            \     '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \     'python': ['isort', 'black'],
+            \     'javascript': ['eslint'],
+            \     'json': ['jq'],
+            \     'terraform': ['terraform'],
+            \     'yaml': ['yamlfix'],
             \ }
 
 " Linter name in the error message
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+
+" Avoid LSP inception
+let g:ale_disable_lsp = 1
 
 " Neovim should use system Python (not one from venv)
 if has('nvim')
@@ -287,13 +293,12 @@ let g:jedi#goto_definitions_command = '<Leader>jd'
 let g:jedi#rename_command = '<Leader>jr'
 let g:jedi#usages_command = '<Leader>ju'
 
-" Enable Deoplete completions and hints
+" Enable Deoplete completions
 if has('nvim')
     let g:deoplete#enable_at_startup = 1
-    let g:echodoc_enable_at_startup = 1
 endif
 
-" Support code embedded in Markdown
+" Allow code embedded in Markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 
 
@@ -338,21 +343,21 @@ endfunction
 
 " Lightline configuration
 let g:lightline = {
-            \   'colorscheme': 'gruvbox',
-            \   'active': {
-            \       'left': [['mode', 'paste'], ['shortname', 'modified'], ['fugitive', 'gitgutter' ]],
-            \       'right': [['lineinfo'], ['quickfix', 'percent'], ['filetype', 'spell', 'readonly']],
-            \   },
-            \   'inactive': {
-            \       'left': [['shortname', 'modified']],
-            \       'right': [['lineinfo' ], [ 'percent']],
-            \   },
-            \   'component_function': {
-            \       'shortname': 'LightlineShortName',
-            \       'fugitive': 'FugitiveHead',
-            \       'gitgutter': 'LightlineGitGutter',
-            \       'quickfix': 'LightlineQuickfix',
-            \   }
+            \     'colorscheme': 'gruvbox',
+            \     'active': {
+            \         'left': [['mode', 'paste'], ['shortname', 'modified'], ['fugitive', 'gitgutter' ]],
+            \         'right': [['lineinfo'], ['quickfix', 'percent'], ['filetype', 'spell', 'readonly']],
+            \     },
+            \     'inactive': {
+            \         'left': [['shortname', 'modified']],
+            \         'right': [['lineinfo' ], [ 'percent']],
+            \     },
+            \     'component_function': {
+            \         'shortname': 'LightlineShortName',
+            \         'fugitive': 'FugitiveHead',
+            \         'gitgutter': 'LightlineGitGutter',
+            \         'quickfix': 'LightlineQuickfix',
+            \     }
             \ }
 
 
@@ -389,7 +394,7 @@ augroup vimrc
     " Restore last cursor position
     autocmd BufReadPost *
                 \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                \   exe "normal g`\"" |
+                \     exe "normal g`\"" |
                 \ endif
 
     " Auto-open quickfix
@@ -460,14 +465,6 @@ nnoremap <Leader>d :Dispatch<CR>
 nnoremap <Leader>D :Dispatch<Space>
 nnoremap <Leader>m :Make<CR>
 nnoremap <Leader>M :Make<Space>
-
-" ALE LSP mappings (experimental)
-" let g:ale_disable_lsp = 1
-nmap <Leader>gd <Plug>(ale_go_to_definition)
-nmap <Leader>gt <Plug>(ale_go_to_type_definition)
-nmap <Leader>gh <Plug>(ale_hover)
-nmap <Leader>gk <Plug>(ale_documentation)
-nmap <Leader>gf <Plug>(ale_find_references)
 
 " Repeat last edit over visual selection
 xmap <silent> . :normal .<CR>
