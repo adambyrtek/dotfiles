@@ -5,6 +5,7 @@ if [[ -r ~/.zsh/antigen.zsh ]]; then
     source ~/.zsh/antigen.zsh
 
     # OMZ plugins
+    zstyle ':omz:update' mode disabled
     antigen bundle ohmyzsh/ohmyzsh
     antigen bundle ohmyzsh/ohmyzsh plugins/command-not-found
     antigen bundle ohmyzsh/ohmyzsh plugins/git

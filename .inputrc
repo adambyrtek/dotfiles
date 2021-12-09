@@ -10,8 +10,8 @@ set colored-completion-prefix on
 # Show suffix with file type symbol
 set visible-stats on
 
-# Colors based on file type (see LS_COLORS)
-# set colored-stats on
+# Prevent saving edited history lines
+set revert-all-at-newline on
 
 # Prefix history search with arrows
 "\e[A": history-search-backward

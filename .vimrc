@@ -242,9 +242,6 @@ endif
 " Mapping to delete buffers
 let g:ctrlp_prompt_mappings = {'PrtDeleteEnt()': ['<c-k>']}
 
-" Quick way to close the prompt
-let g:ctrlp_brief_prompt = 1
-
 " Reuse windows from selected plugins
 let g:ctrlp_reuse_window = 'dirvish'
 
