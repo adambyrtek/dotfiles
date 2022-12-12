@@ -20,6 +20,7 @@ if exists('g:loaded_minpac')
     call minpac#add('airblade/vim-gitgutter')
     call minpac#add('ap/vim-css-color')
     call minpac#add('chaoren/vim-wordmotion')
+    call minpac#add('chrisbra/csv.vim')
     call minpac#add('ctrlpvim/ctrlp.vim')
     call minpac#add('davidhalter/jedi-vim')
     call minpac#add('hashivim/vim-terraform')
@@ -448,7 +449,7 @@ cnoremap <C-d> <Del>
 nnoremap <silent> <C-Up> :cprev<CR>
 nnoremap <silent> <C-Down> :cnext<CR>
 
-" Fix C-c not triggering autocmds
+" Fix for Ctrl-C not triggering autocmds
 inoremap <C-c> <Esc>
 
 " Easy exit from terminal mode
