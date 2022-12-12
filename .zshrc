@@ -35,6 +35,9 @@ setopt no_share_history
 # Incrementaly append to the history file
 setopt inc_append_history
 
+# Avoid accidentally closing the shell with Ctrl-D
+setopt ignore_eof
+
 # Highlight isearch match
 zle_highlight=("isearch:bg=yellow,fg=black")
 
