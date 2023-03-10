@@ -1,6 +1,6 @@
-.PHONY: stow unstow restow docker
+.PHONY: stow unstow restow submodule docker
 
-stow:
+stow: submodule
 	@# Avoid bundling certain directories
 	@mkdir -p ${HOME}/.config ${HOME}/.vim/pack/minpac/opt
 	stow -vS .
@@ -10,6 +10,8 @@ unstow:
 
 restow: unstow stow
 
-docker:
+submodule:
 	git submodule update --init
+
+docker: submodule
 	docker build -t dotfiles .
