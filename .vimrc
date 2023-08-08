@@ -466,3 +466,9 @@ nnoremap <Leader>M :Make<Space>
 
 " Repeat last edit over visual selection
 xmap <silent> . :normal .<CR>
+
+" Git mappings
+nnoremap <Leader>gg :Git<Space>
+nnoremap <Leader>gs :Git<CR>
+nnoremap <Leader>gb :GBrowse<CR>
+vnoremap <Leader>gb :GBrowse<CR>
